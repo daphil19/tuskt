@@ -1,0 +1,835 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="ab6072de-7cba-4d3e-a47d-de46e6e6281b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.editorconfig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.github/workflows/publish.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.github/workflows/release.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.github/workflows/tests.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/AndroidProjectSystem.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/benchmark_js.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/benchmark_jvm.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/benchmark_wasm_js.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/kulid_0_4_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/kulid_0_5_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/kulid_js_0_3_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/kulid_js_0_4_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/kulid_js_0_5_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/kulid_jvm_0_3_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/kulid_jvm_0_4_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/kulid_jvm_0_5_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/kulid_wasm_js_0_3_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/kulid_wasm_js_0_4_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/kulid_wasm_js_0_5_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/kulid_wasm_wasi_0_3_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/kulid_wasm_wasi_0_4_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/kulid_wasm_wasi_0_5_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/tuskt_client_0_1_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/tuskt_client_js_0_1_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/tuskt_client_jvm.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/tuskt_client_jvm_0_1_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/tuskt_client_wasm_js_0_1_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/detekt.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/deviceManager.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/kotlinc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/ktlint-plugin.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.tool-versions" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CHANGELOG.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/LICENSE" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gradle/libs.versions.toml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gradlew" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gradlew.bat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kotlin-js-store/wasm/yarn.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kotlin-js-store/yarn.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/settings.gradle.kts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tuskt-client/build.gradle.kts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tuskt-server/build.gradle.kts" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeInsightWorkspaceSettings">
+    <option name="optimizeImportsOnTheFly" value="true" />
+  </component>
+  <component name="EmbeddingIndexingInfo">
+    <option name="cachedIndexableFilesCount" value="5709" />
+    <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Kulid" type="f1a62948:ProjectNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Kotlin Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GradleScriptDefinitionsStorage" workingDir="$PROJECT_DIR$" gradleHome="$USER_HOME$/.gradle/wrapper/dists/gradle-9.3.1-bin/23ovyewtku6u96viwx3xl3oks/gradle-9.3.1" javaHome="$USER_HOME$/.asdf/installs/java/temurin-21.0.9+10.0.LTS" gradleVersion="9.3.1">
+    <option name="jvmArguments">
+      <list>
+        <option value="-Didea.compose.hot-reload=true" />
+        <option value="-Didea.compose.hot-reload.version=2" />
+      </list>
+    </option>
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="jar://$APPLICATION_HOME_DIR$/lib/util-8.jar!/kotlin/ranges/ranges.kotlin_builtins" root0="SKIP_INSPECTION" />
+  </component>
+  <component name="KotlinCodeInsightWorkspaceSettings">
+    <option name="optimizeImportsOnTheFly" value="true" />
+  </component>
+  <component name="KotlinMultiplatform" KONAN_HOME="$USER_HOME$/.konan/kotlin-native-prebuilt-macos-aarch64-2.3.0">
+    <executable TARGET="macos_x64" TARGET_NAME="macosX64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":tuskt-client:" IS_TEST="true">
+      <variant NAME="Debug" GRADLE_TASK=":tuskt-client:linkDebugTestMacosX64" FILE="$PROJECT_DIR$/tuskt-client/build/bin/macosX64/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
+        <envs />
+      </variant>
+    </executable>
+    <executable TARGET="macos_arm64" TARGET_NAME="macosArm64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":tuskt-client:" IS_TEST="true">
+      <variant NAME="Debug" GRADLE_TASK=":tuskt-client:linkDebugTestMacosArm64" FILE="$PROJECT_DIR$/tuskt-client/build/bin/macosArm64/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
+        <envs />
+      </variant>
+    </executable>
+    <executable TARGET="linux_x64" TARGET_NAME="linuxX64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":tuskt-client:" IS_TEST="true">
+      <variant NAME="Debug" GRADLE_TASK=":tuskt-client:linkDebugTestLinuxX64" FILE="$PROJECT_DIR$/tuskt-client/build/bin/linuxX64/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
+        <envs />
+      </variant>
+    </executable>
+    <executable TARGET="watchos_arm64" TARGET_NAME="watchosArm64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":tuskt-client:" IS_TEST="true">
+      <variant NAME="Debug" GRADLE_TASK=":tuskt-client:linkDebugTestWatchosArm64" FILE="$PROJECT_DIR$/tuskt-client/build/bin/watchosArm64/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
+        <envs />
+      </variant>
+    </executable>
+    <executable TARGET="watchos_x64" TARGET_NAME="watchosX64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":tuskt-client:" IS_TEST="true">
+      <variant NAME="Debug" GRADLE_TASK=":tuskt-client:linkDebugTestWatchosX64" FILE="$PROJECT_DIR$/tuskt-client/build/bin/watchosX64/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
+        <envs />
+      </variant>
+    </executable>
+    <executable TARGET="ios_x64" TARGET_NAME="iosX64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":tuskt-client:" IS_TEST="true">
+      <variant NAME="Debug" GRADLE_TASK=":tuskt-client:linkDebugTestIosX64" FILE="$PROJECT_DIR$/tuskt-client/build/bin/iosX64/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
+        <envs />
+      </variant>
+    </executable>
+    <executable TARGET="ios_arm64" TARGET_NAME="iosArm64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":tuskt-client:" IS_TEST="true">
+      <variant NAME="Debug" GRADLE_TASK=":tuskt-client:linkDebugTestIosArm64" FILE="$PROJECT_DIR$/tuskt-client/build/bin/iosArm64/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
+        <envs />
+      </variant>
+    </executable>
+    <executable TARGET="tvos_simulator_arm64" TARGET_NAME="tvosSimulatorArm64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":tuskt-client:" IS_TEST="true">
+      <variant NAME="Debug" GRADLE_TASK=":tuskt-client:linkDebugTestTvosSimulatorArm64" FILE="$PROJECT_DIR$/tuskt-client/build/bin/tvosSimulatorArm64/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
+        <envs />
+      </variant>
+    </executable>
+    <executable TARGET="tvos_x64" TARGET_NAME="tvosX64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":tuskt-client:" IS_TEST="true">
+      <variant NAME="Debug" GRADLE_TASK=":tuskt-client:linkDebugTestTvosX64" FILE="$PROJECT_DIR$/tuskt-client/build/bin/tvosX64/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
+        <envs />
+      </variant>
+    </executable>
+    <executable TARGET="ios_simulator_arm64" TARGET_NAME="iosSimulatorArm64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":tuskt-client:" IS_TEST="true">
+      <variant NAME="Debug" GRADLE_TASK=":tuskt-client:linkDebugTestIosSimulatorArm64" FILE="$PROJECT_DIR$/tuskt-client/build/bin/iosSimulatorArm64/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
+        <envs />
+      </variant>
+    </executable>
+    <executable TARGET="watchos_simulator_arm64" TARGET_NAME="watchosSimulatorArm64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":tuskt-client:" IS_TEST="true">
+      <variant NAME="Debug" GRADLE_TASK=":tuskt-client:linkDebugTestWatchosSimulatorArm64" FILE="$PROJECT_DIR$/tuskt-client/build/bin/watchosSimulatorArm64/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
+        <envs />
+      </variant>
+    </executable>
+    <executable TARGET="watchos_arm32" TARGET_NAME="watchosArm32" EXECUTABLE_NAME="test" PROJECT_PREFIX=":tuskt-client:" IS_TEST="true">
+      <variant NAME="Debug" GRADLE_TASK=":tuskt-client:linkDebugTestWatchosArm32" FILE="$PROJECT_DIR$/tuskt-client/build/bin/watchosArm32/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
+        <envs />
+      </variant>
+    </executable>
+    <executable TARGET="mingw_x64" TARGET_NAME="mingwX64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":tuskt-client:" IS_TEST="true">
+      <variant NAME="Debug" GRADLE_TASK=":tuskt-client:linkDebugTestMingwX64" FILE="$PROJECT_DIR$/tuskt-client/build/bin/mingwX64/debugTest/test.exe" WORKING_DIR="" PROGRAM_PARAMS="">
+        <envs />
+      </variant>
+    </executable>
+    <executable TARGET="linux_arm64" TARGET_NAME="linuxArm64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":tuskt-client:" IS_TEST="true">
+      <variant NAME="Debug" GRADLE_TASK=":tuskt-client:linkDebugTestLinuxArm64" FILE="$PROJECT_DIR$/tuskt-client/build/bin/linuxArm64/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
+        <envs />
+      </variant>
+    </executable>
+    <executable TARGET="tvos_arm64" TARGET_NAME="tvosArm64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":tuskt-client:" IS_TEST="true">
+      <variant NAME="Debug" GRADLE_TASK=":tuskt-client:linkDebugTestTvosArm64" FILE="$PROJECT_DIR$/tuskt-client/build/bin/tvosArm64/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
+        <envs />
+      </variant>
+    </executable>
+  </component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="3482PplJAe7zg2q43kZhWHRS7PJ" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Gradle.Build Kulid.executor": "Run",
+    "Gradle.TestULID.executor": "Run",
+    "Gradle.TestULIDMonotonic.executor": "Run",
+    "Gradle.TestULIDMonotonic.ulidThrowsErrorWhenRandomIsAtMax.executor": "Debug",
+    "Gradle.TestULIDMonotonic.ulidsWithinSameMillisecondAreStrictlyIncreasing.executor": "Run",
+    "Gradle.kulid [jvm].executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "cidr.known.project.marker": "true",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultAutoModeForALLUsers.v1": "true",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "git-widget-placeholder": "main",
+    "junie.onboarding.icon.badge.shown": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/daphillips/projects/tuskt",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "yarn",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.1484375",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
+    "to.speed.mode.migration.done": "true",
+    "typescript.add.unambiguous.imports.on.the.fly": "true",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecapSpentCounter">
+    <option name="endsOfQuotaMs" value="1770775242512" />
+    <option name="spentUsd" value="0.01273985" />
+  </component>
+  <component name="RecapUselessUpdatesCounter">
+    <option name="suspendCountdown" value="1" />
+  </component>
+  <component name="RunManager" selected="Gradle.kulid [jvm]">
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="RUN_TOOL" value="" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Doctests">
+      <module name="kotlin.scripts.KotlinBuildScript.build.gradle.kts" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="RUN_TOOL" value="" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="AppleRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" IS_LOCATION_SIMULATION_SUPPORTED="false" IS_LOCATION_SIMULATION_ALLOWED="true" APPLICATION_LANGUAGE="IDELaunchSchemeLanguageUseSystemLanguage" APPLICATION_REGION="" DEVELOPMENT_TEAM="${TEAM_ID}" MAKE_ACTIVE="TRUE" SHOULD_DEBUG_EXTENSIONS="false">
+      <embedded_app_extension_list />
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestULID" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/kulid" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="--continue" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":kulid:cleanTestDebugUnitTest" />
+            <option value=":kulid:testDebugUnitTest" />
+            <option value="--tests &quot;dev.phillipslabs.kulid.TestULID&quot;" />
+            <option value=":kulid:cleanJvmTest" />
+            <option value=":kulid:jvmTest" />
+            <option value="--tests &quot;dev.phillipslabs.kulid.TestULID&quot;" />
+            <option value=":kulid:cleanLinuxX64Test" />
+            <option value=":kulid:linuxX64Test" />
+            <option value="--tests &quot;dev.phillipslabs.kulid.TestULID&quot;" />
+            <option value=":kulid:cleanWasmJsBrowserTest" />
+            <option value=":kulid:wasmJsBrowserTest" />
+            <option value="--tests &quot;dev.phillipslabs.kulid.TestULID&quot;" />
+            <option value=":kulid:cleanWasmJsNodeTest" />
+            <option value=":kulid:wasmJsNodeTest" />
+            <option value="--tests &quot;dev.phillipslabs.kulid.TestULID&quot;" />
+            <option value=":kulid:cleanWasmWasiNodeTest" />
+            <option value=":kulid:wasmWasiNodeTest" />
+            <option value="--tests &quot;dev.phillipslabs.kulid.TestULID&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <ExternalSystemDebugDisabled>false</ExternalSystemDebugDisabled>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <GradleProfilingDisabled>false</GradleProfilingDisabled>
+      <GradleCoverageDisabled>false</GradleCoverageDisabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="TestULIDMonotonic" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/kulid" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="--continue" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":kulid:cleanTestDebugUnitTest" />
+            <option value=":kulid:testDebugUnitTest" />
+            <option value="--tests &quot;dev.phillipslabs.kulid.TestULIDMonotonic&quot;" />
+            <option value=":kulid:cleanIosSimulatorArm64Test" />
+            <option value=":kulid:iosSimulatorArm64Test" />
+            <option value="--tests &quot;dev.phillipslabs.kulid.TestULIDMonotonic&quot;" />
+            <option value=":kulid:cleanJvmTest" />
+            <option value=":kulid:jvmTest" />
+            <option value="--tests &quot;dev.phillipslabs.kulid.TestULIDMonotonic&quot;" />
+            <option value=":kulid:cleanMacosArm64Test" />
+            <option value=":kulid:macosArm64Test" />
+            <option value="--tests &quot;dev.phillipslabs.kulid.TestULIDMonotonic&quot;" />
+            <option value=":kulid:cleanTvosSimulatorArm64Test" />
+            <option value=":kulid:tvosSimulatorArm64Test" />
+            <option value="--tests &quot;dev.phillipslabs.kulid.TestULIDMonotonic&quot;" />
+            <option value=":kulid:cleanWasmJsBrowserTest" />
+            <option value=":kulid:wasmJsBrowserTest" />
+            <option value="--tests &quot;dev.phillipslabs.kulid.TestULIDMonotonic&quot;" />
+            <option value=":kulid:cleanWasmJsNodeTest" />
+            <option value=":kulid:wasmJsNodeTest" />
+            <option value="--tests &quot;dev.phillipslabs.kulid.TestULIDMonotonic&quot;" />
+            <option value=":kulid:cleanWasmWasiNodeTest" />
+            <option value=":kulid:wasmWasiNodeTest" />
+            <option value="--tests &quot;dev.phillipslabs.kulid.TestULIDMonotonic&quot;" />
+            <option value=":kulid:cleanWatchosSimulatorArm64Test" />
+            <option value=":kulid:watchosSimulatorArm64Test" />
+            <option value="--tests &quot;dev.phillipslabs.kulid.TestULIDMonotonic&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <ExternalSystemDebugDisabled>false</ExternalSystemDebugDisabled>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <GradleProfilingDisabled>false</GradleProfilingDisabled>
+      <GradleCoverageDisabled>false</GradleCoverageDisabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="TestULIDMonotonic" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/kulid" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="--continue" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":kulid:cleanTestDebugUnitTest" />
+            <option value=":kulid:testDebugUnitTest" />
+            <option value="--tests &quot;dev.phillipslabs.kulid.TestULIDMonotonic&quot;" />
+            <option value=":kulid:cleanIosSimulatorArm64Test" />
+            <option value=":kulid:iosSimulatorArm64Test" />
+            <option value="--tests &quot;dev.phillipslabs.kulid.TestULIDMonotonic&quot;" />
+            <option value=":kulid:cleanJvmTest" />
+            <option value=":kulid:jvmTest" />
+            <option value="--tests &quot;dev.phillipslabs.kulid.TestULIDMonotonic&quot;" />
+            <option value=":kulid:cleanMacosArm64Test" />
+            <option value=":kulid:macosArm64Test" />
+            <option value="--tests &quot;dev.phillipslabs.kulid.TestULIDMonotonic&quot;" />
+            <option value=":kulid:cleanTvosSimulatorArm64Test" />
+            <option value=":kulid:tvosSimulatorArm64Test" />
+            <option value="--tests &quot;dev.phillipslabs.kulid.TestULIDMonotonic&quot;" />
+            <option value=":kulid:cleanWasmJsBrowserTest" />
+            <option value=":kulid:wasmJsBrowserTest" />
+            <option value="--tests &quot;dev.phillipslabs.kulid.TestULIDMonotonic&quot;" />
+            <option value=":kulid:cleanWasmJsNodeTest" />
+            <option value=":kulid:wasmJsNodeTest" />
+            <option value="--tests &quot;dev.phillipslabs.kulid.TestULIDMonotonic&quot;" />
+            <option value=":kulid:cleanWasmWasiNodeTest" />
+            <option value=":kulid:wasmWasiNodeTest" />
+            <option value="--tests &quot;dev.phillipslabs.kulid.TestULIDMonotonic&quot;" />
+            <option value=":kulid:cleanWatchosSimulatorArm64Test" />
+            <option value=":kulid:watchosSimulatorArm64Test" />
+            <option value="--tests &quot;dev.phillipslabs.kulid.TestULIDMonotonic&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <ExternalSystemDebugDisabled>false</ExternalSystemDebugDisabled>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <GradleProfilingDisabled>false</GradleProfilingDisabled>
+      <GradleCoverageDisabled>false</GradleCoverageDisabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="TestULIDMonotonic.ulidThrowsErrorWhenRandomIsAtMax" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/kulid" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":kulid:cleanJvmTest" />
+            <option value=":kulid:jvmTest" />
+            <option value="--tests &quot;dev.phillipslabs.kulid.TestULIDMonotonic.ulidThrowsErrorWhenRandomIsAtMax&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <ExternalSystemDebugDisabled>false</ExternalSystemDebugDisabled>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <GradleProfilingDisabled>false</GradleProfilingDisabled>
+      <GradleCoverageDisabled>false</GradleCoverageDisabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="TestULIDMonotonic.ulidThrowsErrorWhenRandomIsAtMax" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/kulid" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":kulid:cleanJvmTest" />
+            <option value=":kulid:jvmTest" />
+            <option value="--tests &quot;dev.phillipslabs.kulid.TestULIDMonotonic.ulidThrowsErrorWhenRandomIsAtMax&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <ExternalSystemDebugDisabled>false</ExternalSystemDebugDisabled>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <GradleProfilingDisabled>false</GradleProfilingDisabled>
+      <GradleCoverageDisabled>false</GradleCoverageDisabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="TestULIDMonotonic.ulidsWithinSameMillisecondAreStrictlyIncreasing" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/kulid" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":kulid:cleanJvmTest" />
+            <option value=":kulid:jvmTest" />
+            <option value="--tests &quot;dev.phillipslabs.kulid.TestULIDMonotonic.ulidsWithinSameMillisecondAreStrictlyIncreasing&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <ExternalSystemDebugDisabled>false</ExternalSystemDebugDisabled>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <GradleProfilingDisabled>false</GradleProfilingDisabled>
+      <GradleCoverageDisabled>false</GradleCoverageDisabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="TestULIDMonotonic.ulidsWithinSameMillisecondAreStrictlyIncreasing" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/kulid" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":kulid:cleanJvmTest" />
+            <option value=":kulid:jvmTest" />
+            <option value="--tests &quot;dev.phillipslabs.kulid.TestULIDMonotonic.ulidsWithinSameMillisecondAreStrictlyIncreasing&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <ExternalSystemDebugDisabled>false</ExternalSystemDebugDisabled>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <GradleProfilingDisabled>false</GradleProfilingDisabled>
+      <GradleCoverageDisabled>false</GradleCoverageDisabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="TestULID" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/kulid" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="--continue" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":kulid:cleanTestDebugUnitTest" />
+            <option value=":kulid:testDebugUnitTest" />
+            <option value="--tests &quot;dev.phillipslabs.kulid.TestULID&quot;" />
+            <option value=":kulid:cleanJvmTest" />
+            <option value=":kulid:jvmTest" />
+            <option value="--tests &quot;dev.phillipslabs.kulid.TestULID&quot;" />
+            <option value=":kulid:cleanLinuxX64Test" />
+            <option value=":kulid:linuxX64Test" />
+            <option value="--tests &quot;dev.phillipslabs.kulid.TestULID&quot;" />
+            <option value=":kulid:cleanWasmJsBrowserTest" />
+            <option value=":kulid:wasmJsBrowserTest" />
+            <option value="--tests &quot;dev.phillipslabs.kulid.TestULID&quot;" />
+            <option value=":kulid:cleanWasmJsNodeTest" />
+            <option value=":kulid:wasmJsNodeTest" />
+            <option value="--tests &quot;dev.phillipslabs.kulid.TestULID&quot;" />
+            <option value=":kulid:cleanWasmWasiNodeTest" />
+            <option value=":kulid:wasmWasiNodeTest" />
+            <option value="--tests &quot;dev.phillipslabs.kulid.TestULID&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <ExternalSystemDebugDisabled>false</ExternalSystemDebugDisabled>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <GradleProfilingDisabled>false</GradleProfilingDisabled>
+      <GradleCoverageDisabled>false</GradleCoverageDisabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="kulid [jvm]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/kulid" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="-DmainClass=dev.phillipslabs.kulid.ULIDKt --quiet" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="jvmRun" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <ExternalSystemDebugDisabled>false</ExternalSystemDebugDisabled>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <GradleProfilingDisabled>false</GradleProfilingDisabled>
+      <GradleCoverageDisabled>false</GradleCoverageDisabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="kulid [jvm]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/kulid" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="-DmainClass=dev.phillipslabs.kulid.ULIDKt --quiet" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="jvmRun" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <ExternalSystemDebugDisabled>false</ExternalSystemDebugDisabled>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <GradleProfilingDisabled>false</GradleProfilingDisabled>
+      <GradleCoverageDisabled>false</GradleCoverageDisabled>
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="tuskt" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="linuxX64Benchmark[linuxX64]" type="KonanRunConfiguration" factoryName="KonanApp" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" WORKING_DIR="file://$PROJECT_DIR$/benchmark" PASS_PARENT_ENVS_2="true">
+      <executable TARGET="linux_x64" TARGET_NAME="linuxX64" EXECUTABLE_NAME="linuxX64Benchmark" PROJECT_PREFIX=":benchmark:" IS_TEST="false">
+        <variant NAME="Release" GRADLE_TASK=":benchmark:linkLinuxX64BenchmarkReleaseExecutableLinuxX64" FILE="$PROJECT_DIR$/benchmark/build/benchmarks/linuxX64/classes/linuxX64Benchmark.kexe" WORKING_DIR="$PROJECT_DIR$/benchmark" PROGRAM_PARAMS="">
+          <envs />
+        </variant>
+      </executable>
+      <variant NAME="Release" GRADLE_TASK=":benchmark:linkLinuxX64BenchmarkReleaseExecutableLinuxX64" FILE="$PROJECT_DIR$/benchmark/build/benchmarks/linuxX64/classes/linuxX64Benchmark.kexe" WORKING_DIR="$PROJECT_DIR$/benchmark" PROGRAM_PARAMS="">
+        <envs />
+      </variant>
+      <method v="2">
+        <option name="com.jetbrains.mpp.KonanBuildTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="linuxX64Benchmark[linuxX64]" type="KonanRunConfiguration" factoryName="KonanApp" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" WORKING_DIR="file://$PROJECT_DIR$/benchmark" PASS_PARENT_ENVS_2="true">
+      <executable TARGET="linux_x64" TARGET_NAME="linuxX64" EXECUTABLE_NAME="linuxX64Benchmark" PROJECT_PREFIX=":benchmark:" IS_TEST="false">
+        <variant NAME="Release" GRADLE_TASK=":benchmark:linkLinuxX64BenchmarkReleaseExecutableLinuxX64" FILE="$PROJECT_DIR$/benchmark/build/benchmarks/linuxX64/classes/linuxX64Benchmark.kexe" WORKING_DIR="$PROJECT_DIR$/benchmark" PROGRAM_PARAMS="">
+          <envs />
+        </variant>
+      </executable>
+      <variant NAME="Release" GRADLE_TASK=":benchmark:linkLinuxX64BenchmarkReleaseExecutableLinuxX64" FILE="$PROJECT_DIR$/benchmark/build/benchmarks/linuxX64/classes/linuxX64Benchmark.kexe" WORKING_DIR="$PROJECT_DIR$/benchmark" PROGRAM_PARAMS="">
+        <envs />
+      </variant>
+      <method v="2">
+        <option name="com.jetbrains.mpp.KonanBuildTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="tuskt" />
+      <option name="filePath" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="RUN_TOOL" value="" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="Tox" factoryName="Tox">
+      <module name="tuskt" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="RUN_TOOL" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Autodetect">
+      <module name="tuskt" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="RUN_TOOL" value="" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Doctests">
+      <module name="kotlin.scripts.KotlinBuildScript.build.gradle.kts" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="RUN_TOOL" value="" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.kulid [jvm]" />
+        <item itemvalue="Gradle.TestULID" />
+        <item itemvalue="Gradle.TestULIDMonotonic.ulidsWithinSameMillisecondAreStrictlyIncreasing" />
+        <item itemvalue="Gradle.TestULIDMonotonic.ulidThrowsErrorWhenRandomIsAtMax" />
+        <item itemvalue="Gradle.TestULIDMonotonic" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.30387.90" />
+        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.30387.90" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ab6072de-7cba-4d3e-a47d-de46e6e6281b" name="Changes" comment="" />
+      <created>1760580856885</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1760580856885</updated>
+      <workItem from="1760580857983" duration="3013000" />
+      <workItem from="1761264940881" duration="755000" />
+      <workItem from="1761307498979" duration="5407000" />
+      <workItem from="1761781596970" duration="201000" />
+      <workItem from="1761781813721" duration="17987000" />
+      <workItem from="1761882002497" duration="9141000" />
+      <workItem from="1761998016889" duration="6485000" />
+      <workItem from="1762020573914" duration="427000" />
+      <workItem from="1762023353336" duration="1981000" />
+      <workItem from="1762386537967" duration="897000" />
+      <workItem from="1765254480691" duration="111000" />
+      <workItem from="1768021350767" duration="442000" />
+      <workItem from="1768052004600" duration="4776000" />
+      <workItem from="1768274341034" duration="2665000" />
+      <workItem from="1768279909654" duration="332000" />
+      <workItem from="1768280273891" duration="912000" />
+      <workItem from="1768660402014" duration="3306000" />
+      <workItem from="1769923077327" duration="1763000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/tuskt/src/commonTest/kotlin/dev/phillipslabs/kulid/TestULIDMonotonic.kt</url>
+          <line>69</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
