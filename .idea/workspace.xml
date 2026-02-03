@@ -5,12 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ab6072de-7cba-4d3e-a47d-de46e6e6281b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/shared.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/shared.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/shared_js.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/shared_js.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/shared_jvm.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/shared_jvm.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/shared_wasm_js.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/shared_wasm_js.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared/src/commonMain/kotlin/dev/phillipslabs/tuskt/TusHeaders.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/commonMain/kotlin/dev/phillipslabs/tuskt/TusHeaders.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tuskt-server/src/main/kotlin/dev/phillipslabs/tuskt/Application.kt" beforeDir="false" afterPath="$PROJECT_DIR$/tuskt-server/src/main/kotlin/dev/phillipslabs/tuskt/Application.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -52,6 +48,7 @@
       <list>
         <option value="Kotlin Class" />
         <option value="Kotlin Object" />
+        <option value="Kotlin File" />
       </list>
     </option>
   </component>
@@ -845,7 +842,7 @@
       <workItem from="1768280273891" duration="912000" />
       <workItem from="1768660402014" duration="3306000" />
       <workItem from="1769923077327" duration="2712000" />
-      <workItem from="1770087914732" duration="2058000" />
+      <workItem from="1770087914732" duration="2486000" />
     </task>
     <servers />
   </component>
