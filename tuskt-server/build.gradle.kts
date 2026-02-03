@@ -22,6 +22,8 @@ application {
 }
 
 dependencies {
+    // TODO does this need to be api for any reason?
+    implementation(projects.shared)
     implementation(libs.ktor.server.core)
     implementation(libs.ktor.server.netty)
     implementation(libs.ktor.server.default.headers)

@@ -19,5 +19,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "tuskt"
 
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 include(":tuskt-client")
 include(":tuskt-server")
+include(":shared")
