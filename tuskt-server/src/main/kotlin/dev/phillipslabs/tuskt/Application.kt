@@ -18,10 +18,9 @@ fun Application.tusktModule(basePath: String = "/files") {
 
         // TODO X-HTTP-Method-Override support
 
-        // TODO is there a way that we can make this work with a directory that the files should live in?
-        //  (safely normalize it to avoid back-pathing out of the parent dir)
         route(basePath) {
             route("/{id}") {
+                // TODO this must include the upload length!!
                 head {
                     // spec says we must return this
                     call.response.header(HttpHeaders.CacheControl, "no-store")
@@ -49,7 +48,7 @@ fun Application.tusktModule(basePath: String = "/files") {
                     }
 
                     @Suppress("MaxLineLength")
-                    if (call.request.headers[HttpHeaders.ContentType] != ContentType.Application.OctetStream.toString()) {
+                    if (call.request.headers[HttpHeaders.ContentType] != ContentType.Application.OffsetOctetStream.toString()) {
                         // TODO response body?
                         call.respond(HttpStatusCode.UnsupportedMediaType)
                         return@patch
@@ -57,7 +56,7 @@ fun Application.tusktModule(basePath: String = "/files") {
 
                     val offset = call.request.headers[TusHeaders.UPLOAD_OFFSET]?.toLongOrNull() ?: TODO("should bail")
 
-                    if (filePath.fileSize() > offset) {
+                    if (filePath.fileSize() != offset) {
                         call.respond(HttpStatusCode.Conflict)
                         return@patch
                     }
@@ -82,7 +81,7 @@ fun Application.tusktModule(basePath: String = "/files") {
 
             options {
                 // This could return a 200 or a 204. Electing a 204 here because of the vibe
-                call.response.header(TUS_VERSION, TUS_VERSION)
+                call.response.header(TusHeaders.TUS_VERION, TUS_VERSION)
                 // NOTE: Tus-Resumable header is included in all responses by default, per spec
                 // TODO other headers can go here as we add support
             }
