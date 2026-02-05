@@ -15,58 +15,76 @@ fun Application.tusktModule(basePath: String = "/files") {
         install(DefaultHeaders) {
             header(TusHeaders.TUS_RESUMABLE, TUS_RESUME_VERSION)
         }
+
+        // TODO X-HTTP-Method-Override support
+
         // TODO is there a way that we can make this work with a directory that the files should live in?
         //  (safely normalize it to avoid back-pathing out of the parent dir)
-        route("$basePath/{filename}") {
-            head {
-                // spec says we must return this
-                call.response.header(HttpHeaders.CacheControl, "no-store")
+        route(basePath) {
+            route("/{id}") {
+                head {
+                    // spec says we must return this
+                    call.response.header(HttpHeaders.CacheControl, "no-store")
 
-                val filePath = getPathFromFilename()
-                if (filePath.notExists()) {
-                    // TODO reponse body?
-                    call.respond(HttpStatusCode.NotFound)
-                    return@head
+                    val filePath = getPathFromId()
+                    if (filePath.notExists()) {
+                        // TODO reponse body?
+                        call.respond(HttpStatusCode.NotFound)
+                        return@head
+                    }
+
+                    call.response.header(TusHeaders.UPLOAD_OFFSET, filePath.fileSize())
+                    // while the spec says that we SHOULD use a 200 or 204 for successful responses,
+                    // the openAPI spec just uses 200
+                    call.respond(HttpStatusCode.OK)
                 }
 
-                call.response.header(TusHeaders.UPLOAD_OFFSET, filePath.fileSize())
-                // while the spec says that we SHOULD use a 200 or 204 for successful responses,
-                // the openAPI spec just uses 200
-                call.respond(HttpStatusCode.OK)
+                patch {
+                    // make sure we can get a file path first
+                    // TODO return 404 if the resource isn't found (whatever that means?)
+                    val filePath = getPathFromId()
+
+                    if (filePath.notExists()) {
+                        call.respond(HttpStatusCode.NotFound)
+                    }
+
+                    @Suppress("MaxLineLength")
+                    if (call.request.headers[HttpHeaders.ContentType] != ContentType.Application.OctetStream.toString()) {
+                        // TODO response body?
+                        call.respond(HttpStatusCode.UnsupportedMediaType)
+                        return@patch
+                    }
+
+                    val offset = call.request.headers[TusHeaders.UPLOAD_OFFSET]?.toLongOrNull() ?: TODO("should bail")
+
+                    if (filePath.fileSize() > offset) {
+                        call.respond(HttpStatusCode.Conflict)
+                        return@patch
+                    }
+
+                    // write the bytes to the file
+                    call.receiveStream().use {
+                        it.copyTo(
+                            filePath.outputStream(
+                                StandardOpenOption.CREATE,
+                                StandardOpenOption.WRITE,
+                                StandardOpenOption.APPEND,
+                            ),
+                        )
+                    }
+
+                    // TODO header for new content size!
+                    call.response.header(TusHeaders.UPLOAD_OFFSET, filePath.fileSize())
+
+                    call.respond(HttpStatusCode.NoContent)
+                }
             }
 
-            patch {
-                // make sure we can get a file path first
-                // TODO return 404 if the resource isn't found (whatever that means?)
-                val filePath = getPathFromFilename()
-
-                if (call.request.headers[HttpHeaders.ContentType] != ContentType.Application.OctetStream.toString()) {
-                    // TODO response body?
-                    call.respond(HttpStatusCode.UnsupportedMediaType)
-                    return@patch
-                }
-
-                val offset = call.request.headers[TusHeaders.UPLOAD_OFFSET]?.toLongOrNull() ?: TODO("should bail")
-
-                if (filePath.fileSize() > offset) {
-                    call.respond(HttpStatusCode.Conflict)
-                    return@patch
-                }
-
-                // write the bytes to the file
-                call.receiveStream().use {
-                    it.copyTo(
-                        filePath.outputStream(
-                            StandardOpenOption.CREATE,
-                            StandardOpenOption.WRITE,
-                            StandardOpenOption.APPEND,
-                        ),
-                    )
-                }
-
-                // TODO header for new content size!
-
-                call.respond(HttpStatusCode.NoContent)
+            options {
+                // This could return a 200 or a 204. Electing a 204 here because of the vibe
+                call.response.header(TUS_VERSION, TUS_VERSION)
+                // NOTE: Tus-Resumable header is included in all responses by default, per spec
+                // TODO other headers can go here as we add support
             }
         }
     }
@@ -75,7 +93,7 @@ fun Application.tusktModule(basePath: String = "/files") {
 // TODO use kotlinx io path instead?
 private val parentDir = Path("files").toRealPath()
 
-private fun RoutingContext.getPathFromFilename(): Path {
+private fun RoutingContext.getPathFromId(): Path {
     val filename = getFilename() ?: throw IllegalArgumentException("Filename is required")
     return Path(parentDir.absolutePathString(), filename).toRealPath().takeIf { parentDir.contains(it) }
         ?: throw IllegalArgumentException("Filename $filename is outside of parent directory $parentDir")
