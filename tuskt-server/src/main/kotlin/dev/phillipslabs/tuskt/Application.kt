@@ -7,36 +7,64 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import java.nio.file.Path
-import kotlin.io.path.Path
-import kotlin.io.path.absolutePathString
+import java.nio.file.StandardOpenOption
+import kotlin.io.path.*
 
-fun main() {
-    println("Hello, tuskt!")
-}
-
-fun Application.module() {
+fun Application.tusktModule(basePath: String = "/files") {
     routing {
         install(DefaultHeaders) {
             header(TusHeaders.TUS_RESUMABLE, TUS_RESUME_VERSION)
         }
         // TODO is there a way that we can make this work with a directory that the files should live in?
         //  (safely normalize it to avoid back-pathing out of the parent dir)
-        route("/files/{filename}") {
+        route("$basePath/{filename}") {
             head {
-                call.response.header(TusHeaders.UPLOAD_OFFSET, getPathFromFilename().toFile().length().toString())
+                // spec says we must return this
+                call.response.header(HttpHeaders.CacheControl, "no-store")
+
+                val filePath = getPathFromFilename()
+                if (filePath.notExists()) {
+                    // TODO reponse body?
+                    call.respond(HttpStatusCode.NotFound)
+                    return@head
+                }
+
+                call.response.header(TusHeaders.UPLOAD_OFFSET, filePath.fileSize())
+                // while the spec says that we SHOULD use a 200 or 204 for successful responses,
+                // the openAPI spec just uses 200
                 call.respond(HttpStatusCode.OK)
             }
 
             patch {
-                val offset = call.request.headers[TusHeaders.UPLOAD_OFFSET]?.toLongOrNull() ?: 0L
-                val bytes = call.receive<ByteArray>()
+                // make sure we can get a file path first
+                // TODO return 404 if the resource isn't found (whatever that means?)
+                val filePath = getPathFromFilename()
 
-                // TODO would kotlinx io make sense here?
-                java.io.RandomAccessFile(getPathFromFilename().toFile(), "rw").use { file ->
-                    file.seek(offset)
-                    file.write(bytes)
-                    call.response.header(TusHeaders.UPLOAD_OFFSET, file.length().toString())
+                if (call.request.headers[HttpHeaders.ContentType] != ContentType.Application.OctetStream.toString()) {
+                    // TODO response body?
+                    call.respond(HttpStatusCode.UnsupportedMediaType)
+                    return@patch
                 }
+
+                val offset = call.request.headers[TusHeaders.UPLOAD_OFFSET]?.toLongOrNull() ?: TODO("should bail")
+
+                if (filePath.fileSize() > offset) {
+                    call.respond(HttpStatusCode.Conflict)
+                    return@patch
+                }
+
+                // write the bytes to the file
+                call.receiveStream().use {
+                    it.copyTo(
+                        filePath.outputStream(
+                            StandardOpenOption.CREATE,
+                            StandardOpenOption.WRITE,
+                            StandardOpenOption.APPEND,
+                        ),
+                    )
+                }
+
+                // TODO header for new content size!
 
                 call.respond(HttpStatusCode.NoContent)
             }

@@ -4,7 +4,7 @@ import org.jetbrains.kotlin.gradle.dsl.abi.ExperimentalAbiValidation
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
-    alias(libs.plugins.ktor)
+//    alias(libs.plugins.ktor)
     alias(libs.plugins.ktlint)
     alias(libs.plugins.detekt)
     alias(libs.plugins.vanniktech.mavenPublish)
@@ -89,6 +89,10 @@ kotlin {
             }
         }
     }
+}
+
+ktlint {
+    version = libs.versions.ktlint.get()
 }
 
 mavenPublishing {

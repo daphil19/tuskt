@@ -5,6 +5,7 @@ kotlin = "2.3.0"
 android-compileSdk = "36"
 android-minSdk = "21"
 ktor = "3.4.0"
+ktlint = "1.8.0"
 
 [libraries]
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }

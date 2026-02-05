@@ -73,6 +73,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
+                implementation(libs.ktor.client.core)
             }
         }
         commonTest {
@@ -81,4 +82,8 @@ kotlin {
             }
         }
     }
+}
+
+ktlint {
+    version = libs.versions.ktlint.get()
 }
