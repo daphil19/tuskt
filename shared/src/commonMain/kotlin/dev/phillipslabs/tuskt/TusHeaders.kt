@@ -38,13 +38,14 @@ object TusHeaders {
      */
     const val TUS_MAX_SIZE = "Tus-Max-Size"
 
-    /**
-     * The X-HTTP-Method-Override request header MUST be a string which MUST be interpreted as the request’s method by
-     * the Server, if the header is presented.
-     * The actual method of the request MUST be ignored.
-     * The Client SHOULD use this header if its environment does not support the PATCH or DELETE methods.
-     */
-    const val X_HTTP_METHOD_OVERRIDE = "X-HTTP-Method-Override"
+    // NOTE this header is handled by a ktor server plugin!
+//    /**
+//     * The X-HTTP-Method-Override request header MUST be a string which MUST be interpreted as the request’s method by
+//     * the Server, if the header is presented.
+//     * The actual method of the request MUST be ignored.
+//     * The Client SHOULD use this header if its environment does not support the PATCH or DELETE methods.
+//     */
+//    const val X_HTTP_METHOD_OVERRIDE = "X-HTTP-Method-Override"
 
     /**
      * The Upload-Defer-Length request and response header indicates that the size of the upload is not known currently

@@ -3,6 +3,7 @@ package dev.phillipslabs.tuskt
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.plugins.defaultheaders.*
+import io.ktor.server.plugins.methodoverride.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
@@ -11,12 +12,12 @@ import java.nio.file.StandardOpenOption
 import kotlin.io.path.*
 
 fun Application.tusktModule(basePath: String = "/files") {
+    install(XHttpMethodOverride)
+
     routing {
         install(DefaultHeaders) {
             header(TusHeaders.TUS_RESUMABLE, TUS_RESUME_VERSION)
         }
-
-        // TODO X-HTTP-Method-Override support
 
         route(basePath) {
             route("/{id}") {
@@ -27,7 +28,7 @@ fun Application.tusktModule(basePath: String = "/files") {
 
                     val filePath = getPathFromId()
                     if (filePath.notExists()) {
-                        // TODO reponse body?
+                        // TODO response body?
                         call.respond(HttpStatusCode.NotFound)
                         return@head
                     }
