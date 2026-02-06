@@ -9,9 +9,15 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import java.nio.file.Path
 import java.nio.file.StandardOpenOption
-import kotlin.io.path.*
+import kotlin.io.path.Path
+import kotlin.io.path.fileSize
+import kotlin.io.path.notExists
+import kotlin.io.path.outputStream
 
-fun Application.tusktModule(basePath: String = "/files") {
+fun Application.tusktModule(
+    basePath: String = "/files",
+    storagePath: Path = Path("files").toAbsolutePath(),
+) {
     install(XHttpMethodOverride)
     install(TusResumablePlugin)
 
@@ -27,7 +33,7 @@ fun Application.tusktModule(basePath: String = "/files") {
                     // spec says we must return this
                     call.response.header(HttpHeaders.CacheControl, "no-store")
 
-                    val filePath = getPathFromId()
+                    val filePath = getPathFromId(storagePath)
                     if (filePath.notExists()) {
                         // TODO response body?
                         call.respond(HttpStatusCode.NotFound)
@@ -43,10 +49,11 @@ fun Application.tusktModule(basePath: String = "/files") {
                 patch {
                     // make sure we can get a file path first
                     // TODO return 404 if the resource isn't found (whatever that means?)
-                    val filePath = getPathFromId()
+                    val filePath = getPathFromId(storagePath)
 
                     if (filePath.notExists()) {
                         call.respond(HttpStatusCode.NotFound)
+                        return@patch
                     }
 
                     @Suppress("MaxLineLength")
@@ -86,6 +93,7 @@ fun Application.tusktModule(basePath: String = "/files") {
                 call.response.header(TusHeaders.TUS_VERSION, TUS_VERSION)
                 // NOTE: Tus-Resumable header is included in all responses by default, per spec
                 // TODO other headers can go here as we add support
+                call.respond(HttpStatusCode.NoContent)
             }
         }
     }
@@ -105,14 +113,10 @@ val TusResumablePlugin =
         }
     }
 
-// TODO use kotlinx io path instead?
-private val parentDir = Path("files").toRealPath()
-
-private fun RoutingContext.getPathFromId(): Path {
-    val filename = getFilename() ?: throw IllegalArgumentException("Filename is required")
-    return Path(parentDir.absolutePathString(), filename).toRealPath().takeIf { parentDir.contains(it) }
-        ?: throw IllegalArgumentException("Filename $filename is outside of parent directory $parentDir")
+// TODO we will eventually have to figure out a way to get an id back for a filename
+//  (it probably shouldn't be what we use on disk?)
+private fun RoutingContext.getPathFromId(storagePath: Path): Path {
+    val filename = call.parameters["id"] ?: throw IllegalArgumentException("Filename is required")
+    return storagePath.resolve(filename).normalize().takeIf { it.startsWith(storagePath) }
+        ?: throw IllegalArgumentException("Filename $filename is outside of storage directory $storagePath")
 }
-
-// TODO this needs to eventually support safely normalizing (e.g avoiding pack-pathing out of the parent dir
-private fun RoutingContext.getFilename() = call.parameters["filename"]
