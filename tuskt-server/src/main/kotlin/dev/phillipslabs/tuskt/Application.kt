@@ -13,6 +13,7 @@ import kotlin.io.path.*
 
 fun Application.tusktModule(basePath: String = "/files") {
     install(XHttpMethodOverride)
+    install(TusResumablePlugin)
 
     routing {
         install(DefaultHeaders) {
@@ -89,6 +90,20 @@ fun Application.tusktModule(basePath: String = "/files") {
         }
     }
 }
+
+val TusResumablePlugin =
+    createApplicationPlugin(name = "TusResumablePlugin") {
+        onCall { call ->
+            if (call.request.httpMethod != HttpMethod.Options) {
+                val version = call.request.headers[TusHeaders.TUS_RESUMABLE]
+                if (version == null || version != TUS_VERSION) {
+                    // TODO do we need to include the header here? Or will default headers pick it up correctly?
+                    call.response.header(TusHeaders.TUS_VERSION, TUS_VERSION)
+                    call.respond(HttpStatusCode.PreconditionFailed)
+                }
+            }
+        }
+    }
 
 // TODO use kotlinx io path instead?
 private val parentDir = Path("files").toRealPath()
