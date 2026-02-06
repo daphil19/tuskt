@@ -17,7 +17,7 @@ object TusHeaders {
      * The Tus-Version response header MUST be a comma-separated list of protocol versions supported by the Server.
      * The list MUST be sorted by Server’s preference where the first one is the most preferred one.
      */
-    const val TUS_VERION = "Tus-Version"
+    const val TUS_VERSION = "Tus-Version"
 
     /**
      * The Tus-Resumable header MUST be included in every request and response except for OPTIONS requests.

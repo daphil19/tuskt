@@ -82,7 +82,7 @@ fun Application.tusktModule(basePath: String = "/files") {
 
             options {
                 // This could return a 200 or a 204. Electing a 204 here because of the vibe
-                call.response.header(TusHeaders.TUS_VERION, TUS_VERSION)
+                call.response.header(TusHeaders.TUS_VERSION, TUS_VERSION)
                 // NOTE: Tus-Resumable header is included in all responses by default, per spec
                 // TODO other headers can go here as we add support
             }
