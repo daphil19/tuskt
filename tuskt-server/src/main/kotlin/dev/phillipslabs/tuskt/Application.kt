@@ -14,12 +14,13 @@ import kotlin.io.path.fileSize
 import kotlin.io.path.notExists
 import kotlin.io.path.outputStream
 
+@Suppress("LongMethod")
 fun Application.tusktModule(
     basePath: String = "/files",
     storagePath: Path = Path("files").toAbsolutePath(),
 ) {
     install(XHttpMethodOverride)
-    install(TusResumablePlugin)
+    install(TusResumableVersionCheck)
 
     routing {
         install(DefaultHeaders) {
@@ -28,7 +29,6 @@ fun Application.tusktModule(
 
         route(basePath) {
             route("/{id}") {
-                // TODO this must include the upload length!!
                 head {
                     // spec says we must return this
                     call.response.header(HttpHeaders.CacheControl, "no-store")
@@ -93,14 +93,23 @@ fun Application.tusktModule(
                 call.response.header(TusHeaders.TUS_VERSION, TUS_VERSION)
                 // NOTE: Tus-Resumable header is included in all responses by default, per spec
                 // TODO other headers can go here as we add support
+//                call.response.header(TusHeaders.TUS_EXTENSION, TUS_EXTENSIONS)
                 call.respond(HttpStatusCode.NoContent)
             }
+
+//            post {
+//                // make sure Upload-defer-length is correctly set
+//                val uploadDeferLength = call.request.headers[TusHeaders.UPLOAD_DEFER_LENGTH]?.toIntOrNull()
+//                if (uploadDeferLength != null && uploadDeferLength != 1) {
+//                    call.respond(HttpStatusCode.BadRequest)
+//                }
+//            }
         }
     }
 }
 
-val TusResumablePlugin =
-    createApplicationPlugin(name = "TusResumablePlugin") {
+val TusResumableVersionCheck =
+    createApplicationPlugin(name = "TusResumableVersionCheck") {
         onCall { call ->
             if (call.request.httpMethod != HttpMethod.Options) {
                 val version = call.request.headers[TusHeaders.TUS_RESUMABLE]
