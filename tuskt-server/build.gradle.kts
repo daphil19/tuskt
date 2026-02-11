@@ -24,12 +24,12 @@ kotlin {
 dependencies {
     // TODO does this need to be api for any reason?
     implementation(projects.shared)
-    implementation(libs.ktor.server.core)
+    implementation(ktorLibs.server.core)
 //    implementation(libs.ktor.server.netty)
-    implementation(libs.ktor.server.default.headers)
-    implementation(libs.ktor.server.method.override)
+    implementation(ktorLibs.server.defaultHeaders)
+    implementation(ktorLibs.server.methodOverride)
 
-    testImplementation(libs.ktor.server.test.host)
+    testImplementation(ktorLibs.server.testHost)
     testImplementation(libs.kotlin.test)
     testImplementation(libs.jimfs)
 }

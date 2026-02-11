@@ -79,8 +79,7 @@ kotlin {
             dependencies {
                 // TODO does this need to be api for any reason?
                 implementation(projects.shared)
-                implementation(libs.ktor.client.core)
-                implementation(libs.ktor.client.cio)
+                implementation(ktorLibs.client.core)
             }
         }
         commonTest {

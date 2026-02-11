@@ -73,7 +73,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation(libs.ktor.client.core)
+                implementation(ktorLibs.client.core)
             }
         }
         commonTest {

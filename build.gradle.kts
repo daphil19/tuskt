@@ -13,7 +13,7 @@ plugins {
     alias(libs.plugins.kotlin.jvm) apply false
     alias(libs.plugins.android.kotlin.multiplatform.library) apply false
 
-    alias(libs.plugins.ktor) apply false
+//    alias(libs.plugins.ktor) apply false
 }
 
 // checks to see if a release is "stable," meaning we don't have to worry about rc versions polluting a dependencyUpdates check
