@@ -20,13 +20,14 @@ fun Application.tusktModule(
     storagePath: Path = Path("files").toAbsolutePath(),
 ) {
     install(XHttpMethodOverride)
+
+    install(DefaultHeaders) {
+        header(TusHeaders.TUS_RESUMABLE, TUS_RESUME_VERSION)
+    }
+
     install(TusResumableVersionCheck)
 
     routing {
-        install(DefaultHeaders) {
-            header(TusHeaders.TUS_RESUMABLE, TUS_RESUME_VERSION)
-        }
-
         route(basePath) {
             route("/{id}") {
                 head {
@@ -114,7 +115,6 @@ val TusResumableVersionCheck =
             if (call.request.httpMethod != HttpMethod.Options) {
                 val version = call.request.headers[TusHeaders.TUS_RESUMABLE]
                 if (version == null || version != TUS_VERSION) {
-                    // TODO do we need to include the header here? Or will default headers pick it up correctly?
                     call.response.header(TusHeaders.TUS_VERSION, TUS_VERSION)
                     call.respond(HttpStatusCode.PreconditionFailed)
                 }
