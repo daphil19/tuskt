@@ -4,6 +4,7 @@ import dev.phillipslabs.tuskt.OffsetOctetStream
 import dev.phillipslabs.tuskt.TusHeaders
 import io.ktor.client.*
 import io.ktor.client.request.*
+import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.ktor.utils.io.*
 import io.ktor.utils.io.core.*
@@ -41,20 +42,48 @@ public class TusktClient(
         }
     }
 
-    // TODO alternative that allows for streaming?
-    // TODO accounting for max size!
     public suspend fun uploadBytes(
         bytes: ByteArray,
         id: String,
         offset: Long,
+        maxRetries: Int? = null,
     ) {
-        val response =
-            client.patch("/$id") {
-                contentType(ContentType.Application.OffsetOctetStream)
-                setBody(bytes)
-                header(TusHeaders.UPLOAD_OFFSET, offset.toString())
+        // TODO do we want to retry any time an exception gets thrown?
+        val currentTry = 0
+
+        val expectedFinalOffset = offset + bytes.size
+        var currentOffset = offset
+
+        while (currentOffset < expectedFinalOffset) {
+            val response =
+                client.patch("/$id") {
+                    contentType(ContentType.Application.OffsetOctetStream)
+                    setBody(bytes.copyOfRange((currentOffset - offset).toInt(), bytes.size))
+                    header(TusHeaders.UPLOAD_OFFSET, currentOffset.toString())
+                }
+            val tusResponse = handleUploadResponse(response)
+            when (tusResponse) {
+                is TusktUploadResult.Success -> {
+                    if (tusResponse.offset < expectedFinalOffset) {
+                        currentOffset = tusResponse.offset
+                    } else {
+                        // TODO reterun result
+                    }
+                }
+
+                is TusktUploadResult.OffsetMismatch -> {
+                    TODO()
+                }
+
+                TusktUploadResult.NotFound -> {
+                    TODO()
+                }
+
+                TusktUploadResult.UnsupportedMediaType -> {
+                    TODO()
+                }
             }
-        TODO()
+        }
     }
 
     public suspend fun uploadStream(
@@ -62,14 +91,55 @@ public class TusktClient(
         id: String,
         offset: Long,
     ) {
+        // Instead of looking for a specific offset here, we read until either
+        // 1. the channel is done
+        // 2. we hit max retires
+        // 3. we hit max upload of the server
+
         val response =
             client.patch("/$id") {
                 contentType(ContentType.Application.OffsetOctetStream)
                 setBody(stream)
                 header(TusHeaders.UPLOAD_OFFSET, offset.toString())
             }
+
+        val serverResponseOffset = handleUploadResponse(response)
+
         TODO()
     }
+
+    private fun handleUploadResponse(response: HttpResponse): TusktUploadResult =
+        when (response.status) {
+            HttpStatusCode.NoContent -> {
+                TusktUploadResult.Success(
+                    response.headers[TusHeaders.UPLOAD_OFFSET]?.toLongOrNull()
+                        ?: throw TusktException("Server did not set Upload-Offset header"),
+                )
+            }
+
+            HttpStatusCode.UnsupportedMediaType -> {
+                // TODO log this!
+                throw TusktException("Unexpected UnsupportedMediaType response from server")
+            }
+
+            HttpStatusCode.Conflict -> {
+                // TODO make a more specific exception?
+                // do we want to try and recover from this one?
+                throw TusktException(
+                    @Suppress("MaxLineLength")
+                    "Upload offset mismatch; client_offset=${response.request.headers[TusHeaders.UPLOAD_OFFSET]}, server_offset=${response.headers[TusHeaders.UPLOAD_OFFSET]}",
+                )
+            }
+
+            HttpStatusCode.NotFound -> {
+                throw TusktException("Upload id not found on server")
+            }
+
+            else -> {
+                // TODO log!
+                throw TusktException("Unexpected response from server: ${response.status}")
+            }
+        }
 
     override fun close() {
         client.close()
@@ -100,7 +170,7 @@ public class TusktClient(
             // TODO handle 4xx and 5xx errors more gracefully
             if (response.status != HttpStatusCode.OK && response.status != HttpStatusCode.NoContent) {
                 @Suppress("MaxLineLength")
-                throw TusktException("Server information (options) call returend unexpected status code: ${response.status}")
+                throw TusktException("Server information (options) call returned unexpected status code: ${response.status}")
             }
 
             return TusServerInformation(
