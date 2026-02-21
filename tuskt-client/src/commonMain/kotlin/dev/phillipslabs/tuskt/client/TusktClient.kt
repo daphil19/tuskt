@@ -46,10 +46,8 @@ public class TusktClient(
         bytes: ByteArray,
         id: String,
         offset: Long,
-        maxRetries: Int? = null,
-    ) {
-        // TODO do we want to retry any time an exception gets thrown?
-        val currentTry = 0
+    ): TusktUploadResult {
+        // TODO add retry support?
 
         val expectedFinalOffset = offset + bytes.size
         var currentOffset = offset
@@ -61,29 +59,23 @@ public class TusktClient(
                     setBody(bytes.copyOfRange((currentOffset - offset).toInt(), bytes.size))
                     header(TusHeaders.UPLOAD_OFFSET, currentOffset.toString())
                 }
-            val tusResponse = handleUploadResponse(response)
-            when (tusResponse) {
+            when (val tusResponse = handleUploadResponse(response)) {
                 is TusktUploadResult.Success -> {
                     if (tusResponse.offset < expectedFinalOffset) {
                         currentOffset = tusResponse.offset
                     } else {
-                        // TODO reterun result
+                        return tusResponse
                     }
                 }
 
-                is TusktUploadResult.OffsetMismatch -> {
-                    TODO()
-                }
-
-                TusktUploadResult.NotFound -> {
-                    TODO()
-                }
-
-                TusktUploadResult.UnsupportedMediaType -> {
-                    TODO()
+                else -> {
+                    return tusResponse
                 }
             }
         }
+
+        // ending up here should never really happen unless we gave empty data or have something go wrong in the loop
+        throw TusktException("Bad upload offset provided")
     }
 
     public suspend fun uploadStream(
@@ -137,6 +129,7 @@ public class TusktClient(
 
             else -> {
                 // TODO log!
+                // status code was not expected from a protocol perspective. Maybe we should add some that help manage timeouts, etc.
                 throw TusktException("Unexpected response from server: ${response.status}")
             }
         }
