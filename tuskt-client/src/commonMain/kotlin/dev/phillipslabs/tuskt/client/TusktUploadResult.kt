@@ -13,5 +13,9 @@ public sealed interface TusktUploadResult {
 
     public data object NotFound : TusktUploadResult
 
+    public data class MaxSizeReached(
+        val offset: Long,
+    ) : TusktUploadResult
+
 //    public data object UnknownError : TusktUploadResult
 }

@@ -1,8 +1,10 @@
 package dev.phillipslabs.tuskt.client
 
 import dev.phillipslabs.tuskt.OffsetOctetStream
+import dev.phillipslabs.tuskt.TUS_RESUME_VERSION
 import dev.phillipslabs.tuskt.TusHeaders
 import io.ktor.client.*
+import io.ktor.client.plugins.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
@@ -13,6 +15,7 @@ public class TusktClient(
     // TODO can we configure the client to use the base url?
     private val client: HttpClient,
     private val baseUrl: String,
+    private val serverInfo: TusServerInformation,
 ) : Closeable {
     public suspend fun getTusServerInformation(): TusServerInformation = getTusServerInformation(client, baseUrl)
 
@@ -36,6 +39,13 @@ public class TusktClient(
                 null
             }
 
+            HttpStatusCode.PreconditionFailed -> {
+                throw TusktException(
+                    @Suppress("MaxLineLength")
+                    "Tus version provided by client ${response.request.headers[TusHeaders.TUS_RESUMABLE]} not in server-allowed versions ${response.headers[TusHeaders.TUS_VERSION]}",
+                )
+            }
+
             else -> {
                 throw TusktException("Unexepected status code ${response.status}")
             }
@@ -53,6 +63,8 @@ public class TusktClient(
         var currentOffset = offset
 
         while (currentOffset < expectedFinalOffset) {
+            // TODO consider chunking the byte array on upload
+            // spec suggests sending as much as possible, but we might want to have some configurable limit
             val response =
                 client.patch("/$id") {
                     contentType(ContentType.Application.OffsetOctetStream)
@@ -61,6 +73,7 @@ public class TusktClient(
                 }
             when (val tusResponse = handleUploadResponse(response)) {
                 is TusktUploadResult.Success -> {
+                    // on a success, checdk to see if we have more to upload or if we are finished and can be done
                     if (tusResponse.offset < expectedFinalOffset) {
                         currentOffset = tusResponse.offset
                     } else {
@@ -103,10 +116,15 @@ public class TusktClient(
     private fun handleUploadResponse(response: HttpResponse): TusktUploadResult =
         when (response.status) {
             HttpStatusCode.NoContent -> {
-                TusktUploadResult.Success(
+                val responseOffset =
                     response.headers[TusHeaders.UPLOAD_OFFSET]?.toLongOrNull()
-                        ?: throw TusktException("Server did not set Upload-Offset header"),
-                )
+                        ?: throw TusktException("Server did not set Upload-Offset header")
+
+                if (responseOffset == serverInfo.maxSize) {
+                    TusktUploadResult.MaxSizeReached(responseOffset)
+                } else {
+                    TusktUploadResult.Success(responseOffset)
+                }
             }
 
             HttpStatusCode.UnsupportedMediaType -> {
@@ -127,6 +145,13 @@ public class TusktClient(
                 throw TusktException("Upload id not found on server")
             }
 
+            HttpStatusCode.PreconditionFailed -> {
+                throw TusktException(
+                    @Suppress("MaxLineLength")
+                    "Tus version provided by client ${response.request.headers[TusHeaders.TUS_RESUMABLE]} not in server-allowed versions ${response.headers[TusHeaders.TUS_VERSION]}",
+                )
+            }
+
             else -> {
                 // TODO log!
                 // status code was not expected from a protocol perspective. Maybe we should add some that help manage timeouts, etc.
@@ -139,16 +164,23 @@ public class TusktClient(
     }
 
     public companion object {
-        // TODO factory method that helps configure the client (e.g. calls server info and such)
-        public suspend fun initialize(client: HttpClient) {
-            // TODO use a client to get the server options first, then configure
-//            val tusServerInformation = getTusServerInformation(client, "")
-//            val newClient =
-//                client.config {
-//                    defaultRequest {
-//                        header(TusHeaders.TUS_RESUMABLE, TODO("Version from server in options request!"))
-//                    }
-//                }
+        public suspend fun initialize(
+            client: HttpClient,
+            baseUrl: String,
+        ): TusktClient {
+            val tusServerInformation = getTusServerInformation(client, baseUrl)
+            if (!(tusServerInformation.versions.contains(TUS_RESUME_VERSION))) {
+                throw TusktException("Server does not support $TUS_RESUME_VERSION")
+            }
+            val newClient =
+                client.config {
+                    // TODO set base url in client?
+                    defaultRequest {
+                        header(TusHeaders.TUS_RESUMABLE, TUS_RESUME_VERSION)
+                    }
+                }
+
+            return TusktClient(newClient, baseUrl, tusServerInformation)
         }
 
         private suspend fun getTusServerInformation(
@@ -170,9 +202,6 @@ public class TusktClient(
                 versions =
                     response.headers[TusHeaders.TUS_VERSION]?.split(",")
                         ?: throw TusktException("Server did not return a Tus-Version header"),
-                resumableVersion =
-                    response.headers[TusHeaders.TUS_RESUMABLE]
-                        ?: throw TusktException("Server did not return a Tus-Resumable header"),
                 // TODO extensions and max size
                 extensions = response.headers[TusHeaders.TUS_EXTENSION]?.split(",") ?: emptyList(),
                 maxSize = response.headers[TusHeaders.TUS_MAX_SIZE]?.toLongOrNull(),
