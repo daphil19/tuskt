@@ -8,7 +8,7 @@ import io.ktor.client.engine.mock.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 
-internal const val WELL_KNOWN_TUS_BASE_URL = "https://tus.example.org/files"
+internal const val EXAMPLE_BASE_URL = "https://tus.example.org/files"
 
 internal data class MockTusResponse(
     val status: HttpStatusCode,
@@ -46,7 +46,7 @@ internal class TusCoreProtocolHarness(
             expectSuccess = false
         }
 
-    internal suspend fun initializeTusClient(baseUrl: String = WELL_KNOWN_TUS_BASE_URL): TusktClient =
+    internal suspend fun initializeTusClient(baseUrl: String = EXAMPLE_BASE_URL): TusktClient =
         TusktClient.initialize(
             client = createHttpClient(),
             baseUrl = baseUrl,

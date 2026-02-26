@@ -11,11 +11,10 @@ import io.ktor.http.*
 import kotlinx.coroutines.test.runTest
 import kotlin.test.*
 
-@Ignore
 class TusktClientCoreProtocolSpecTest {
     @Test
     fun testInitializeUsesKnownBaseUrlAndOmitsTusResumableOnOptions() =
-        runBlocking {
+        runTest {
             val harness = TusCoreProtocolHarness(listOf(optionsResponse()))
 
             val tusClient = harness.initializeTusClient()
@@ -23,14 +22,14 @@ class TusktClientCoreProtocolSpecTest {
 
             val optionsRequest = harness.requests.single()
             assertEquals(HttpMethod.Options, optionsRequest.method)
-            assertEquals(WELL_KNOWN_TUS_BASE_URL, optionsRequest.url.toString())
+            assertEquals(EXAMPLE_BASE_URL, optionsRequest.url.toString())
             assertNull(optionsRequest.headers[TusHeaders.TUS_RESUMABLE])
             harness.assertAllResponsesConsumed()
         }
 
     @Test
     fun testInitializeAcceptsOptions200And204() =
-        runBlocking {
+        runTest {
             val successStatuses = listOf(HttpStatusCode.OK, HttpStatusCode.NoContent)
 
             successStatuses.forEach { status ->
@@ -45,7 +44,7 @@ class TusktClientCoreProtocolSpecTest {
 
     @Test
     fun testInitializeFailsWhenOptionsResponseIsUnexpected() =
-        runBlocking {
+        runTest {
             val harness =
                 TusCoreProtocolHarness(
                     listOf(
@@ -62,7 +61,7 @@ class TusktClientCoreProtocolSpecTest {
 
     @Test
     fun testInitializeFailsWhenTusVersionHeaderIsMissing() =
-        runBlocking {
+        runTest {
             val harness =
                 TusCoreProtocolHarness(
                     listOf(
@@ -79,7 +78,7 @@ class TusktClientCoreProtocolSpecTest {
 
     @Test
     fun testInitializeFailsWhenServerDoesNotSupportClientTusVersion() =
-        runBlocking {
+        runTest {
             val harness =
                 TusCoreProtocolHarness(
                     listOf(
@@ -96,7 +95,7 @@ class TusktClientCoreProtocolSpecTest {
 
     @Test
     fun testGetTusServerInformationParsesAdvertisedCoreHeaders() =
-        runBlocking {
+        runTest {
             val harness =
                 TusCoreProtocolHarness(
                     listOf(
@@ -127,7 +126,7 @@ class TusktClientCoreProtocolSpecTest {
 
     @Test
     fun testHeadReturnsUploadOffsetAndOptionalUploadLength() =
-        runBlocking {
+        runTest {
             val uploadId = "upload-01"
             val harness =
                 TusCoreProtocolHarness(
@@ -159,7 +158,7 @@ class TusktClientCoreProtocolSpecTest {
 
     @Test
     fun testHeadAcceptsNoContentForSuccessfulLookup() =
-        runBlocking {
+        runTest {
             val harness =
                 TusCoreProtocolHarness(
                     listOf(
@@ -181,7 +180,7 @@ class TusktClientCoreProtocolSpecTest {
 
     @Test
     fun testHeadReturnsNullForMissingOrUnavailableUploadResource() =
-        runBlocking {
+        runTest {
             val statuses = listOf(HttpStatusCode.Forbidden, HttpStatusCode.NotFound, HttpStatusCode.Gone)
 
             statuses.forEach { status ->
@@ -201,7 +200,7 @@ class TusktClientCoreProtocolSpecTest {
 
     @Test
     fun testHeadFailsWhenUploadOffsetHeaderIsMissing() =
-        runBlocking {
+        runTest {
             val harness =
                 TusCoreProtocolHarness(
                     listOf(
@@ -222,7 +221,7 @@ class TusktClientCoreProtocolSpecTest {
 
     @Test
     fun testHeadFailsWhenUploadOffsetHeaderIsMalformed() =
-        runBlocking {
+        runTest {
             val harness =
                 TusCoreProtocolHarness(
                     listOf(
@@ -243,7 +242,7 @@ class TusktClientCoreProtocolSpecTest {
 
     @Test
     fun testHeadRejectsNegativeUploadOffsetAndNegativeUploadLength() =
-        runBlocking {
+        runTest {
             val offsetHarness =
                 TusCoreProtocolHarness(
                     listOf(
@@ -285,7 +284,7 @@ class TusktClientCoreProtocolSpecTest {
 
     @Test
     fun testPatchSendsCoreRequiredHeadersAndContentType() =
-        runBlocking {
+        runTest {
             val uploadId = "upload-07"
             val harness =
                 TusCoreProtocolHarness(
@@ -314,7 +313,7 @@ class TusktClientCoreProtocolSpecTest {
 
     @Test
     fun testPatchSupportsMultipleSequentialChunksInCoreFlow() =
-        runBlocking {
+        runTest {
             val harness =
                 TusCoreProtocolHarness(
                     listOf(
@@ -344,7 +343,7 @@ class TusktClientCoreProtocolSpecTest {
 
     @Test
     fun testPatchReturnsMaxSizeReachedWhenServerAdvertisesLimit() =
-        runBlocking {
+        runTest {
             val harness =
                 TusCoreProtocolHarness(
                     listOf(
@@ -365,7 +364,7 @@ class TusktClientCoreProtocolSpecTest {
 
     @Test
     fun testPatchFailsWhenServerOmitsUploadOffsetInSuccessResponse() =
-        runBlocking {
+        runTest {
             val harness =
                 TusCoreProtocolHarness(
                     listOf(
@@ -385,7 +384,7 @@ class TusktClientCoreProtocolSpecTest {
 
     @Test
     fun testPatchFailsForConflictNotFoundPreconditionAndUnsupportedMediaType() =
-        runBlocking {
+        runTest {
             val scenarios =
                 listOf(
                     MockTusResponse(status = HttpStatusCode.Conflict),
@@ -416,7 +415,7 @@ class TusktClientCoreProtocolSpecTest {
 
     @Test
     fun testPatchFailsForUnexpectedStatusCodeOutsideCoreContract() =
-        runBlocking {
+        runTest {
             val harness =
                 TusCoreProtocolHarness(
                     listOf(
@@ -434,7 +433,7 @@ class TusktClientCoreProtocolSpecTest {
 
     @Test
     fun testUploadBytesFailsForEmptyPayloadEdgeCase() =
-        runBlocking {
+        runTest {
             val harness = TusCoreProtocolHarness(listOf(optionsResponse()))
 
             withInitializedClient(harness) { tusClient ->
@@ -443,12 +442,6 @@ class TusktClientCoreProtocolSpecTest {
                 }
             }
         }
-
-    private fun runBlocking(block: suspend () -> Unit) {
-        runTest {
-            block()
-        }
-    }
 
     private suspend fun withInitializedClient(
         harness: TusCoreProtocolHarness,
