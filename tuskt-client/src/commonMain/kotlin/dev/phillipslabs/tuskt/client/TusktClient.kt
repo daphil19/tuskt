@@ -5,6 +5,7 @@ import dev.phillipslabs.tuskt.TUS_RESUME_VERSION
 import dev.phillipslabs.tuskt.TusHeaders
 import io.ktor.client.*
 import io.ktor.client.plugins.*
+import io.ktor.client.plugins.api.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
@@ -163,6 +164,15 @@ public class TusktClient(
     }
 
     public companion object {
+        private val tusResumableHeaderPlugin =
+            createClientPlugin("TusResumableHeaderPlugin") {
+                onRequest { request, _ ->
+                    if (request.method != HttpMethod.Options && request.headers[TusHeaders.TUS_RESUMABLE] == null) {
+                        request.headers.append(TusHeaders.TUS_RESUMABLE, TUS_RESUME_VERSION)
+                    }
+                }
+            }
+
         public suspend fun initialize(
             client: HttpClient,
             baseUrl: String,
@@ -173,10 +183,10 @@ public class TusktClient(
             }
             val tusktClient =
                 client.config {
+                    install(tusResumableHeaderPlugin)
+
                     // TODO set base url in client?
                     defaultRequest {
-                        header(TusHeaders.TUS_RESUMABLE, TUS_RESUME_VERSION)
-
                         // we want to make sure that our base url always ends up with a trailing slash
                         val normalizedBaseUrl = if (baseUrl.endsWith("/")) baseUrl else "$baseUrl/"
                         url(normalizedBaseUrl)
@@ -192,7 +202,6 @@ public class TusktClient(
         ): TusServerInformation {
             val response =
                 client.options(url) {
-                    // we want to make sure we _don't_ send the Tus-Resumable header, per the spec
                     headers.remove(TusHeaders.TUS_RESUMABLE)
                 }
             // TODO handle 4xx and 5xx errors more gracefully
