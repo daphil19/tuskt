@@ -8,6 +8,7 @@ import dev.phillipslabs.tuskt.client.TusktClient
 import dev.phillipslabs.tuskt.client.TusktException
 import dev.phillipslabs.tuskt.client.TusktUploadResult
 import io.ktor.http.*
+import io.ktor.http.content.*
 import kotlinx.coroutines.test.runTest
 import kotlin.test.*
 
@@ -307,7 +308,9 @@ class TusktClientCoreProtocolSpecTest {
             assertEquals(HttpMethod.Patch, patchRequest.method)
             assertEquals(TUS_RESUME_VERSION, patchRequest.headers[TusHeaders.TUS_RESUMABLE])
             assertEquals("0", patchRequest.headers[TusHeaders.UPLOAD_OFFSET])
-            assertEquals(ContentType.Application.OffsetOctetStream.toString(), patchRequest.headers[HttpHeaders.ContentType])
+            // MockEngine keeps request content type on OutgoingContent; real engines serialize this to HTTP Content-Type.
+            val patchBody = assertIs<OutgoingContent>(patchRequest.body)
+            assertEquals(ContentType.Application.OffsetOctetStream, patchBody.contentType)
             assertEquals("/files/$uploadId", patchRequest.url.encodedPath)
         }
 

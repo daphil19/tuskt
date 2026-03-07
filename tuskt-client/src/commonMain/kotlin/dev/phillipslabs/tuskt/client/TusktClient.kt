@@ -14,13 +14,12 @@ import io.ktor.utils.io.core.*
 public class TusktClient(
     // TODO can we configure the client to use the base url?
     private val client: HttpClient,
-    private val baseUrl: String,
     private val serverInfo: TusServerInformation,
 ) : Closeable {
-    public suspend fun getTusServerInformation(): TusServerInformation = getTusServerInformation(client, baseUrl)
+    public suspend fun getTusServerInformation(): TusServerInformation = getTusServerInformation(client)
 
     public suspend fun getUploadOffset(id: String): TusUploadOffsetResponse? {
-        val response = client.head("/$id")
+        val response = client.head(id)
 
         return when (response.status) {
             HttpStatusCode.OK, HttpStatusCode.NoContent -> {
@@ -66,14 +65,14 @@ public class TusktClient(
             // TODO consider chunking the byte array on upload
             // spec suggests sending as much as possible, but we might want to have some configurable limit
             val response =
-                client.patch("/$id") {
-                    contentType(ContentType.Application.OffsetOctetStream)
+                client.patch(id) {
                     setBody(bytes.copyOfRange((currentOffset - offset).toInt(), bytes.size))
+                    contentType(ContentType.Application.OffsetOctetStream)
                     header(TusHeaders.UPLOAD_OFFSET, currentOffset.toString())
                 }
             when (val tusResponse = handleUploadResponse(response)) {
                 is TusktUploadResult.Success -> {
-                    // on a success, checdk to see if we have more to upload or if we are finished and can be done
+                    // on a success, check to see if we have more to upload or if we are finished and can be done
                     if (tusResponse.offset < expectedFinalOffset) {
                         currentOffset = tusResponse.offset
                     } else {
@@ -102,7 +101,7 @@ public class TusktClient(
         // 3. we hit max upload of the server
 
         val response =
-            client.patch("/$id") {
+            client.patch(id) {
                 contentType(ContentType.Application.OffsetOctetStream)
                 setBody(stream)
                 header(TusHeaders.UPLOAD_OFFSET, offset.toString())
@@ -172,20 +171,24 @@ public class TusktClient(
             if (!(tusServerInformation.versions.contains(TUS_RESUME_VERSION))) {
                 throw TusktException("Server does not support $TUS_RESUME_VERSION")
             }
-            val newClient =
+            val tusktClient =
                 client.config {
                     // TODO set base url in client?
                     defaultRequest {
                         header(TusHeaders.TUS_RESUMABLE, TUS_RESUME_VERSION)
+
+                        // we want to make sure that our base url always ends up with a trailing slash
+                        val normalizedBaseUrl = if (baseUrl.endsWith("/")) baseUrl else "$baseUrl/"
+                        url(normalizedBaseUrl)
                     }
                 }
 
-            return TusktClient(newClient, baseUrl, tusServerInformation)
+            return TusktClient(tusktClient, tusServerInformation)
         }
 
         private suspend fun getTusServerInformation(
             client: HttpClient,
-            url: String,
+            url: String = "",
         ): TusServerInformation {
             val response =
                 client.options(url) {
