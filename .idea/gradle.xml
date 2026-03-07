@@ -8,6 +8,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/integration-tests" />
             <option value="$PROJECT_DIR$/shared" />
             <option value="$PROJECT_DIR$/tuskt-client" />
             <option value="$PROJECT_DIR$/tuskt-server" />
