@@ -2,7 +2,6 @@ package dev.phillipslabs.tuskt
 
 import io.ktor.http.*
 import io.ktor.server.application.*
-import io.ktor.server.plugins.defaultheaders.*
 import io.ktor.server.plugins.methodoverride.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
@@ -21,11 +20,8 @@ fun Application.tusktModule(
 ) {
     install(XHttpMethodOverride)
 
-    install(DefaultHeaders) {
-        header(TusHeaders.TUS_RESUMABLE, TUS_RESUME_VERSION)
-    }
-
     install(TusResumableVersionCheck)
+    install(TusResponseHeaders)
 
     routing {
         route(basePath) {
@@ -34,7 +30,7 @@ fun Application.tusktModule(
                     // spec says we must return this
                     call.response.header(HttpHeaders.CacheControl, "no-store")
 
-                    val filePath = getPathFromId(storagePath)
+                    val filePath = getPathFromIdOrRespond(storagePath) ?: return@head
                     if (filePath.notExists()) {
                         // TODO response body?
                         call.respond(HttpStatusCode.NotFound)
@@ -50,7 +46,7 @@ fun Application.tusktModule(
                 patch {
                     // make sure we can get a file path first
                     // TODO return 404 if the resource isn't found (whatever that means?)
-                    val filePath = getPathFromId(storagePath)
+                    val filePath = getPathFromIdOrRespond(storagePath) ?: return@patch
 
                     if (filePath.notExists()) {
                         call.respond(HttpStatusCode.NotFound)
@@ -64,7 +60,11 @@ fun Application.tusktModule(
                         return@patch
                     }
 
-                    val offset = call.request.headers[TusHeaders.UPLOAD_OFFSET]?.toLongOrNull() ?: TODO("should bail")
+                    val offset = call.request.headers[TusHeaders.UPLOAD_OFFSET]?.toLongOrNull()
+                    if (offset == null || offset < 0) {
+                        call.respond(HttpStatusCode.BadRequest)
+                        return@patch
+                    }
 
                     if (filePath.fileSize() != offset) {
                         call.respond(HttpStatusCode.Conflict)
@@ -92,7 +92,6 @@ fun Application.tusktModule(
             options {
                 // This could return a 200 or a 204. Electing a 204 here because of the vibe
                 call.response.header(TusHeaders.TUS_VERSION, TUS_VERSION)
-                // NOTE: Tus-Resumable header is included in all responses by default, per spec
                 // TODO other headers can go here as we add support
 //                call.response.header(TusHeaders.TUS_EXTENSION, TUS_EXTENSIONS)
                 call.respond(HttpStatusCode.NoContent)
@@ -120,6 +119,23 @@ val TusResumableVersionCheck =
                 }
             }
         }
+    }
+
+val TusResponseHeaders =
+    createApplicationPlugin(name = "TusResponseHeaders") {
+        onCallRespond { call, _ ->
+            if (call.request.httpMethod != HttpMethod.Options) {
+                call.response.header(TusHeaders.TUS_RESUMABLE, TUS_RESUME_VERSION)
+            }
+        }
+    }
+
+private suspend fun RoutingContext.getPathFromIdOrRespond(storagePath: Path): Path? =
+    try {
+        getPathFromId(storagePath)
+    } catch (_: IllegalArgumentException) {
+        call.respond(HttpStatusCode.Forbidden)
+        null
     }
 
 // TODO we will eventually have to figure out a way to get an id back for a filename

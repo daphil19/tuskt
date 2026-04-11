@@ -2,9 +2,10 @@ package dev.phillipslabs.tuskt.integration
 
 import com.google.common.jimfs.Configuration
 import com.google.common.jimfs.Jimfs
+import dev.phillipslabs.tuskt.TusktServerConfiguration
 import dev.phillipslabs.tuskt.client.TusktClient
 import dev.phillipslabs.tuskt.client.TusktUploadResult
-import dev.phillipslabs.tuskt.tusktModule
+import dev.phillipslabs.tuskt.embeddedTusktServer
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
 import io.ktor.server.engine.*
@@ -104,9 +105,15 @@ private class RunningTusktServer : AutoCloseable {
     private val fileSystem: FileSystem = Jimfs.newFileSystem(Configuration.unix())
     private val storagePath: Path = fileSystem.getPath("/files").createDirectories()
     private val engine: EmbeddedServer<NettyApplicationEngine, NettyApplicationEngine.Configuration> =
-        embeddedServer(Netty, host = HOST, port = 0) {
-            tusktModule(storagePath = storagePath)
-        }.start(wait = false)
+        embeddedTusktServer(
+            factory = Netty,
+            configuration =
+                TusktServerConfiguration(
+                    host = HOST,
+                    port = 0,
+                    storagePath = storagePath,
+                ),
+        ).start(wait = false)
 
     val baseUrl: String =
         runBlocking {

@@ -3,8 +3,11 @@ plugins {
 //    alias(libs.plugins.ktor)
     alias(libs.plugins.ktlint)
     alias(libs.plugins.detekt)
-    // TODO library and publish plugins!
+    alias(libs.plugins.vanniktech.mavenPublish)
 }
+
+group = "dev.phillipslabs"
+version = "0.1.0"
 
 kotlin {
     jvmToolchain(
@@ -41,3 +44,37 @@ ktlint {
 detekt {
     buildUponDefaultConfig = true
 }
+
+// mavenPublishing {
+//    publishToMavenCentral()
+//
+//    signAllPublications()
+//
+//    coordinates(group.toString(), "tuskt-server", version.toString())
+//
+//    pom {
+//        name = "Tuskt Server"
+//        description = "Tus server implementation for Ktor"
+//        inceptionYear = "2025"
+//        url = "https://github.com/daphil19/tuskt"
+//        licenses {
+//            license {
+//                name.set("The Apache License, Version 2.0")
+//                url.set("https://www.apache.org/licenses/LICENSE-2.0.txt")
+//                distribution.set("https://www.apache.org/licenses/LICENSE-2.0.txt")
+//            }
+//        }
+//        developers {
+//            developer {
+//                id = "daphil19"
+//                name = "David Phillips"
+//                url = "https://github.com/daphil19"
+//            }
+//        }
+//        scm {
+//            url = "https://github.com/daphil19/tuskt"
+//            connection = "scm:git:git://github.com/daphil19/tuskt.git"
+//            developerConnection = "scm:git:ssh://git@github.com/daphil19/tuskt.git"
+//        }
+//    }
+// }

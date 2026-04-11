@@ -41,6 +41,17 @@ class TusktServerTest {
         }
 
     @Test
+    fun testOptionsOmitsTusResumableHeader() =
+        testApplication {
+            application {
+                tusktModule(storagePath = storagePath)
+            }
+            val response = client.options("/files")
+
+            assertNull(response.headers[TusHeaders.TUS_RESUMABLE])
+        }
+
+    @Test
     fun testMissingTusResumableHeader() =
         testApplication {
             application {
@@ -83,6 +94,7 @@ class TusktServerTest {
             assertEquals(HttpStatusCode.OK, response.status)
             assertEquals("no-store", response.headers[HttpHeaders.CacheControl])
             assertEquals("11", response.headers[TusHeaders.UPLOAD_OFFSET])
+            assertEquals(TUS_VERSION, response.headers[TusHeaders.TUS_RESUMABLE])
         }
 
     @Test
@@ -106,6 +118,21 @@ class TusktServerTest {
         }
 
     @Test
+    fun testHeadInvalidFileIdReturnsForbidden() =
+        testApplication {
+            application {
+                tusktModule(storagePath = storagePath)
+            }
+            val response =
+                client.head("/files/..") {
+                    header(TusHeaders.TUS_RESUMABLE, TUS_VERSION)
+                }
+
+            assertEquals(HttpStatusCode.Forbidden, response.status)
+            assertNull(response.headers[TusHeaders.UPLOAD_OFFSET])
+        }
+
+    @Test
     fun testPatchExistingFile() =
         testApplication {
             application {
@@ -125,6 +152,7 @@ class TusktServerTest {
 
             assertEquals(HttpStatusCode.NoContent, response.status)
             assertEquals("5", response.headers[TusHeaders.UPLOAD_OFFSET])
+            assertEquals(TUS_VERSION, response.headers[TusHeaders.TUS_RESUMABLE])
             assertEquals("hello", Files.readString(file))
         }
 
@@ -168,6 +196,67 @@ class TusktServerTest {
                 }
 
             assertEquals(HttpStatusCode.UnsupportedMediaType, response.status)
+        }
+
+    @Test
+    fun testPatchMissingUploadOffsetReturnsBadRequest() =
+        testApplication {
+            application {
+                tusktModule(storagePath = storagePath)
+            }
+            val id = "missing-offset-file"
+            val file = storagePath.resolve(id)
+            Files.createFile(file)
+
+            val response =
+                client.patch("/files/$id") {
+                    header(TusHeaders.TUS_RESUMABLE, TUS_VERSION)
+                    header(HttpHeaders.ContentType, "application/offset+octet-stream")
+                    setBody("data")
+                }
+
+            assertEquals(HttpStatusCode.BadRequest, response.status)
+            assertEquals("", Files.readString(file))
+        }
+
+    @Test
+    fun testPatchNegativeUploadOffsetReturnsBadRequest() =
+        testApplication {
+            application {
+                tusktModule(storagePath = storagePath)
+            }
+            val id = "negative-offset-file"
+            val file = storagePath.resolve(id)
+            Files.createFile(file)
+
+            val response =
+                client.patch("/files/$id") {
+                    header(TusHeaders.TUS_RESUMABLE, TUS_VERSION)
+                    header(TusHeaders.UPLOAD_OFFSET, "-1")
+                    header(HttpHeaders.ContentType, "application/offset+octet-stream")
+                    setBody("data")
+                }
+
+            assertEquals(HttpStatusCode.BadRequest, response.status)
+            assertEquals("", Files.readString(file))
+        }
+
+    @Test
+    fun testPatchInvalidFileIdReturnsForbidden() =
+        testApplication {
+            application {
+                tusktModule(storagePath = storagePath)
+            }
+
+            val response =
+                client.patch("/files/..") {
+                    header(TusHeaders.TUS_RESUMABLE, TUS_VERSION)
+                    header(TusHeaders.UPLOAD_OFFSET, "0")
+                    header(HttpHeaders.ContentType, "application/offset+octet-stream")
+                    setBody("data")
+                }
+
+            assertEquals(HttpStatusCode.Forbidden, response.status)
         }
 
     @Test
@@ -224,5 +313,6 @@ class TusktServerTest {
                 "Should return 204 or 200 for OPTIONS",
             )
             assertNotNull(response.headers[TusHeaders.TUS_VERSION])
+            assertNull(response.headers[TusHeaders.TUS_RESUMABLE])
         }
 }

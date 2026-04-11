@@ -12,6 +12,8 @@
             <option value="$PROJECT_DIR$/shared" />
             <option value="$PROJECT_DIR$/tuskt-client" />
             <option value="$PROJECT_DIR$/tuskt-server" />
+            <option value="$PROJECT_DIR$/tuskt-server-embeddable" />
+            <option value="$PROJECT_DIR$/tuskt-server-standalone" />
           </set>
         </option>
       </GradleProjectSettings>
