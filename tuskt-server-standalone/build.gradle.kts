@@ -1,15 +1,9 @@
-plugins {
-    alias(libs.plugins.kotlin.jvm)
-    alias(libs.plugins.ktlint)
-    alias(libs.plugins.detekt)
-}
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+import org.gradle.jvm.tasks.Jar
 
-kotlin {
-    jvmToolchain(
-        libs.versions.jdk
-            .get()
-            .toInt(),
-    )
+plugins {
+    id("tuskt.jvm-module")
+    alias(libs.plugins.shadow)
 }
 
 dependencies {
@@ -17,10 +11,17 @@ dependencies {
     implementation(ktorLibs.server.netty)
 }
 
-ktlint {
-    version = libs.versions.ktlint.get()
+tasks.named<Jar>("jar") {
+    enabled = false
 }
 
-detekt {
-    buildUponDefaultConfig = true
+tasks.named<ShadowJar>("shadowJar") {
+    archiveClassifier.set("")
+    manifest {
+        attributes["Main-Class"] = "dev.phillipslabs.tuskt.standalone.MainKt"
+    }
+}
+
+tasks.named("assemble") {
+    dependsOn(tasks.named("shadowJar"))
 }

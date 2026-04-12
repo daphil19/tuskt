@@ -14,7 +14,7 @@ import kotlin.io.path.notExists
 import kotlin.io.path.outputStream
 
 @Suppress("LongMethod")
-fun Application.tusktModule(
+public fun Application.tusktModule(
     basePath: String = "/files",
     storagePath: Path = Path("files").toAbsolutePath(),
 ) {
@@ -108,7 +108,7 @@ fun Application.tusktModule(
     }
 }
 
-val TusResumableVersionCheck =
+public val TusResumableVersionCheck: ApplicationPlugin<Unit> =
     createApplicationPlugin(name = "TusResumableVersionCheck") {
         onCall { call ->
             if (call.request.httpMethod != HttpMethod.Options) {
@@ -121,7 +121,7 @@ val TusResumableVersionCheck =
         }
     }
 
-val TusResponseHeaders =
+public val TusResponseHeaders: ApplicationPlugin<Unit> =
     createApplicationPlugin(name = "TusResponseHeaders") {
         onCallRespond { call, _ ->
             if (call.request.httpMethod != HttpMethod.Options) {

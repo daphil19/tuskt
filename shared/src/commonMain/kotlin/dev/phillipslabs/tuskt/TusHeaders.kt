@@ -1,42 +1,42 @@
 package dev.phillipslabs.tuskt
 
-object TusHeaders {
+public object TusHeaders {
     /**
      * The Upload-Offset request and response header indicates a byte offset within a resource.
      * The value MUST be a non-negative integer.
      */
-    const val UPLOAD_OFFSET = "Upload-Offset"
+    public const val UPLOAD_OFFSET: String = "Upload-Offset"
 
     /**
      * The Upload-Length request and response header indicates the size of the entire upload in bytes.
      * The value MUST be a non-negative integer.
      */
-    const val UPLOAD_LENGTH = "Upload-Length"
+    public const val UPLOAD_LENGTH: String = "Upload-Length"
 
     /**
      * The Tus-Version response header MUST be a comma-separated list of protocol versions supported by the Server.
      * The list MUST be sorted by Server’s preference where the first one is the most preferred one.
      */
-    const val TUS_VERSION = "Tus-Version"
+    public const val TUS_VERSION: String = "Tus-Version"
 
     /**
      * The Tus-Resumable header MUST be included in every request and response except for OPTIONS requests.
      * The value MUST be the version of the protocol used by the Client or the Server.
      */
-    const val TUS_RESUMABLE = "Tus-Resumable"
+    public const val TUS_RESUMABLE: String = "Tus-Resumable"
 
     /**
      * The Tus-Extension response header MUST be a comma-separated list of the extensions supported by the Server.
      * If no extensions are supported, the Tus-Extension header MUST be omitted.
      */
-    const val TUS_EXTENSION = "Tus-Extension"
+    public const val TUS_EXTENSION: String = "Tus-Extension"
 
     /**
      * The Tus-Max-Size response header MUST be a non-negative integer indicating the maximum allowed size of an entire
      * upload in bytes.
      * The Server SHOULD set this header if there is a known hard limit.
      */
-    const val TUS_MAX_SIZE = "Tus-Max-Size"
+    public const val TUS_MAX_SIZE: String = "Tus-Max-Size"
 
     // NOTE this header is handled by a ktor server plugin!
 //    /**
@@ -52,7 +52,7 @@ object TusHeaders {
      * and will be transferred later.
      * Its value MUST be 1. If the length of an upload is not deferred, this header MUST be omitted.
      */
-    const val UPLOAD_DEFER_LENGTH = "Upload-Defer-Length"
+    public const val UPLOAD_DEFER_LENGTH: String = "Upload-Defer-Length"
 
     /**
      * The Upload-Metadata request and response header MUST consist of one or more comma-separated key-value pairs.
@@ -61,27 +61,27 @@ object TusHeaders {
      * The value MAY be empty. In these cases, the space, which would normally separate the key and the value,
      * MAY be left out.
      */
-    const val UPLOAD_METADATA = "Upload-Metadata"
+    public const val UPLOAD_METADATA: String = "Upload-Metadata"
 
     /**
      * The Upload-Expires response header indicates the time after which the unfinished upload expires.
      * The Client SHOULD use this header to determine if an upload is still valid before attempting to resume the
      * upload.
      */
-    const val UPLOAD_EXPIRES = "Upload-Expires"
+    public const val UPLOAD_EXPIRES: String = "Upload-Expires"
 
     /**
      * The Upload-Checksum request header contains information about the checksum of the current body payload.
      * The header MUST consist of the name of the used checksum algorithm and the Base64 encoded checksum separated by
      * a space.
      */
-    const val UPLOAD_CHECKSUM = "Upload-Checksum"
+    public const val UPLOAD_CHECKSUM: String = "Upload-Checksum"
 
     /**
      * The Tus-Checksum-Algorithm response header MUST be a comma-separated list of the checksum algorithms supported
      * by the server.
      */
-    const val TUS_CHECKSUM_ALGORITHM = "Tus-Checksum-Algorithm"
+    public const val TUS_CHECKSUM_ALGORITHM: String = "Tus-Checksum-Algorithm"
 
     /**
      * The Upload-Concat request and response header MUST be set in both partial and final upload creation requests.
@@ -90,5 +90,5 @@ object TusHeaders {
      * In the case of a final upload, its value MUST be final followed by a semicolon and a space-separated list of
      * partial upload URLs that will be concatenated.
      */
-    const val UPLOAD_CONCAT = "Upload-Concat"
+    public const val UPLOAD_CONCAT: String = "Upload-Concat"
 }

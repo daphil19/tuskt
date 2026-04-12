@@ -1,0 +1,44 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, watchosArm32, watchosArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <dev.phillipslabs:shared>
+final object dev.phillipslabs.tuskt/TusHeaders { // dev.phillipslabs.tuskt/TusHeaders|null[0]
+    final const val TUS_CHECKSUM_ALGORITHM // dev.phillipslabs.tuskt/TusHeaders.TUS_CHECKSUM_ALGORITHM|{}TUS_CHECKSUM_ALGORITHM[0]
+        final fun <get-TUS_CHECKSUM_ALGORITHM>(): kotlin/String // dev.phillipslabs.tuskt/TusHeaders.TUS_CHECKSUM_ALGORITHM.<get-TUS_CHECKSUM_ALGORITHM>|<get-TUS_CHECKSUM_ALGORITHM>(){}[0]
+    final const val TUS_EXTENSION // dev.phillipslabs.tuskt/TusHeaders.TUS_EXTENSION|{}TUS_EXTENSION[0]
+        final fun <get-TUS_EXTENSION>(): kotlin/String // dev.phillipslabs.tuskt/TusHeaders.TUS_EXTENSION.<get-TUS_EXTENSION>|<get-TUS_EXTENSION>(){}[0]
+    final const val TUS_MAX_SIZE // dev.phillipslabs.tuskt/TusHeaders.TUS_MAX_SIZE|{}TUS_MAX_SIZE[0]
+        final fun <get-TUS_MAX_SIZE>(): kotlin/String // dev.phillipslabs.tuskt/TusHeaders.TUS_MAX_SIZE.<get-TUS_MAX_SIZE>|<get-TUS_MAX_SIZE>(){}[0]
+    final const val TUS_RESUMABLE // dev.phillipslabs.tuskt/TusHeaders.TUS_RESUMABLE|{}TUS_RESUMABLE[0]
+        final fun <get-TUS_RESUMABLE>(): kotlin/String // dev.phillipslabs.tuskt/TusHeaders.TUS_RESUMABLE.<get-TUS_RESUMABLE>|<get-TUS_RESUMABLE>(){}[0]
+    final const val TUS_VERSION // dev.phillipslabs.tuskt/TusHeaders.TUS_VERSION|{}TUS_VERSION[0]
+        final fun <get-TUS_VERSION>(): kotlin/String // dev.phillipslabs.tuskt/TusHeaders.TUS_VERSION.<get-TUS_VERSION>|<get-TUS_VERSION>(){}[0]
+    final const val UPLOAD_CHECKSUM // dev.phillipslabs.tuskt/TusHeaders.UPLOAD_CHECKSUM|{}UPLOAD_CHECKSUM[0]
+        final fun <get-UPLOAD_CHECKSUM>(): kotlin/String // dev.phillipslabs.tuskt/TusHeaders.UPLOAD_CHECKSUM.<get-UPLOAD_CHECKSUM>|<get-UPLOAD_CHECKSUM>(){}[0]
+    final const val UPLOAD_CONCAT // dev.phillipslabs.tuskt/TusHeaders.UPLOAD_CONCAT|{}UPLOAD_CONCAT[0]
+        final fun <get-UPLOAD_CONCAT>(): kotlin/String // dev.phillipslabs.tuskt/TusHeaders.UPLOAD_CONCAT.<get-UPLOAD_CONCAT>|<get-UPLOAD_CONCAT>(){}[0]
+    final const val UPLOAD_DEFER_LENGTH // dev.phillipslabs.tuskt/TusHeaders.UPLOAD_DEFER_LENGTH|{}UPLOAD_DEFER_LENGTH[0]
+        final fun <get-UPLOAD_DEFER_LENGTH>(): kotlin/String // dev.phillipslabs.tuskt/TusHeaders.UPLOAD_DEFER_LENGTH.<get-UPLOAD_DEFER_LENGTH>|<get-UPLOAD_DEFER_LENGTH>(){}[0]
+    final const val UPLOAD_EXPIRES // dev.phillipslabs.tuskt/TusHeaders.UPLOAD_EXPIRES|{}UPLOAD_EXPIRES[0]
+        final fun <get-UPLOAD_EXPIRES>(): kotlin/String // dev.phillipslabs.tuskt/TusHeaders.UPLOAD_EXPIRES.<get-UPLOAD_EXPIRES>|<get-UPLOAD_EXPIRES>(){}[0]
+    final const val UPLOAD_LENGTH // dev.phillipslabs.tuskt/TusHeaders.UPLOAD_LENGTH|{}UPLOAD_LENGTH[0]
+        final fun <get-UPLOAD_LENGTH>(): kotlin/String // dev.phillipslabs.tuskt/TusHeaders.UPLOAD_LENGTH.<get-UPLOAD_LENGTH>|<get-UPLOAD_LENGTH>(){}[0]
+    final const val UPLOAD_METADATA // dev.phillipslabs.tuskt/TusHeaders.UPLOAD_METADATA|{}UPLOAD_METADATA[0]
+        final fun <get-UPLOAD_METADATA>(): kotlin/String // dev.phillipslabs.tuskt/TusHeaders.UPLOAD_METADATA.<get-UPLOAD_METADATA>|<get-UPLOAD_METADATA>(){}[0]
+    final const val UPLOAD_OFFSET // dev.phillipslabs.tuskt/TusHeaders.UPLOAD_OFFSET|{}UPLOAD_OFFSET[0]
+        final fun <get-UPLOAD_OFFSET>(): kotlin/String // dev.phillipslabs.tuskt/TusHeaders.UPLOAD_OFFSET.<get-UPLOAD_OFFSET>|<get-UPLOAD_OFFSET>(){}[0]
+}
+
+final const val dev.phillipslabs.tuskt/TUS_EXTENSIONS // dev.phillipslabs.tuskt/TUS_EXTENSIONS|{}TUS_EXTENSIONS[0]
+    final fun <get-TUS_EXTENSIONS>(): kotlin/String // dev.phillipslabs.tuskt/TUS_EXTENSIONS.<get-TUS_EXTENSIONS>|<get-TUS_EXTENSIONS>(){}[0]
+final const val dev.phillipslabs.tuskt/TUS_RESUME_VERSION // dev.phillipslabs.tuskt/TUS_RESUME_VERSION|{}TUS_RESUME_VERSION[0]
+    final fun <get-TUS_RESUME_VERSION>(): kotlin/String // dev.phillipslabs.tuskt/TUS_RESUME_VERSION.<get-TUS_RESUME_VERSION>|<get-TUS_RESUME_VERSION>(){}[0]
+final const val dev.phillipslabs.tuskt/TUS_VERSION // dev.phillipslabs.tuskt/TUS_VERSION|{}TUS_VERSION[0]
+    final fun <get-TUS_VERSION>(): kotlin/String // dev.phillipslabs.tuskt/TUS_VERSION.<get-TUS_VERSION>|<get-TUS_VERSION>(){}[0]
+
+final val dev.phillipslabs.tuskt/OffsetOctetStream // dev.phillipslabs.tuskt/OffsetOctetStream|@io.ktor.http.ContentType.Application{}OffsetOctetStream[0]
+    final fun (io.ktor.http/ContentType.Application).<get-OffsetOctetStream>(): io.ktor.http/ContentType // dev.phillipslabs.tuskt/OffsetOctetStream.<get-OffsetOctetStream>|<get-OffsetOctetStream>@io.ktor.http.ContentType.Application(){}[0]

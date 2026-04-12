@@ -1,0 +1,101 @@
+public final class dev/phillipslabs/tuskt/client/TusServerInformation {
+	public fun <init> (Ljava/util/List;Ljava/util/List;Ljava/lang/Long;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun component2 ()Ljava/util/List;
+	public final fun component3 ()Ljava/lang/Long;
+	public final fun copy (Ljava/util/List;Ljava/util/List;Ljava/lang/Long;)Ldev/phillipslabs/tuskt/client/TusServerInformation;
+	public static synthetic fun copy$default (Ldev/phillipslabs/tuskt/client/TusServerInformation;Ljava/util/List;Ljava/util/List;Ljava/lang/Long;ILjava/lang/Object;)Ldev/phillipslabs/tuskt/client/TusServerInformation;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getExtensions ()Ljava/util/List;
+	public final fun getMaxSize ()Ljava/lang/Long;
+	public final fun getVersions ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/phillipslabs/tuskt/client/TusUploadOffsetResponse {
+	public fun <init> (JLjava/lang/Long;)V
+	public synthetic fun <init> (JLjava/lang/Long;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()J
+	public final fun component2 ()Ljava/lang/Long;
+	public final fun copy (JLjava/lang/Long;)Ldev/phillipslabs/tuskt/client/TusUploadOffsetResponse;
+	public static synthetic fun copy$default (Ldev/phillipslabs/tuskt/client/TusUploadOffsetResponse;JLjava/lang/Long;ILjava/lang/Object;)Ldev/phillipslabs/tuskt/client/TusUploadOffsetResponse;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getUploadLength ()Ljava/lang/Long;
+	public final fun getUploadOffset ()J
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/phillipslabs/tuskt/client/TusktClient : java/io/Closeable {
+	public static final field Companion Ldev/phillipslabs/tuskt/client/TusktClient$Companion;
+	public fun <init> (Lio/ktor/client/HttpClient;Ldev/phillipslabs/tuskt/client/TusServerInformation;)V
+	public fun close ()V
+	public final fun getTusServerInformation (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun getUploadOffset (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun uploadBytes ([BLjava/lang/String;JLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun uploadStream (Lio/ktor/utils/io/ByteReadChannel;Ljava/lang/String;JLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class dev/phillipslabs/tuskt/client/TusktClient$Companion {
+	public final fun initialize (Lio/ktor/client/HttpClient;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class dev/phillipslabs/tuskt/client/TusktException : java/lang/Exception {
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/String;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/Throwable;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/Throwable;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/lang/Throwable;)V
+}
+
+public abstract interface class dev/phillipslabs/tuskt/client/TusktUploadResult {
+}
+
+public final class dev/phillipslabs/tuskt/client/TusktUploadResult$MaxSizeReached : dev/phillipslabs/tuskt/client/TusktUploadResult {
+	public fun <init> (J)V
+	public final fun component1 ()J
+	public final fun copy (J)Ldev/phillipslabs/tuskt/client/TusktUploadResult$MaxSizeReached;
+	public static synthetic fun copy$default (Ldev/phillipslabs/tuskt/client/TusktUploadResult$MaxSizeReached;JILjava/lang/Object;)Ldev/phillipslabs/tuskt/client/TusktUploadResult$MaxSizeReached;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getOffset ()J
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/phillipslabs/tuskt/client/TusktUploadResult$NotFound : dev/phillipslabs/tuskt/client/TusktUploadResult {
+	public static final field INSTANCE Ldev/phillipslabs/tuskt/client/TusktUploadResult$NotFound;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/phillipslabs/tuskt/client/TusktUploadResult$OffsetMismatch : dev/phillipslabs/tuskt/client/TusktUploadResult {
+	public fun <init> (J)V
+	public final fun component1 ()J
+	public final fun copy (J)Ldev/phillipslabs/tuskt/client/TusktUploadResult$OffsetMismatch;
+	public static synthetic fun copy$default (Ldev/phillipslabs/tuskt/client/TusktUploadResult$OffsetMismatch;JILjava/lang/Object;)Ldev/phillipslabs/tuskt/client/TusktUploadResult$OffsetMismatch;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getExpectedOffset ()J
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/phillipslabs/tuskt/client/TusktUploadResult$Success : dev/phillipslabs/tuskt/client/TusktUploadResult {
+	public fun <init> (J)V
+	public final fun component1 ()J
+	public final fun copy (J)Ldev/phillipslabs/tuskt/client/TusktUploadResult$Success;
+	public static synthetic fun copy$default (Ldev/phillipslabs/tuskt/client/TusktUploadResult$Success;JILjava/lang/Object;)Ldev/phillipslabs/tuskt/client/TusktUploadResult$Success;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getOffset ()J
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/phillipslabs/tuskt/client/TusktUploadResult$UnsupportedMediaType : dev/phillipslabs/tuskt/client/TusktUploadResult {
+	public static final field INSTANCE Ldev/phillipslabs/tuskt/client/TusktUploadResult$UnsupportedMediaType;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+

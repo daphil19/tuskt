@@ -1,15 +1,5 @@
 plugins {
-    alias(libs.plugins.kotlin.jvm)
-    alias(libs.plugins.ktlint)
-    alias(libs.plugins.detekt)
-}
-
-kotlin {
-    jvmToolchain(
-        libs.versions.jdk
-            .get()
-            .toInt(),
-    )
+    id("tuskt.jvm-module")
 }
 
 dependencies {
@@ -21,12 +11,4 @@ dependencies {
     testImplementation(libs.jimfs)
     testImplementation(ktorLibs.client.cio)
     testImplementation(ktorLibs.server.netty)
-}
-
-ktlint {
-    version = libs.versions.ktlint.get()
-}
-
-detekt {
-    buildUponDefaultConfig = true
 }

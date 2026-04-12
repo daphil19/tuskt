@@ -1,0 +1,115 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, mingwX64, tvosArm64, tvosSimulatorArm64, wasmJs, watchosArm32, watchosArm64, watchosSimulatorArm64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <dev.phillipslabs:tuskt-client>
+sealed interface dev.phillipslabs.tuskt.client/TusktUploadResult { // dev.phillipslabs.tuskt.client/TusktUploadResult|null[0]
+    final class MaxSizeReached : dev.phillipslabs.tuskt.client/TusktUploadResult { // dev.phillipslabs.tuskt.client/TusktUploadResult.MaxSizeReached|null[0]
+        constructor <init>(kotlin/Long) // dev.phillipslabs.tuskt.client/TusktUploadResult.MaxSizeReached.<init>|<init>(kotlin.Long){}[0]
+
+        final val offset // dev.phillipslabs.tuskt.client/TusktUploadResult.MaxSizeReached.offset|{}offset[0]
+            final fun <get-offset>(): kotlin/Long // dev.phillipslabs.tuskt.client/TusktUploadResult.MaxSizeReached.offset.<get-offset>|<get-offset>(){}[0]
+
+        final fun component1(): kotlin/Long // dev.phillipslabs.tuskt.client/TusktUploadResult.MaxSizeReached.component1|component1(){}[0]
+        final fun copy(kotlin/Long = ...): dev.phillipslabs.tuskt.client/TusktUploadResult.MaxSizeReached // dev.phillipslabs.tuskt.client/TusktUploadResult.MaxSizeReached.copy|copy(kotlin.Long){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // dev.phillipslabs.tuskt.client/TusktUploadResult.MaxSizeReached.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // dev.phillipslabs.tuskt.client/TusktUploadResult.MaxSizeReached.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // dev.phillipslabs.tuskt.client/TusktUploadResult.MaxSizeReached.toString|toString(){}[0]
+    }
+
+    final class OffsetMismatch : dev.phillipslabs.tuskt.client/TusktUploadResult { // dev.phillipslabs.tuskt.client/TusktUploadResult.OffsetMismatch|null[0]
+        constructor <init>(kotlin/Long) // dev.phillipslabs.tuskt.client/TusktUploadResult.OffsetMismatch.<init>|<init>(kotlin.Long){}[0]
+
+        final val expectedOffset // dev.phillipslabs.tuskt.client/TusktUploadResult.OffsetMismatch.expectedOffset|{}expectedOffset[0]
+            final fun <get-expectedOffset>(): kotlin/Long // dev.phillipslabs.tuskt.client/TusktUploadResult.OffsetMismatch.expectedOffset.<get-expectedOffset>|<get-expectedOffset>(){}[0]
+
+        final fun component1(): kotlin/Long // dev.phillipslabs.tuskt.client/TusktUploadResult.OffsetMismatch.component1|component1(){}[0]
+        final fun copy(kotlin/Long = ...): dev.phillipslabs.tuskt.client/TusktUploadResult.OffsetMismatch // dev.phillipslabs.tuskt.client/TusktUploadResult.OffsetMismatch.copy|copy(kotlin.Long){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // dev.phillipslabs.tuskt.client/TusktUploadResult.OffsetMismatch.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // dev.phillipslabs.tuskt.client/TusktUploadResult.OffsetMismatch.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // dev.phillipslabs.tuskt.client/TusktUploadResult.OffsetMismatch.toString|toString(){}[0]
+    }
+
+    final class Success : dev.phillipslabs.tuskt.client/TusktUploadResult { // dev.phillipslabs.tuskt.client/TusktUploadResult.Success|null[0]
+        constructor <init>(kotlin/Long) // dev.phillipslabs.tuskt.client/TusktUploadResult.Success.<init>|<init>(kotlin.Long){}[0]
+
+        final val offset // dev.phillipslabs.tuskt.client/TusktUploadResult.Success.offset|{}offset[0]
+            final fun <get-offset>(): kotlin/Long // dev.phillipslabs.tuskt.client/TusktUploadResult.Success.offset.<get-offset>|<get-offset>(){}[0]
+
+        final fun component1(): kotlin/Long // dev.phillipslabs.tuskt.client/TusktUploadResult.Success.component1|component1(){}[0]
+        final fun copy(kotlin/Long = ...): dev.phillipslabs.tuskt.client/TusktUploadResult.Success // dev.phillipslabs.tuskt.client/TusktUploadResult.Success.copy|copy(kotlin.Long){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // dev.phillipslabs.tuskt.client/TusktUploadResult.Success.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // dev.phillipslabs.tuskt.client/TusktUploadResult.Success.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // dev.phillipslabs.tuskt.client/TusktUploadResult.Success.toString|toString(){}[0]
+    }
+
+    final object NotFound : dev.phillipslabs.tuskt.client/TusktUploadResult { // dev.phillipslabs.tuskt.client/TusktUploadResult.NotFound|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // dev.phillipslabs.tuskt.client/TusktUploadResult.NotFound.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // dev.phillipslabs.tuskt.client/TusktUploadResult.NotFound.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // dev.phillipslabs.tuskt.client/TusktUploadResult.NotFound.toString|toString(){}[0]
+    }
+
+    final object UnsupportedMediaType : dev.phillipslabs.tuskt.client/TusktUploadResult { // dev.phillipslabs.tuskt.client/TusktUploadResult.UnsupportedMediaType|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // dev.phillipslabs.tuskt.client/TusktUploadResult.UnsupportedMediaType.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // dev.phillipslabs.tuskt.client/TusktUploadResult.UnsupportedMediaType.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // dev.phillipslabs.tuskt.client/TusktUploadResult.UnsupportedMediaType.toString|toString(){}[0]
+    }
+}
+
+final class dev.phillipslabs.tuskt.client/TusServerInformation { // dev.phillipslabs.tuskt.client/TusServerInformation|null[0]
+    constructor <init>(kotlin.collections/List<kotlin/String>, kotlin.collections/List<kotlin/String>, kotlin/Long?) // dev.phillipslabs.tuskt.client/TusServerInformation.<init>|<init>(kotlin.collections.List<kotlin.String>;kotlin.collections.List<kotlin.String>;kotlin.Long?){}[0]
+
+    final val extensions // dev.phillipslabs.tuskt.client/TusServerInformation.extensions|{}extensions[0]
+        final fun <get-extensions>(): kotlin.collections/List<kotlin/String> // dev.phillipslabs.tuskt.client/TusServerInformation.extensions.<get-extensions>|<get-extensions>(){}[0]
+    final val maxSize // dev.phillipslabs.tuskt.client/TusServerInformation.maxSize|{}maxSize[0]
+        final fun <get-maxSize>(): kotlin/Long? // dev.phillipslabs.tuskt.client/TusServerInformation.maxSize.<get-maxSize>|<get-maxSize>(){}[0]
+    final val versions // dev.phillipslabs.tuskt.client/TusServerInformation.versions|{}versions[0]
+        final fun <get-versions>(): kotlin.collections/List<kotlin/String> // dev.phillipslabs.tuskt.client/TusServerInformation.versions.<get-versions>|<get-versions>(){}[0]
+
+    final fun component1(): kotlin.collections/List<kotlin/String> // dev.phillipslabs.tuskt.client/TusServerInformation.component1|component1(){}[0]
+    final fun component2(): kotlin.collections/List<kotlin/String> // dev.phillipslabs.tuskt.client/TusServerInformation.component2|component2(){}[0]
+    final fun component3(): kotlin/Long? // dev.phillipslabs.tuskt.client/TusServerInformation.component3|component3(){}[0]
+    final fun copy(kotlin.collections/List<kotlin/String> = ..., kotlin.collections/List<kotlin/String> = ..., kotlin/Long? = ...): dev.phillipslabs.tuskt.client/TusServerInformation // dev.phillipslabs.tuskt.client/TusServerInformation.copy|copy(kotlin.collections.List<kotlin.String>;kotlin.collections.List<kotlin.String>;kotlin.Long?){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.phillipslabs.tuskt.client/TusServerInformation.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.phillipslabs.tuskt.client/TusServerInformation.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.phillipslabs.tuskt.client/TusServerInformation.toString|toString(){}[0]
+}
+
+final class dev.phillipslabs.tuskt.client/TusUploadOffsetResponse { // dev.phillipslabs.tuskt.client/TusUploadOffsetResponse|null[0]
+    constructor <init>(kotlin/Long, kotlin/Long? = ...) // dev.phillipslabs.tuskt.client/TusUploadOffsetResponse.<init>|<init>(kotlin.Long;kotlin.Long?){}[0]
+
+    final val uploadLength // dev.phillipslabs.tuskt.client/TusUploadOffsetResponse.uploadLength|{}uploadLength[0]
+        final fun <get-uploadLength>(): kotlin/Long? // dev.phillipslabs.tuskt.client/TusUploadOffsetResponse.uploadLength.<get-uploadLength>|<get-uploadLength>(){}[0]
+    final val uploadOffset // dev.phillipslabs.tuskt.client/TusUploadOffsetResponse.uploadOffset|{}uploadOffset[0]
+        final fun <get-uploadOffset>(): kotlin/Long // dev.phillipslabs.tuskt.client/TusUploadOffsetResponse.uploadOffset.<get-uploadOffset>|<get-uploadOffset>(){}[0]
+
+    final fun component1(): kotlin/Long // dev.phillipslabs.tuskt.client/TusUploadOffsetResponse.component1|component1(){}[0]
+    final fun component2(): kotlin/Long? // dev.phillipslabs.tuskt.client/TusUploadOffsetResponse.component2|component2(){}[0]
+    final fun copy(kotlin/Long = ..., kotlin/Long? = ...): dev.phillipslabs.tuskt.client/TusUploadOffsetResponse // dev.phillipslabs.tuskt.client/TusUploadOffsetResponse.copy|copy(kotlin.Long;kotlin.Long?){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.phillipslabs.tuskt.client/TusUploadOffsetResponse.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.phillipslabs.tuskt.client/TusUploadOffsetResponse.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.phillipslabs.tuskt.client/TusUploadOffsetResponse.toString|toString(){}[0]
+}
+
+final class dev.phillipslabs.tuskt.client/TusktClient : io.ktor.utils.io.core/Closeable { // dev.phillipslabs.tuskt.client/TusktClient|null[0]
+    constructor <init>(io.ktor.client/HttpClient, dev.phillipslabs.tuskt.client/TusServerInformation) // dev.phillipslabs.tuskt.client/TusktClient.<init>|<init>(io.ktor.client.HttpClient;dev.phillipslabs.tuskt.client.TusServerInformation){}[0]
+
+    final fun close() // dev.phillipslabs.tuskt.client/TusktClient.close|close(){}[0]
+    final suspend fun getTusServerInformation(): dev.phillipslabs.tuskt.client/TusServerInformation // dev.phillipslabs.tuskt.client/TusktClient.getTusServerInformation|getTusServerInformation(){}[0]
+    final suspend fun getUploadOffset(kotlin/String): dev.phillipslabs.tuskt.client/TusUploadOffsetResponse? // dev.phillipslabs.tuskt.client/TusktClient.getUploadOffset|getUploadOffset(kotlin.String){}[0]
+    final suspend fun uploadBytes(kotlin/ByteArray, kotlin/String, kotlin/Long): dev.phillipslabs.tuskt.client/TusktUploadResult // dev.phillipslabs.tuskt.client/TusktClient.uploadBytes|uploadBytes(kotlin.ByteArray;kotlin.String;kotlin.Long){}[0]
+    final suspend fun uploadStream(io.ktor.utils.io/ByteReadChannel, kotlin/String, kotlin/Long) // dev.phillipslabs.tuskt.client/TusktClient.uploadStream|uploadStream(io.ktor.utils.io.ByteReadChannel;kotlin.String;kotlin.Long){}[0]
+
+    final object Companion { // dev.phillipslabs.tuskt.client/TusktClient.Companion|null[0]
+        final suspend fun initialize(io.ktor.client/HttpClient, kotlin/String): dev.phillipslabs.tuskt.client/TusktClient // dev.phillipslabs.tuskt.client/TusktClient.Companion.initialize|initialize(io.ktor.client.HttpClient;kotlin.String){}[0]
+    }
+}
+
+final class dev.phillipslabs.tuskt.client/TusktException : kotlin/Exception { // dev.phillipslabs.tuskt.client/TusktException|null[0]
+    constructor <init>(kotlin/String? = ..., kotlin/Throwable? = ...) // dev.phillipslabs.tuskt.client/TusktException.<init>|<init>(kotlin.String?;kotlin.Throwable?){}[0]
+    constructor <init>(kotlin/String?) // dev.phillipslabs.tuskt.client/TusktException.<init>|<init>(kotlin.String?){}[0]
+    constructor <init>(kotlin/Throwable?) // dev.phillipslabs.tuskt.client/TusktException.<init>|<init>(kotlin.Throwable?){}[0]
+}

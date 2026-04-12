@@ -1,29 +1,12 @@
-@file:OptIn(ExperimentalAbiValidation::class)
-
-import org.jetbrains.kotlin.gradle.dsl.abi.ExperimentalAbiValidation
+@file:OptIn(org.jetbrains.kotlin.gradle.ExperimentalWasmDsl::class)
 
 plugins {
-    alias(libs.plugins.kotlin.multiplatform)
-//    alias(libs.plugins.ktor)
-    alias(libs.plugins.ktlint)
-    alias(libs.plugins.detekt)
-//    alias(libs.plugins.vanniktech.mavenPublish)
-    alias(libs.plugins.android.kotlin.multiplatform.library)
+    id("tuskt.kmp-library-base")
+    id("tuskt.published-library")
 }
 
 kotlin {
-//    explicitApi()
-//
-//    abiValidation {
-//        enabled = true
-//    }
-
     jvm()
-    jvmToolchain(
-        libs.versions.jdk
-            .get()
-            .toInt(),
-    )
 
     js {
         nodejs()
@@ -84,6 +67,9 @@ kotlin {
     }
 }
 
-ktlint {
-    version = libs.versions.ktlint.get()
+mavenPublishing {
+    pom {
+        name = "Tuskt Shared"
+        description = "Shared Tus protocol primitives and constants used by Tuskt libraries"
+    }
 }
