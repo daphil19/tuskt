@@ -12,8 +12,6 @@ class TusktRootReleasePlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             pluginManager.apply("com.github.ben-manes.versions")
-            pluginManager.apply("org.jetbrains.changelog")
-            pluginManager.apply("net.researchgate.release")
 
             tasks.named("dependencyUpdates", DependencyUpdatesTask::class.java).configure {
                 rejectVersionIf {
@@ -22,56 +20,79 @@ class TusktRootReleasePlugin : Plugin<Project> {
                 gradleReleaseChannel = "current"
             }
 
-            extensions.configure(ChangelogPluginExtension::class.java) {
-                versionPrefix.set("v")
-                version.set(providers.provider { project.version.toString().removeSuffix("-SNAPSHOT") })
-                path.set(layout.projectDirectory.file("CHANGELOG.md").asFile.canonicalPath)
-                header.set(providers.provider { "[${project.version.toString().removeSuffix("-SNAPSHOT")}] - ${date()}" })
-                unreleasedTerm.set("[Unreleased]")
-                keepUnreleasedSection.set(true)
-                itemPrefix.set("-")
-                groups.set(listOf("Added", "Changed", "Deprecated", "Removed", "Fixed", "Security"))
-            }
+            if (requiresReleaseTooling()) {
+                pluginManager.apply("org.jetbrains.changelog")
+                pluginManager.apply("net.researchgate.release")
 
-            val releaseVerification =
-                tasks.register("releaseVerification") {
-                    group = "release"
-                    description = "Runs the verification tasks required before a release tag is created."
-                    dependsOn(
-                        "ktlintCheck",
-                        "detekt",
-                        "test",
-                        ":shared:allTests",
-                        ":tuskt-client:allTests",
-                        ":tuskt-server-standalone:shadowJar",
+                extensions.configure(ChangelogPluginExtension::class.java) {
+                    versionPrefix.set("v")
+                    version.set(providers.provider { project.version.toString().removeSuffix("-SNAPSHOT") })
+                    path.set(layout.projectDirectory.file("CHANGELOG.md").asFile.canonicalPath)
+                    header.set(providers.provider { "[${project.version.toString().removeSuffix("-SNAPSHOT")}] - ${date()}" })
+                    unreleasedTerm.set("[Unreleased]")
+                    keepUnreleasedSection.set(true)
+                    itemPrefix.set("-")
+                    groups.set(listOf("Added", "Changed", "Deprecated", "Removed", "Fixed", "Security"))
+                }
+
+                val releaseVerification =
+                    tasks.register("releaseVerification") {
+                        group = "release"
+                        description = "Runs the verification tasks required before a release tag is created."
+                        dependsOn(
+                            "ktlintCheck",
+                            "detekt",
+                            "test",
+                            ":shared:allTests",
+                            ":tuskt-client:allTests",
+                            ":tuskt-server-standalone:shadowJar",
+                        )
+                    }
+
+                extensions.configure(ReleaseExtension::class.java) {
+                    tagTemplate.set("v\$version")
+                    versionPropertyFile.set("gradle.properties")
+                    versionProperties.set(listOf("VERSION_NAME"))
+                    buildTasks.set(listOf(releaseVerification.name))
+                    preTagCommitMessage.set("[Gradle Release Plugin] - release ")
+                    tagCommitMessage.set("[Gradle Release Plugin] - tag ")
+                    newVersionCommitMessage.set("[Gradle Release Plugin] - next version ")
+
+                    git {
+                        requireBranch.set("main")
+                        pushToRemote.set("origin")
+                        commitVersionFileOnly.set(false)
+                        signTag.set(false)
+                    }
+                }
+
+                tasks.named("beforeReleaseBuild") {
+                    dependsOn("patchChangelog")
+                }
+
+                tasks.named("release") {
+                    notCompatibleWithConfigurationCache(
+                        "net.researchgate.release uses build listeners that are not configuration-cache compatible",
                     )
                 }
-
-            extensions.configure(ReleaseExtension::class.java) {
-                tagTemplate.set("v\$version")
-                versionPropertyFile.set("gradle.properties")
-                versionProperties.set(listOf("VERSION_NAME"))
-                buildTasks.set(listOf(releaseVerification.name))
-                preTagCommitMessage.set("[Gradle Release Plugin] - release ")
-                tagCommitMessage.set("[Gradle Release Plugin] - tag ")
-                newVersionCommitMessage.set("[Gradle Release Plugin] - next version ")
-
-                git {
-                    requireBranch.set("main")
-                    pushToRemote.set("origin")
-                    commitVersionFileOnly.set(false)
-                    signTag.set(false)
-                }
             }
+        }
+    }
 
-            tasks.named("beforeReleaseBuild") {
-                dependsOn("patchChangelog")
-            }
+    private fun Project.requiresReleaseTooling(): Boolean {
+        val releaseTaskNames =
+            setOf(
+                "release",
+                "beforeReleaseBuild",
+                "patchChangelog",
+                "getChangelog",
+            )
 
-            tasks.named("release") {
-                notCompatibleWithConfigurationCache(
-                    "net.researchgate.release uses build listeners that are not configuration-cache compatible",
-                )
+        return gradle.startParameter.taskNames.any { requested ->
+            releaseTaskNames.any { taskName ->
+                requested == taskName ||
+                    requested.endsWith(":$taskName") ||
+                    requested.contains(taskName, ignoreCase = true)
             }
         }
     }
