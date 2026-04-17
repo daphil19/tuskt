@@ -1,0 +1,243 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  ARTIFACTORY_MAVEN_URL: ${{ secrets.ARTIFACTORY_MAVEN_URL }}
+  ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
+  ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
+  ORG_GRADLE_PROJECT_mavenCentralUsername: unused
+  ORG_GRADLE_PROJECT_mavenCentralPassword: unused
+  ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.MAVEN_PUBLISHING_SIGNING_KEY }}
+  ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.MAVEN_PUBLISHING_SIGNING_PASSWORD }}
+
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.metadata.outputs.tag }}
+      version: ${{ steps.metadata.outputs.version }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Resolve release metadata
+        id: metadata
+        shell: bash
+        run: |
+          tag="${GITHUB_REF##refs/tags/}"
+          if [[ ! "$tag" =~ ^v([0-9]+)\.([0-9]+)\.([0-9]+)$ ]]; then
+            echo "Tag must match vX.Y.Z: $tag" >&2
+            exit 1
+          fi
+          version="${tag#v}"
+          repo_version="$(awk -F= '$1 == "VERSION_NAME" { print $2 }' gradle.properties | tr -d '[:space:]')"
+          if [[ "$repo_version" != "$version" ]]; then
+            echo "Tag version $version does not match VERSION_NAME $repo_version" >&2
+            exit 1
+          fi
+          {
+            echo "tag=$tag"
+            echo "version=$version"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Prepare release notes artifact
+        run: >
+          ./gradlew
+          --quiet
+          getChangelog
+          --project-version="${{ steps.metadata.outputs.version }}"
+          --no-links
+          --no-empty-sections
+          --output-file=release-notes.md
+
+      - name: Upload changelog excerpt
+        uses: actions/upload-artifact@v4
+        with:
+          name: changelog
+          path: release-notes.md
+
+  publish-linux:
+    needs: preflight
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Validate release build
+        run: ./gradlew ktlintCheck detekt test :shared:allTests :tuskt-client:allTests
+
+      - name: Publish Linux, JVM, JS, and Wasm artifacts
+        run: >
+          ./gradlew
+          :tuskt-server:publishMavenPublicationToArtifactoryRepository
+          :shared:publishAndroidPublicationToArtifactoryRepository
+          :shared:publishJvmPublicationToArtifactoryRepository
+          :shared:publishJsPublicationToArtifactoryRepository
+          :shared:publishKotlinMultiplatformPublicationToArtifactoryRepository
+          :shared:publishLinuxArm64PublicationToArtifactoryRepository
+          :shared:publishLinuxX64PublicationToArtifactoryRepository
+          :shared:publishWasmJsPublicationToArtifactoryRepository
+          :tuskt-client:publishAndroidPublicationToArtifactoryRepository
+          :tuskt-client:publishJvmPublicationToArtifactoryRepository
+          :tuskt-client:publishJsPublicationToArtifactoryRepository
+          :tuskt-client:publishKotlinMultiplatformPublicationToArtifactoryRepository
+          :tuskt-client:publishLinuxArm64PublicationToArtifactoryRepository
+          :tuskt-client:publishLinuxX64PublicationToArtifactoryRepository
+          :tuskt-client:publishWasmJsPublicationToArtifactoryRepository
+
+  publish-macos:
+    needs: preflight
+    runs-on: macos-latest
+    timeout-minutes: 90
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Publish Apple artifacts
+        run: >
+          ./gradlew
+          :shared:publishIosArm64PublicationToArtifactoryRepository
+          :shared:publishIosSimulatorArm64PublicationToArtifactoryRepository
+          :shared:publishIosX64PublicationToArtifactoryRepository
+          :shared:publishMacosArm64PublicationToArtifactoryRepository
+          :shared:publishMacosX64PublicationToArtifactoryRepository
+          :shared:publishTvosArm64PublicationToArtifactoryRepository
+          :shared:publishTvosSimulatorArm64PublicationToArtifactoryRepository
+          :shared:publishTvosX64PublicationToArtifactoryRepository
+          :shared:publishWatchosArm32PublicationToArtifactoryRepository
+          :shared:publishWatchosArm64PublicationToArtifactoryRepository
+          :shared:publishWatchosSimulatorArm64PublicationToArtifactoryRepository
+          :shared:publishWatchosX64PublicationToArtifactoryRepository
+          :tuskt-client:publishIosArm64PublicationToArtifactoryRepository
+          :tuskt-client:publishIosSimulatorArm64PublicationToArtifactoryRepository
+          :tuskt-client:publishIosX64PublicationToArtifactoryRepository
+          :tuskt-client:publishMacosArm64PublicationToArtifactoryRepository
+          :tuskt-client:publishMacosX64PublicationToArtifactoryRepository
+          :tuskt-client:publishTvosArm64PublicationToArtifactoryRepository
+          :tuskt-client:publishTvosSimulatorArm64PublicationToArtifactoryRepository
+          :tuskt-client:publishWatchosArm32PublicationToArtifactoryRepository
+          :tuskt-client:publishWatchosArm64PublicationToArtifactoryRepository
+          :tuskt-client:publishWatchosSimulatorArm64PublicationToArtifactoryRepository
+
+  publish-windows:
+    needs: preflight
+    runs-on: windows-latest
+    timeout-minutes: 90
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Publish Windows artifacts
+        shell: bash
+        run: >
+          ./gradlew
+          :shared:publishMingwX64PublicationToArtifactoryRepository
+          :tuskt-client:publishMingwX64PublicationToArtifactoryRepository
+
+  standalone-jar:
+    needs: preflight
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Build standalone jar
+        run: ./gradlew :tuskt-server-standalone:shadowJar
+
+      - name: Upload standalone jar
+        uses: actions/upload-artifact@v4
+        with:
+          name: tuskt-server-standalone
+          path: tuskt-server-standalone/build/libs/*.jar
+
+  github-release:
+    needs:
+      - preflight
+      - publish-linux
+      - publish-macos
+      - publish-windows
+      - standalone-jar
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download changelog excerpt
+        uses: actions/download-artifact@v4
+        with:
+          name: changelog
+          path: release-notes
+
+      - name: Download standalone jar
+        uses: actions/download-artifact@v4
+        with:
+          name: tuskt-server-standalone
+          path: release-assets
+
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ needs.preflight.outputs.tag }}
+          body_path: release-notes/release-notes.md
+          files: release-assets/*.jar

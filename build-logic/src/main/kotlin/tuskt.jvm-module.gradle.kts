@@ -4,15 +4,17 @@ plugins {
     id("io.gitlab.arturbosch.detekt")
 }
 
+val libs = the<VersionCatalogsExtension>().named("libs")
+
 group = providers.gradleProperty("GROUP").get()
 version = providers.gradleProperty("VERSION_NAME").get()
 
 kotlin {
-    jvmToolchain(17)
+    jvmToolchain(libs.findVersion("jdk").get().toString().toInt())
 }
 
 ktlint {
-    version = providers.gradleProperty("KTLINT_CLI_VERSION").get()
+    version = libs.findVersion("ktlint-cli").get().toString()
 }
 
 detekt {
