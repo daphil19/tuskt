@@ -1,19 +1,12 @@
-import dev.phillipslabs.tuskt.gradle.gradlePropertyOrEnvVar
-
 plugins {
     id("com.vanniktech.maven.publish")
 }
 
-val libs = the<VersionCatalogsExtension>().named("libs")
-
 group = providers.gradleProperty("GROUP").get()
 version = providers.gradleProperty("VERSION_NAME").get()
 
-val artifactoryUrl = providers.gradlePropertyOrEnvVar("ARTIFACTORY_MAVEN_URL")
-val artifactoryUsername = providers.gradlePropertyOrEnvVar("ARTIFACTORY_USERNAME")
-val artifactoryPassword = providers.gradlePropertyOrEnvVar("ARTIFACTORY_PASSWORD")
-
 mavenPublishing {
+    publishToMavenCentral()
     signAllPublications()
 
     if (project.name == "shared") {
@@ -41,21 +34,6 @@ mavenPublishing {
             url = providers.gradleProperty("POM_SCM_URL").get()
             connection = providers.gradleProperty("POM_SCM_CONNECTION").get()
             developerConnection = providers.gradleProperty("POM_SCM_DEV_CONNECTION").get()
-        }
-    }
-}
-
-extensions.configure<PublishingExtension>("publishing") {
-    repositories {
-        if (artifactoryUrl.isPresent) {
-            maven {
-                name = "artifactory"
-                url = uri(artifactoryUrl.get())
-                credentials {
-                    username = artifactoryUsername.orNull
-                    password = artifactoryPassword.orNull
-                }
-            }
         }
     }
 }

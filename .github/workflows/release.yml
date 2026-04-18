@@ -13,13 +13,11 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  ARTIFACTORY_MAVEN_URL: ${{ secrets.ARTIFACTORY_MAVEN_URL }}
-  ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
-  ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
-  ORG_GRADLE_PROJECT_mavenCentralUsername: unused
-  ORG_GRADLE_PROJECT_mavenCentralPassword: unused
-  ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.MAVEN_PUBLISHING_SIGNING_KEY }}
-  ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.MAVEN_PUBLISHING_SIGNING_PASSWORD }}
+  ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+  ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+  ORG_GRADLE_PROJECT_signingInMemoryKeyId: ${{ secrets.SIGNING_KEY_ID }}
+  ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.GPG_KEY_CONTENTS || secrets.MAVEN_PUBLISHING_SIGNING_KEY }}
+  ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.SIGNING_PASSWORD || secrets.MAVEN_PUBLISHING_SIGNING_PASSWORD }}
 
 jobs:
   preflight:
@@ -64,6 +62,7 @@ jobs:
       - name: Prepare release notes artifact
         run: >
           ./gradlew
+          --no-configuration-cache
           --quiet
           getChangelog
           --project-version="${{ steps.metadata.outputs.version }}"
@@ -77,9 +76,9 @@ jobs:
           name: changelog
           path: release-notes.md
 
-  publish-linux:
+  publish-mavencentral:
     needs: preflight
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     timeout-minutes: 90
 
     steps:
@@ -98,128 +97,45 @@ jobs:
       - name: Validate release build
         run: ./gradlew ktlintCheck detekt test :shared:allTests :tuskt-client:allTests
 
-      - name: Publish Linux, JVM, JS, and Wasm artifacts
+      - name: Validate Maven Central publishing configuration
         run: >
           ./gradlew
-          :tuskt-server:publishMavenPublicationToArtifactoryRepository
-          :shared:publishAndroidPublicationToArtifactoryRepository
-          :shared:publishJvmPublicationToArtifactoryRepository
-          :shared:publishJsPublicationToArtifactoryRepository
-          :shared:publishKotlinMultiplatformPublicationToArtifactoryRepository
-          :shared:publishLinuxArm64PublicationToArtifactoryRepository
-          :shared:publishLinuxX64PublicationToArtifactoryRepository
-          :shared:publishWasmJsPublicationToArtifactoryRepository
-          :tuskt-client:publishAndroidPublicationToArtifactoryRepository
-          :tuskt-client:publishJvmPublicationToArtifactoryRepository
-          :tuskt-client:publishJsPublicationToArtifactoryRepository
-          :tuskt-client:publishKotlinMultiplatformPublicationToArtifactoryRepository
-          :tuskt-client:publishLinuxArm64PublicationToArtifactoryRepository
-          :tuskt-client:publishLinuxX64PublicationToArtifactoryRepository
-          :tuskt-client:publishWasmJsPublicationToArtifactoryRepository
+          --no-configuration-cache
+          :shared:checkSigningConfiguration
+          :tuskt-client:checkSigningConfiguration
+          :tuskt-server:checkSigningConfiguration
+          :shared:checkPomFileForKotlinMultiplatformPublication
+          :tuskt-client:checkPomFileForKotlinMultiplatformPublication
+          :tuskt-server:checkPomFileForMavenPublication
 
-  publish-macos:
-    needs: preflight
-    runs-on: macos-latest
-    timeout-minutes: 90
-
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
-
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: '17'
-
-      - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v4
-
-      - name: Publish Apple artifacts
+      - name: Publish dependency modules to Maven Central
         run: >
           ./gradlew
-          :shared:publishIosArm64PublicationToArtifactoryRepository
-          :shared:publishIosSimulatorArm64PublicationToArtifactoryRepository
-          :shared:publishIosX64PublicationToArtifactoryRepository
-          :shared:publishMacosArm64PublicationToArtifactoryRepository
-          :shared:publishMacosX64PublicationToArtifactoryRepository
-          :shared:publishTvosArm64PublicationToArtifactoryRepository
-          :shared:publishTvosSimulatorArm64PublicationToArtifactoryRepository
-          :shared:publishTvosX64PublicationToArtifactoryRepository
-          :shared:publishWatchosArm32PublicationToArtifactoryRepository
-          :shared:publishWatchosArm64PublicationToArtifactoryRepository
-          :shared:publishWatchosSimulatorArm64PublicationToArtifactoryRepository
-          :shared:publishWatchosX64PublicationToArtifactoryRepository
-          :tuskt-client:publishIosArm64PublicationToArtifactoryRepository
-          :tuskt-client:publishIosSimulatorArm64PublicationToArtifactoryRepository
-          :tuskt-client:publishIosX64PublicationToArtifactoryRepository
-          :tuskt-client:publishMacosArm64PublicationToArtifactoryRepository
-          :tuskt-client:publishMacosX64PublicationToArtifactoryRepository
-          :tuskt-client:publishTvosArm64PublicationToArtifactoryRepository
-          :tuskt-client:publishTvosSimulatorArm64PublicationToArtifactoryRepository
-          :tuskt-client:publishWatchosArm32PublicationToArtifactoryRepository
-          :tuskt-client:publishWatchosArm64PublicationToArtifactoryRepository
-          :tuskt-client:publishWatchosSimulatorArm64PublicationToArtifactoryRepository
+          --no-configuration-cache
+          :shared:publishAndReleaseToMavenCentral
+          :tuskt-client:publishAndReleaseToMavenCentral
+          :tuskt-server:publishAndReleaseToMavenCentral
 
-  publish-windows:
-    needs: preflight
-    runs-on: windows-latest
-    timeout-minutes: 90
+      - name: Build standalone release assets
+        run: |
+          ./gradlew :tuskt-server-standalone:shadowJar
+          mkdir -p release-assets
+          cp tuskt-server-standalone/build/libs/*.jar release-assets/
+          cd release-assets
+          for file in *.jar; do
+            shasum -a 256 "$file" > "$file.sha256"
+          done
 
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
-
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: '17'
-
-      - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v4
-
-      - name: Publish Windows artifacts
-        shell: bash
-        run: >
-          ./gradlew
-          :shared:publishMingwX64PublicationToArtifactoryRepository
-          :tuskt-client:publishMingwX64PublicationToArtifactoryRepository
-
-  standalone-jar:
-    needs: preflight
-    runs-on: ubuntu-latest
-    timeout-minutes: 60
-
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
-
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: '17'
-
-      - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v4
-
-      - name: Build standalone jar
-        run: ./gradlew :tuskt-server-standalone:shadowJar
-
-      - name: Upload standalone jar
+      - name: Upload release assets
         uses: actions/upload-artifact@v4
         with:
-          name: tuskt-server-standalone
-          path: tuskt-server-standalone/build/libs/*.jar
+          name: release-assets
+          path: release-assets/*
 
   github-release:
     needs:
       - preflight
-      - publish-linux
-      - publish-macos
-      - publish-windows
-      - standalone-jar
+      - publish-mavencentral
     runs-on: ubuntu-latest
 
     steps:
@@ -232,7 +148,7 @@ jobs:
       - name: Download standalone jar
         uses: actions/download-artifact@v4
         with:
-          name: tuskt-server-standalone
+          name: release-assets
           path: release-assets
 
       - name: Create GitHub release
@@ -240,4 +156,4 @@ jobs:
         with:
           tag_name: ${{ needs.preflight.outputs.tag }}
           body_path: release-notes/release-notes.md
-          files: release-assets/*.jar
+          files: release-assets/*
