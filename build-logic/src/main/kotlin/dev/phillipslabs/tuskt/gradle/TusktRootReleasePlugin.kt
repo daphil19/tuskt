@@ -40,11 +40,13 @@ class TusktRootReleasePlugin : Plugin<Project> {
                         group = "release"
                         description = "Runs the verification tasks required before a release tag is created."
                         dependsOn(
-                            "ktlintCheck",
-                            "detekt",
-                            "test",
+                            ":integration-tests:test",
+                            ":shared:check",
                             ":shared:allTests",
+                            ":tuskt-client:check",
                             ":tuskt-client:allTests",
+                            ":tuskt-server:check",
+                            ":tuskt-server-standalone:check",
                             ":tuskt-server-standalone:shadowJar",
                         )
                     }
@@ -53,7 +55,7 @@ class TusktRootReleasePlugin : Plugin<Project> {
                     tagTemplate.set("v\$version")
                     versionPropertyFile.set("gradle.properties")
                     versionProperties.set(listOf("VERSION_NAME"))
-                    buildTasks.set(listOf(releaseVerification.name))
+                    buildTasks.set(emptyList())
                     preTagCommitMessage.set("[Gradle Release Plugin] - release ")
                     tagCommitMessage.set("[Gradle Release Plugin] - tag ")
                     newVersionCommitMessage.set("[Gradle Release Plugin] - next version ")
@@ -68,6 +70,7 @@ class TusktRootReleasePlugin : Plugin<Project> {
 
                 tasks.named("beforeReleaseBuild") {
                     dependsOn("patchChangelog")
+                    dependsOn(releaseVerification)
                 }
 
                 tasks.named("release") {
