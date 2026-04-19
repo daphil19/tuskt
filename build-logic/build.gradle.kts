@@ -24,6 +24,5 @@ dependencies {
     implementation(libs.detekt.gradlePlugin)
     implementation(libs.benManes.gradlePlugin)
     implementation(libs.vanniktech.mavenPublish)
-    implementation(libs.researchgate.releasePlugin)
     implementation(libs.jetbrains.changelogPlugin)
 }
