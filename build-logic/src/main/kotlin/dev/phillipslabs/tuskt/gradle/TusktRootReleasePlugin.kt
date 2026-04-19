@@ -402,8 +402,16 @@ private abstract class VerifyReleaseStateTask : ReleaseAwareTask() {
                 gitOutput("git", "status", "--porcelain")
             }
         if (statusOutput.isNotBlank()) {
-            val qualifier = if (allowUntracked.get()) "tracked files" else "working tree"
-            throw GradleException("$qualifier must be clean before releasing.\n$statusOutput")
+            val message =
+                if (allowUntracked.get()) {
+                    "tracked files must be clean before releasing.\n$statusOutput"
+                } else if (statusOutput.lineSequence().all { it.startsWith("??") }) {
+                    "working tree must be clean before releasing.\n$statusOutput\n" +
+                        "If only untracked files are acceptable, rerun with -Prelease.allowUntracked=true."
+                } else {
+                    "working tree must be clean before releasing.\n$statusOutput"
+                }
+            throw GradleException(message)
         }
 
         val existingTag = gitOutput("git", "tag", "--list", "v${plan.releaseVersion}")
