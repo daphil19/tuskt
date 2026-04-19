@@ -116,6 +116,8 @@ class TusktRootReleasePlugin : Plugin<Project> {
             providers.gradleProperty("release.newVersion").orElse(
                 providers.provider { "" },
             )
+        val allowUntracked =
+            providers.gradleProperty("release.allowUntracked").map(String::toBoolean).orElse(false)
 
         val verifyState =
             tasks.register("verify${capitalized}State", VerifyReleaseStateTask::class.java) {
@@ -125,6 +127,7 @@ class TusktRootReleasePlugin : Plugin<Project> {
                 this.releaseType.set(releaseType.name)
                 this.explicitReleaseVersion.set(explicitReleaseVersion)
                 this.explicitNextVersion.set(explicitNextVersion)
+                this.allowUntracked.set(allowUntracked)
                 branchName.set("main")
                 changelogFile.set(layout.projectDirectory.file("CHANGELOG.md"))
                 versionFile.set(layout.projectDirectory.file("gradle.properties"))
@@ -372,6 +375,9 @@ private abstract class VerifyReleaseStateTask : ReleaseAwareTask() {
     @get:Input
     abstract val branchName: Property<String>
 
+    @get:Input
+    abstract val allowUntracked: Property<Boolean>
+
     @get:InputFile
     abstract val changelogFile: RegularFileProperty
 
@@ -389,9 +395,15 @@ private abstract class VerifyReleaseStateTask : ReleaseAwareTask() {
             throw GradleException("Releases must run from branch ${branchName.get()}. Current branch: $currentBranch")
         }
 
-        val statusOutput = gitOutput("git", "status", "--porcelain")
+        val statusOutput =
+            if (allowUntracked.get()) {
+                gitOutput("git", "status", "--porcelain", "--untracked-files=no")
+            } else {
+                gitOutput("git", "status", "--porcelain")
+            }
         if (statusOutput.isNotBlank()) {
-            throw GradleException("Working tree must be clean before releasing.\n$statusOutput")
+            val qualifier = if (allowUntracked.get()) "tracked files" else "working tree"
+            throw GradleException("$qualifier must be clean before releasing.\n$statusOutput")
         }
 
         val existingTag = gitOutput("git", "tag", "--list", "v${plan.releaseVersion}")
