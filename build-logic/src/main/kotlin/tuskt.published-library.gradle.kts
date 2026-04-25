@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.util.prefixIfNot
+
 plugins {
     id("com.vanniktech.maven.publish")
 }
@@ -14,26 +16,28 @@ mavenPublishing {
     }
 
     pom {
+        // published artifacts should be prefixed with tuskt-
+        name = project.name.prefixIfNot("tuskt-")
         inceptionYear = "2025"
-        url = providers.gradleProperty("POM_URL").get()
+        url = "https://github.com/daphil19/tuskt"
         licenses {
             license {
-                name.set(providers.gradleProperty("POM_LICENSE_NAME").get())
-                url.set(providers.gradleProperty("POM_LICENSE_URL").get())
-                distribution.set(providers.gradleProperty("POM_LICENSE_DIST").get())
+                name.set("The Apache License, Version 2.0")
+                url.set("https://www.apache.org/licenses/LICENSE-2.0.txt")
+                distribution.set("https://www.apache.org/licenses/LICENSE-2.0.txt")
             }
         }
         developers {
             developer {
-                id = providers.gradleProperty("POM_DEVELOPER_ID").get()
-                name = providers.gradleProperty("POM_DEVELOPER_NAME").get()
-                url = providers.gradleProperty("POM_DEVELOPER_URL").get()
+                id = "daphil19"
+                name = "David Phillips"
+                url = "https://github.com/daphil19"
             }
         }
         scm {
-            url = providers.gradleProperty("POM_SCM_URL").get()
-            connection = providers.gradleProperty("POM_SCM_CONNECTION").get()
-            developerConnection = providers.gradleProperty("POM_SCM_DEV_CONNECTION").get()
+            url = "https://github.com/daphil19/tuskt"
+            connection = "scm:git:git://github.com/daphil19/tuskt.git"
+            developerConnection = "scm:git:ssh://git@github.com/daphil19/tuskt.git"
         }
     }
 }
