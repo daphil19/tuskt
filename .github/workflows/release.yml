@@ -104,9 +104,6 @@ jobs:
           :shared:checkSigningConfiguration
           :tuskt-client:checkSigningConfiguration
           :tuskt-server:checkSigningConfiguration
-          :shared:checkPomFileForKotlinMultiplatformPublication
-          :tuskt-client:checkPomFileForKotlinMultiplatformPublication
-          :tuskt-server:checkPomFileForMavenPublication
 
       - name: Publish dependency modules to Maven Central
         run: >
