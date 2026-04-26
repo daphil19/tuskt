@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="tuskt-client-js-0.1.1-SNAPSHOT">
+    <output-path>$PROJECT_DIR$/tuskt-client/build/libs</output-path>
+    <root id="archive" name="tuskt-client-js-0.1.1-SNAPSHOT.jar">
+      <element id="module-output" name="tuskt.tuskt-client.jsMain" />
+    </root>
+  </artifact>
+</component>

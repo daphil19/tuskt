@@ -1,7 +1,7 @@
 [versions]
 # NOTE this is lower than the minimum version needed to run gradle, to help maximize compatibility
 jdk = "17"
-kotlin = "2.3.20"
+kotlin = "2.3.21"
 android-compileSdk = "36"
 android-minSdk = "21"
 # ktor versioning defined in version catalog in settings.gradle.kts
