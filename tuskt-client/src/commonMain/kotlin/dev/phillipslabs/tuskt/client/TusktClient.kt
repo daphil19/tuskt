@@ -22,33 +22,37 @@ public class TusktClient(
     public suspend fun getUploadOffset(id: String): TusUploadOffsetResponse? {
         val response = client.head(id)
 
-        return when (response.status) {
-            HttpStatusCode.OK, HttpStatusCode.NoContent -> {
-                val uploadOffsetString = response.headers[TusHeaders.UPLOAD_OFFSET]
-                // non-negative validation happens during construction
-                TusUploadOffsetResponse(
-                    uploadOffsetString?.toLongOrNull()
-                        ?: throw TusktException(
-                            "Invalid header value for ${TusHeaders.UPLOAD_OFFSET}: $uploadOffsetString",
-                        ),
-                    response.headers[TusHeaders.UPLOAD_LENGTH]?.toLongOrNull(),
-                )
-            }
+        try {
+            return when (response.status) {
+                HttpStatusCode.OK, HttpStatusCode.NoContent -> {
+                    val uploadOffsetString = response.headers[TusHeaders.UPLOAD_OFFSET]
+                    // non-negative validation happens during construction
+                    TusUploadOffsetResponse(
+                        uploadOffsetString?.toLongOrNull()
+                            ?: throw TusktException(
+                                "Invalid header value for ${TusHeaders.UPLOAD_OFFSET}: $uploadOffsetString",
+                            ),
+                        response.headers[TusHeaders.UPLOAD_LENGTH]?.toLongOrNull(),
+                    )
+                }
 
-            HttpStatusCode.Forbidden, HttpStatusCode.NotFound, HttpStatusCode.Gone -> {
-                null
-            }
+                HttpStatusCode.Forbidden, HttpStatusCode.NotFound, HttpStatusCode.Gone -> {
+                    null
+                }
 
-            HttpStatusCode.PreconditionFailed -> {
-                throw TusktException(
-                    @Suppress("MaxLineLength")
-                    "Tus version provided by client ${response.request.headers[TusHeaders.TUS_RESUMABLE]} not in server-allowed versions ${response.headers[TusHeaders.TUS_VERSION]}",
-                )
-            }
+                HttpStatusCode.PreconditionFailed -> {
+                    throw TusktException(
+                        @Suppress("MaxLineLength")
+                        "Tus version provided by client ${response.request.headers[TusHeaders.TUS_RESUMABLE]} not in server-allowed versions ${response.headers[TusHeaders.TUS_VERSION]}",
+                    )
+                }
 
-            else -> {
-                throw TusktException("Unexepected status code ${response.status}")
+                else -> {
+                    throw TusktException("Unexepected status code ${response.status}")
+                }
             }
+        } finally {
+            response.bodyAsText()
         }
     }
 
@@ -71,7 +75,14 @@ public class TusktClient(
                     contentType(ContentType.Application.OffsetOctetStream)
                     header(TusHeaders.UPLOAD_OFFSET, currentOffset.toString())
                 }
-            when (val tusResponse = handleUploadResponse(response)) {
+            val tusResponse =
+                try {
+                    handleUploadResponse(response)
+                } finally {
+                    response.bodyAsText()
+                }
+
+            when (tusResponse) {
                 is TusktUploadResult.Success -> {
                     // on a success, check to see if we have more to upload or if we are finished and can be done
                     if (tusResponse.offset < expectedFinalOffset) {
@@ -108,7 +119,11 @@ public class TusktClient(
                 header(TusHeaders.UPLOAD_OFFSET, offset.toString())
             }
 
-        val serverResponseOffset = handleUploadResponse(response)
+        try {
+            handleUploadResponse(response)
+        } finally {
+            response.bodyAsText()
+        }
 
         TODO()
     }
@@ -204,20 +219,24 @@ public class TusktClient(
                 client.options(url) {
                     headers.remove(TusHeaders.TUS_RESUMABLE)
                 }
-            // TODO handle 4xx and 5xx errors more gracefully
-            if (response.status != HttpStatusCode.OK && response.status != HttpStatusCode.NoContent) {
-                @Suppress("MaxLineLength")
-                throw TusktException("Server information (options) call returned unexpected status code: ${response.status}")
-            }
+            try {
+                // TODO handle 4xx and 5xx errors more gracefully
+                if (response.status != HttpStatusCode.OK && response.status != HttpStatusCode.NoContent) {
+                    @Suppress("MaxLineLength")
+                    throw TusktException("Server information (options) call returned unexpected status code: ${response.status}")
+                }
 
-            return TusServerInformation(
-                versions =
-                    response.headers[TusHeaders.TUS_VERSION]?.split(",")
-                        ?: throw TusktException("Server did not return a Tus-Version header"),
-                // TODO extensions and max size
-                extensions = response.headers[TusHeaders.TUS_EXTENSION]?.split(",") ?: emptyList(),
-                maxSize = response.headers[TusHeaders.TUS_MAX_SIZE]?.toLongOrNull(),
-            )
+                return TusServerInformation(
+                    versions =
+                        response.headers[TusHeaders.TUS_VERSION]?.split(",")
+                            ?: throw TusktException("Server did not return a Tus-Version header"),
+                    // TODO extensions and max size
+                    extensions = response.headers[TusHeaders.TUS_EXTENSION]?.split(",") ?: emptyList(),
+                    maxSize = response.headers[TusHeaders.TUS_MAX_SIZE]?.toLongOrNull(),
+                )
+            } finally {
+                response.bodyAsText()
+            }
         }
     }
 }

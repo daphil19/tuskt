@@ -1,5 +1,11 @@
+import java.time.Duration
+
 plugins {
     id("tuskt.jvm-module")
+}
+
+tasks.withType<Test>().configureEach {
+    timeout.set(Duration.ofMinutes(2))
 }
 
 dependencies {

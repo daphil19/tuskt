@@ -11,7 +11,6 @@ import io.ktor.client.engine.cio.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.runTest
 import java.nio.file.FileSystem
 import java.nio.file.Path
 import kotlin.io.path.createDirectories
@@ -26,7 +25,7 @@ class TusktClientServerIntegrationTest {
     @Test
     fun testInitializeAgainstRunningServer() =
         withRunningTusktServer { server ->
-            runTest {
+            runBlocking {
                 withTusClient(server) { client ->
                     assertNotNull(client)
                 }
@@ -38,7 +37,7 @@ class TusktClientServerIntegrationTest {
         withRunningTusktServer { server ->
             server.seedUpload(id = "existing-upload", contents = "hello world")
 
-            runTest {
+            runBlocking {
                 withTusClient(server) { client ->
                     val uploadOffset = client.getUploadOffset("existing-upload")
 
@@ -54,7 +53,7 @@ class TusktClientServerIntegrationTest {
         withRunningTusktServer { server ->
             server.seedUpload(id = "new-upload")
 
-            runTest {
+            runBlocking {
                 withTusClient(server) { client ->
                     val result = client.uploadBytes("hello".encodeToByteArray(), id = "new-upload", offset = 0)
 
@@ -69,7 +68,7 @@ class TusktClientServerIntegrationTest {
     @Test
     fun testMissingUploadReturnsNullAgainstRunningServer() =
         withRunningTusktServer { server ->
-            runTest {
+            runBlocking {
                 withTusClient(server) { client ->
                     assertNull(client.getUploadOffset("missing-upload"))
                 }
@@ -84,12 +83,13 @@ class TusktClientServerIntegrationTest {
         server: RunningTusktServer,
         block: suspend (TusktClient) -> Unit,
     ) {
+        val httpClient =
+            HttpClient(CIO) {
+                expectSuccess = false
+            }
         val client =
             TusktClient.initialize(
-                client =
-                    HttpClient(CIO) {
-                        expectSuccess = false
-                    },
+                client = httpClient,
                 baseUrl = server.baseUrl,
             )
 
@@ -97,6 +97,7 @@ class TusktClientServerIntegrationTest {
             block(client)
         } finally {
             client.close()
+            httpClient.close()
         }
     }
 }
@@ -131,7 +132,7 @@ private class RunningTusktServer : AutoCloseable {
     fun readUpload(id: String): String = storagePath.resolve(id).readText()
 
     override fun close() {
-        engine.stop(gracePeriodMillis = 0, timeoutMillis = 0)
+        engine.stop(gracePeriodMillis = 1_000, timeoutMillis = 5_000)
         fileSystem.close()
     }
 

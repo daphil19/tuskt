@@ -6,6 +6,7 @@ import io.ktor.server.plugins.methodoverride.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import io.ktor.utils.io.*
 import java.nio.file.Path
 import java.nio.file.StandardOpenOption
 import kotlin.io.path.Path
@@ -72,15 +73,20 @@ public fun Application.tusktModule(
                     }
 
                     // write the bytes to the file
-                    call.receiveStream().use {
-                        it.copyTo(
-                            filePath.outputStream(
-                                StandardOpenOption.CREATE,
-                                StandardOpenOption.WRITE,
-                                StandardOpenOption.APPEND,
-                            ),
-                        )
-                    }
+                    filePath
+                        .outputStream(
+                            StandardOpenOption.CREATE,
+                            StandardOpenOption.WRITE,
+                            StandardOpenOption.APPEND,
+                        ).use { output ->
+                            val input = call.receiveChannel()
+                            val buffer = ByteArray(DEFAULT_BUFFER_SIZE)
+                            while (true) {
+                                val bytesRead = input.readAvailable(buffer, 0, buffer.size)
+                                if (bytesRead == -1) break
+                                output.write(buffer, 0, bytesRead)
+                            }
+                        }
 
                     // TODO header for new content size!
                     call.response.header(TusHeaders.UPLOAD_OFFSET, filePath.fileSize())
