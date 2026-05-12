@@ -5,6 +5,7 @@ import io.ktor.utils.io.*
 import io.ktor.utils.io.streams.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import kotlinx.serialization.json.Json
 import java.nio.file.Path
 import java.nio.file.StandardOpenOption
 import kotlin.io.path.*
@@ -12,6 +13,9 @@ import kotlin.io.path.*
 public class FileSystemUploadStore(
     private val storagePath: Path = Path("files").toAbsolutePath(),
 ) : TusktStore {
+    // TODO should json live somewhere else?
+    private val json = Json { ignoreUnknownKeys = true }
+
     override suspend fun create(tusktUploadMetadata: TusktUploadMetadata): String {
         TODO("Not yet implemented")
     }
@@ -19,7 +23,7 @@ public class FileSystemUploadStore(
     override suspend fun getInfo(tusktUploadId: String): TusktUploadMetadata? =
         withContext(Dispatchers.IO) {
             getMetadataPath(tusktUploadId).takeIf { it.exists() }?.let {
-                TODO()
+                json.decodeFromString(it.readText())
             }
         }
 
@@ -46,8 +50,10 @@ public class FileSystemUploadStore(
 
         // TODO update metadata!
         val newMetadata = tusktUploadMetadata.copy(currentOffset = tusktUploadMetadata.currentOffset + appendedBytes)
-        // TODO fix this with json!
-        withContext(Dispatchers.IO) { getMetadataPath(tusktUploadMetadata.id).writeText(TODO()) }
+
+        withContext(Dispatchers.IO) {
+            getMetadataPath(tusktUploadMetadata.id).writeText(json.encodeToString(newMetadata))
+        }
 
         return newMetadata.currentOffset
     }

@@ -1,5 +1,8 @@
 package dev.phillipslabs.tuskt
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 public data class TusktUploadMetadata(
     val id: String,
     val currentOffset: Long,

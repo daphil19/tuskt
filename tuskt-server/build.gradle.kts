@@ -1,5 +1,6 @@
 plugins {
     id("tuskt.published-jvm-library")
+    alias(libs.plugins.kotlin.serialization)
 }
 
 // application {
@@ -15,6 +16,7 @@ dependencies {
 //    implementation(libs.ktor.server.netty)
     implementation(ktorLibs.server.defaultHeaders)
     implementation(ktorLibs.server.methodOverride)
+    implementation(libs.kotlinx.serialization.json)
 
     testImplementation(ktorLibs.server.testHost)
     testImplementation(libs.kotlin.test)

@@ -17,6 +17,7 @@ kotlinLogging = "8.0.01"
 coroutines = "1.10.2"
 vanniktech = "0.36.0"
 jetbrainsChangelog = "2.5.0"
+kotlinx-serialization-json = "1.8.0"
 
 [libraries]
 #ktor-version-catalog = { module = "io.ktor:ktor-version-catalog", version.ref = "ktor" }
@@ -31,6 +32,7 @@ jimfs = { module = "com.google.jimfs:jimfs", version.ref = "jimfs" }
 kotlinLogging = { module = "io.github.oshai:kotlin-logging", version.ref = "kotlinLogging"}
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 vanniktech-mavenPublish = { module = "com.vanniktech:gradle-maven-publish-plugin", version.ref = "vanniktech" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization-json" }
 
 [bundles]
 
