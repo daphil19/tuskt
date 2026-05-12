@@ -1,23 +1,21 @@
 package dev.phillipslabs.tuskt
 
+import dev.phillipslabs.tuskt.store.FileSystemUploadStore
+import dev.phillipslabs.tuskt.store.TusktStore
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.plugins.methodoverride.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import io.ktor.utils.io.*
 import java.nio.file.Path
-import java.nio.file.StandardOpenOption
 import kotlin.io.path.Path
-import kotlin.io.path.fileSize
-import kotlin.io.path.notExists
-import kotlin.io.path.outputStream
 
 @Suppress("LongMethod")
 public fun Application.tusktModule(
     basePath: String = "/files",
     storagePath: Path = Path("files").toAbsolutePath(),
+    tusktStore: TusktStore = FileSystemUploadStore(),
 ) {
     install(XHttpMethodOverride)
 
@@ -27,32 +25,31 @@ public fun Application.tusktModule(
     routing {
         route(basePath) {
             route("/{id}") {
+                // core protocol - upload status/offset
                 head {
                     // spec says we must return this
                     call.response.header(HttpHeaders.CacheControl, "no-store")
 
-                    val filePath = getPathFromIdOrRespond(storagePath) ?: return@head
-                    if (filePath.notExists()) {
-                        // TODO response body?
-                        call.respond(HttpStatusCode.NotFound)
-                        return@head
-                    }
+                    val tusktUploadMetadata = getTusktIdOrRespond(tusktStore) ?: return@head
 
-                    call.response.header(TusHeaders.UPLOAD_OFFSET, filePath.fileSize())
+                    call.response.header(TusHeaders.UPLOAD_OFFSET, tusktUploadMetadata.currentOffset)
                     // while the spec says that we SHOULD use a 200 or 204 for successful responses,
                     // the openAPI spec just uses 200
                     call.respond(HttpStatusCode.OK)
                 }
 
+                // core protocol - upload chunk
                 patch {
                     // make sure we can get a file path first
                     // TODO return 404 if the resource isn't found (whatever that means?)
-                    val filePath = getPathFromIdOrRespond(storagePath) ?: return@patch
+//                    val filePath = getPathFromIdOrRespond(storagePath) ?: return@patch
+                    // TODO do we really need to get metadata here?
+                    val tusktUploadMetadata = getTusktIdOrRespond(tusktStore) ?: return@patch
 
-                    if (filePath.notExists()) {
-                        call.respond(HttpStatusCode.NotFound)
-                        return@patch
-                    }
+//                    if (filePath.notExists()) {
+//                        call.respond(HttpStatusCode.NotFound)
+//                        return@patch
+//                    }
 
                     @Suppress("MaxLineLength")
                     if (call.request.headers[HttpHeaders.ContentType] != ContentType.Application.OffsetOctetStream.toString()) {
@@ -67,34 +64,39 @@ public fun Application.tusktModule(
                         return@patch
                     }
 
-                    if (filePath.fileSize() != offset) {
+                    if (tusktUploadMetadata.currentOffset != offset) {
                         call.respond(HttpStatusCode.Conflict)
                         return@patch
                     }
 
+                    // TODO write and also update metadata!
+
+                    val newOffset = tusktStore.append(tusktUploadMetadata, call.receiveChannel())
+
                     // write the bytes to the file
-                    filePath
-                        .outputStream(
-                            StandardOpenOption.CREATE,
-                            StandardOpenOption.WRITE,
-                            StandardOpenOption.APPEND,
-                        ).use { output ->
-                            val input = call.receiveChannel()
-                            val buffer = ByteArray(DEFAULT_BUFFER_SIZE)
-                            while (true) {
-                                val bytesRead = input.readAvailable(buffer, 0, buffer.size)
-                                if (bytesRead == -1) break
-                                output.write(buffer, 0, bytesRead)
-                            }
-                        }
+//                    filePath
+//                        .outputStream(
+//                            StandardOpenOption.CREATE,
+//                            StandardOpenOption.WRITE,
+//                            StandardOpenOption.APPEND,
+//                        ).use { output ->
+//                            val input = call.receiveChannel()
+//                            val buffer = ByteArray(DEFAULT_BUFFER_SIZE)
+//                            while (true) {
+//                                val bytesRead = input.readAvailable(buffer, 0, buffer.size)
+//                                if (bytesRead == -1) break
+//                                output.write(buffer, 0, bytesRead)
+//                            }
+//                        }
 
                     // TODO header for new content size!
-                    call.response.header(TusHeaders.UPLOAD_OFFSET, filePath.fileSize())
+                    call.response.header(TusHeaders.UPLOAD_OFFSET, newOffset)
 
                     call.respond(HttpStatusCode.NoContent)
                 }
             }
 
+            // core protocol - server information
             options {
                 // This could return a 200 or a 204. Electing a 204 here because of the vibe
                 call.response.header(TusHeaders.TUS_VERSION, TUS_VERSION)
@@ -103,13 +105,16 @@ public fun Application.tusktModule(
                 call.respond(HttpStatusCode.NoContent)
             }
 
-//            post {
-//                // make sure Upload-defer-length is correctly set
-//                val uploadDeferLength = call.request.headers[TusHeaders.UPLOAD_DEFER_LENGTH]?.toIntOrNull()
-//                if (uploadDeferLength != null && uploadDeferLength != 1) {
-//                    call.respond(HttpStatusCode.BadRequest)
-//                }
-//            }
+            // creation extension - create upload
+            post {
+                // TODO handle upload defer length
+                // make sure Upload-defer-length is correctly set
+                val uploadDeferLength = call.request.headers[TusHeaders.UPLOAD_LENGTH]?.toIntOrNull()
+                if (uploadDeferLength != null && uploadDeferLength != 1) {
+                    // invalid upload length
+                    call.respond(HttpStatusCode.BadRequest)
+                }
+            }
         }
     }
 }
@@ -132,6 +137,24 @@ public val TusResponseHeaders: ApplicationPlugin<Unit> =
         onCallRespond { call, _ ->
             if (call.request.httpMethod != HttpMethod.Options) {
                 call.response.header(TusHeaders.TUS_RESUMABLE, TUS_RESUME_VERSION)
+            }
+        }
+    }
+
+private suspend fun RoutingContext.getIdOrRespond() =
+    call.parameters["id"].also {
+        // TODO logging
+        if (it == null) {
+            call.respond(HttpStatusCode.Forbidden)
+        }
+    }
+
+private suspend fun RoutingContext.getTusktIdOrRespond(tusktStore: TusktStore) =
+    getIdOrRespond()?.let { id ->
+        tusktStore.getInfo(id).also {
+            // TODO logging
+            if (it == null) {
+                call.respond(HttpStatusCode.NotFound)
             }
         }
     }
