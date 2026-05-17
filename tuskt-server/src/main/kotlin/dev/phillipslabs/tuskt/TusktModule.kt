@@ -15,7 +15,7 @@ import kotlin.io.path.Path
 public fun Application.tusktModule(
     basePath: String = "/files",
     storagePath: Path = Path("files").toAbsolutePath(),
-    tusktStore: TusktStore = FileSystemUploadStore(),
+    tusktStore: TusktStore = FileSystemUploadStore(storagePath),
 ) {
     install(XHttpMethodOverride)
 
@@ -33,6 +33,9 @@ public fun Application.tusktModule(
                     val tusktUploadMetadata = getTusktIdOrRespond(tusktStore) ?: return@head
 
                     call.response.header(TusHeaders.UPLOAD_OFFSET, tusktUploadMetadata.currentOffset)
+                    tusktUploadMetadata.expectedUploadLength?.let {
+                        call.response.header(TusHeaders.UPLOAD_LENGTH, it)
+                    }
                     // while the spec says that we SHOULD use a 200 or 204 for successful responses,
                     // the openAPI spec just uses 200
                     call.respond(HttpStatusCode.OK)
@@ -42,14 +45,8 @@ public fun Application.tusktModule(
                 patch {
                     // make sure we can get a file path first
                     // TODO return 404 if the resource isn't found (whatever that means?)
-//                    val filePath = getPathFromIdOrRespond(storagePath) ?: return@patch
                     // TODO do we really need to get metadata here?
                     val tusktUploadMetadata = getTusktIdOrRespond(tusktStore) ?: return@patch
-
-//                    if (filePath.notExists()) {
-//                        call.respond(HttpStatusCode.NotFound)
-//                        return@patch
-//                    }
 
                     @Suppress("MaxLineLength")
                     if (call.request.headers[HttpHeaders.ContentType] != ContentType.Application.OffsetOctetStream.toString()) {
@@ -142,6 +139,8 @@ public val TusResponseHeaders: ApplicationPlugin<Unit> =
     }
 
 private suspend fun RoutingContext.getIdOrRespond() =
+    // TODO id hardening (drop path attempts in name, etc)!
+    // TODO it probably makes sense to have a uuid for the id, so we can just check for validity there
     call.parameters["id"].also {
         // TODO logging
         if (it == null) {
@@ -158,19 +157,3 @@ private suspend fun RoutingContext.getTusktIdOrRespond(tusktStore: TusktStore) =
             }
         }
     }
-
-private suspend fun RoutingContext.getPathFromIdOrRespond(storagePath: Path): Path? =
-    try {
-        getPathFromId(storagePath)
-    } catch (_: IllegalArgumentException) {
-        call.respond(HttpStatusCode.Forbidden)
-        null
-    }
-
-// TODO we will eventually have to figure out a way to get an id back for a filename
-//  (it probably shouldn't be what we use on disk?)
-private fun RoutingContext.getPathFromId(storagePath: Path): Path {
-    val filename = call.parameters["id"] ?: throw IllegalArgumentException("Filename is required")
-    return storagePath.resolve(filename).normalize().takeIf { it.startsWith(storagePath) }
-        ?: throw IllegalArgumentException("Filename $filename is outside of storage directory $storagePath")
-}

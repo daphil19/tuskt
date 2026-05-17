@@ -10,8 +10,8 @@ public final class dev/phillipslabs/tuskt/EmbeddedTusktServerKt {
 public final class dev/phillipslabs/tuskt/TusktModuleKt {
 	public static final fun getTusResponseHeaders ()Lio/ktor/server/application/ApplicationPlugin;
 	public static final fun getTusResumableVersionCheck ()Lio/ktor/server/application/ApplicationPlugin;
-	public static final fun tusktModule (Lio/ktor/server/application/Application;Ljava/lang/String;Ljava/nio/file/Path;)V
-	public static synthetic fun tusktModule$default (Lio/ktor/server/application/Application;Ljava/lang/String;Ljava/nio/file/Path;ILjava/lang/Object;)V
+	public static final fun tusktModule (Lio/ktor/server/application/Application;Ljava/lang/String;Ljava/nio/file/Path;Ldev/phillipslabs/tuskt/store/TusktStore;)V
+	public static synthetic fun tusktModule$default (Lio/ktor/server/application/Application;Ljava/lang/String;Ljava/nio/file/Path;Ldev/phillipslabs/tuskt/store/TusktStore;ILjava/lang/Object;)V
 }
 
 public final class dev/phillipslabs/tuskt/TusktServerConfiguration {
@@ -31,5 +31,53 @@ public final class dev/phillipslabs/tuskt/TusktServerConfiguration {
 	public final fun getStoragePath ()Ljava/nio/file/Path;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/phillipslabs/tuskt/TusktUploadMetadata {
+	public static final field Companion Ldev/phillipslabs/tuskt/TusktUploadMetadata$Companion;
+	public fun <init> (Ljava/lang/String;JLjava/lang/Long;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()J
+	public final fun component3 ()Ljava/lang/Long;
+	public final fun copy (Ljava/lang/String;JLjava/lang/Long;)Ldev/phillipslabs/tuskt/TusktUploadMetadata;
+	public static synthetic fun copy$default (Ldev/phillipslabs/tuskt/TusktUploadMetadata;Ljava/lang/String;JLjava/lang/Long;ILjava/lang/Object;)Ldev/phillipslabs/tuskt/TusktUploadMetadata;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCurrentOffset ()J
+	public final fun getExpectedUploadLength ()Ljava/lang/Long;
+	public final fun getId ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final synthetic class dev/phillipslabs/tuskt/TusktUploadMetadata$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Ldev/phillipslabs/tuskt/TusktUploadMetadata$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/phillipslabs/tuskt/TusktUploadMetadata;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/phillipslabs/tuskt/TusktUploadMetadata;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/phillipslabs/tuskt/TusktUploadMetadata$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/phillipslabs/tuskt/store/FileSystemUploadStore : dev/phillipslabs/tuskt/store/TusktStore {
+	public fun <init> ()V
+	public fun <init> (Ljava/nio/file/Path;)V
+	public synthetic fun <init> (Ljava/nio/file/Path;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun append (Ldev/phillipslabs/tuskt/TusktUploadMetadata;Lio/ktor/utils/io/ByteReadChannel;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun create (Ldev/phillipslabs/tuskt/TusktUploadMetadata;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getInfo (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getOffset (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract interface class dev/phillipslabs/tuskt/store/TusktStore {
+	public abstract fun append (Ldev/phillipslabs/tuskt/TusktUploadMetadata;Lio/ktor/utils/io/ByteReadChannel;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun create (Ldev/phillipslabs/tuskt/TusktUploadMetadata;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getInfo (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getOffset (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 

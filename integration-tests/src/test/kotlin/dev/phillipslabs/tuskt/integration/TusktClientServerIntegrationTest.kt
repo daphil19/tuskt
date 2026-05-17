@@ -3,6 +3,7 @@ package dev.phillipslabs.tuskt.integration
 import com.google.common.jimfs.Configuration
 import com.google.common.jimfs.Jimfs
 import dev.phillipslabs.tuskt.TusktServerConfiguration
+import dev.phillipslabs.tuskt.TusktUploadMetadata
 import dev.phillipslabs.tuskt.client.TusktClient
 import dev.phillipslabs.tuskt.client.TusktUploadResult
 import dev.phillipslabs.tuskt.embeddedTusktServer
@@ -11,6 +12,8 @@ import io.ktor.client.engine.cio.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import kotlinx.coroutines.runBlocking
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import java.nio.file.FileSystem
 import java.nio.file.Path
 import kotlin.io.path.createDirectories
@@ -126,10 +129,12 @@ private class RunningTusktServer : AutoCloseable {
         id: String,
         contents: String = "",
     ) {
-        storagePath.resolve(id).writeText(contents)
+        val metadata = TusktUploadMetadata(id, contents.length.toLong(), null)
+        storagePath.resolve("$id.json").writeText(Json.encodeToString(metadata))
+        storagePath.resolve("$id.bin").writeText(contents)
     }
 
-    fun readUpload(id: String): String = storagePath.resolve(id).readText()
+    fun readUpload(id: String): String = storagePath.resolve("$id.bin").readText()
 
     override fun close() {
         engine.stop(gracePeriodMillis = 1_000, timeoutMillis = 5_000)

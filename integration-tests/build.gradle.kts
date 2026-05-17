@@ -2,6 +2,7 @@ import java.time.Duration
 
 plugins {
     id("tuskt.jvm-module")
+    alias(libs.plugins.kotlin.serialization)
 }
 
 tasks.withType<Test>().configureEach {
@@ -17,4 +18,5 @@ dependencies {
     testImplementation(libs.jimfs)
     testImplementation(ktorLibs.client.cio)
     testImplementation(ktorLibs.server.netty)
+    testImplementation(libs.kotlinx.serialization.json)
 }

@@ -27,9 +27,7 @@ public class FileSystemUploadStore(
             }
         }
 
-    override suspend fun getOffset(tusktUploadId: String): Long? {
-        TODO("Not yet implemented")
-    }
+    override suspend fun getOffset(tusktUploadId: String): Long? = getInfo(tusktUploadId)?.currentOffset
 
     // TODO we need to be able to update metadata!
     override suspend fun append(
@@ -40,7 +38,6 @@ public class FileSystemUploadStore(
             withContext(Dispatchers.IO) {
                 getUploadPath(tusktUploadMetadata.id)
                     .outputStream(
-                        StandardOpenOption.CREATE, // TODO drop this once we include creation!
                         StandardOpenOption.WRITE,
                         StandardOpenOption.APPEND,
                     ).use { output ->
