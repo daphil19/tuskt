@@ -9,6 +9,7 @@ import dev.phillipslabs.tuskt.client.TusktUploadResult
 import dev.phillipslabs.tuskt.embeddedTusktServer
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
+import io.ktor.client.plugins.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import kotlinx.coroutines.runBlocking
@@ -23,6 +24,8 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
+
+private const val REQUEST_TIMEOUT_MILLIS = 5_000L
 
 class TusktClientServerIntegrationTest {
     @Test
@@ -89,6 +92,11 @@ class TusktClientServerIntegrationTest {
         val httpClient =
             HttpClient(CIO) {
                 expectSuccess = false
+                install(HttpTimeout) {
+                    requestTimeoutMillis = REQUEST_TIMEOUT_MILLIS
+                    connectTimeoutMillis = REQUEST_TIMEOUT_MILLIS
+                    socketTimeoutMillis = REQUEST_TIMEOUT_MILLIS
+                }
             }
         val client =
             TusktClient.initialize(
