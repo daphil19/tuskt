@@ -3,19 +3,12 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
 }
 
-// application {
-//    mainClass.set("dev.phillipslabs.tuskt.ApplicationKt")
-//
-//    val isDevelopment: Boolean = project.ext.has("development")
-//    applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
-// }
-
 dependencies {
     implementation(projects.shared)
     implementation(ktorLibs.server.core)
-//    implementation(libs.ktor.server.netty)
     implementation(ktorLibs.server.defaultHeaders)
     implementation(ktorLibs.server.methodOverride)
+//    implementation(ktorLibs.server.statusPages)
     implementation(libs.kotlinx.serialization.json)
 
     testImplementation(ktorLibs.server.testHost)

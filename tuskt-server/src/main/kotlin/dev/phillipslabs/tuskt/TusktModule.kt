@@ -30,7 +30,13 @@ public fun Application.tusktModule(
                     // spec says we must return this
                     call.response.header(HttpHeaders.CacheControl, "no-store")
 
-                    val tusktUploadMetadata = getTusktIdOrRespond(tusktStore) ?: return@head
+                    // this throws a bad request if id isn't found, but if id isn't found we shouldn't ever get here?
+                    val id = call.requirePathParameter("id")
+                    val tusktUploadMetadata =
+                        tusktStore.getInfo(id) ?: run {
+                            call.respond(HttpStatusCode.NotFound)
+                            return@head
+                        }
 
                     call.response.header(TusHeaders.UPLOAD_OFFSET, tusktUploadMetadata.currentOffset)
                     tusktUploadMetadata.expectedUploadLength?.let {
@@ -46,17 +52,21 @@ public fun Application.tusktModule(
                     // make sure we can get a file path first
                     // TODO return 404 if the resource isn't found (whatever that means?)
                     // TODO do we really need to get metadata here?
-                    val tusktUploadMetadata = getTusktIdOrRespond(tusktStore) ?: return@patch
+                    val id = call.requirePathParameter("id")
+                    val tusktUploadMetadata =
+                        tusktStore.getInfo(id) ?: run {
+                            call.respond(HttpStatusCode.NotFound)
+                            return@patch
+                        }
 
-                    @Suppress("MaxLineLength")
                     if (call.request.headers[HttpHeaders.ContentType] != ContentType.Application.OffsetOctetStream.toString()) {
                         // TODO response body?
                         call.respond(HttpStatusCode.UnsupportedMediaType)
                         return@patch
                     }
 
-                    val offset = call.request.headers[TusHeaders.UPLOAD_OFFSET]?.toLongOrNull()
-                    if (offset == null || offset < 0) {
+                    val offset = call.requireHeader(TusHeaders.UPLOAD_OFFSET).toLong()
+                    if (offset < 0) {
                         call.respond(HttpStatusCode.BadRequest)
                         return@patch
                     }
@@ -145,15 +155,5 @@ private suspend fun RoutingContext.getIdOrRespond() =
         // TODO logging
         if (it == null) {
             call.respond(HttpStatusCode.Forbidden)
-        }
-    }
-
-private suspend fun RoutingContext.getTusktIdOrRespond(tusktStore: TusktStore) =
-    getIdOrRespond()?.let { id ->
-        tusktStore.getInfo(id).also {
-            // TODO logging
-            if (it == null) {
-                call.respond(HttpStatusCode.NotFound)
-            }
         }
     }
