@@ -1,5 +1,6 @@
 package dev.phillipslabs.tuskt
 
+import dev.phillipslabs.tuskt.store.FileSystemUploadStore
 import com.google.common.jimfs.Configuration
 import com.google.common.jimfs.Jimfs
 import io.ktor.client.request.*
@@ -44,7 +45,7 @@ class TusktServerTest {
     fun testOptions() =
         testApplication {
             application {
-                tusktModule(storagePath = storagePath)
+                tusktModule(tusktStore = FileSystemUploadStore(storagePath))
             }
             val response = client.options("/files")
             assertEquals(HttpStatusCode.NoContent, response.status)
@@ -56,7 +57,7 @@ class TusktServerTest {
     fun testOptionsOmitsTusResumableHeader() =
         testApplication {
             application {
-                tusktModule(storagePath = storagePath)
+                tusktModule(tusktStore = FileSystemUploadStore(storagePath))
             }
             val response = client.options("/files")
 
@@ -67,7 +68,7 @@ class TusktServerTest {
     fun testMissingTusResumableHeader() =
         testApplication {
             application {
-                tusktModule(storagePath = storagePath)
+                tusktModule(tusktStore = FileSystemUploadStore(storagePath))
             }
             val response = client.head("/files/some-id")
             assertEquals(HttpStatusCode.PreconditionFailed, response.status)
@@ -78,7 +79,7 @@ class TusktServerTest {
     fun testUnsupportedVersion() =
         testApplication {
             application {
-                tusktModule(storagePath = storagePath)
+                tusktModule(tusktStore = FileSystemUploadStore(storagePath))
             }
             val response =
                 client.head("/files/some-id") {
@@ -92,7 +93,7 @@ class TusktServerTest {
     fun testHeadExistingFile() =
         testApplication {
             application {
-                tusktModule(storagePath = storagePath)
+                tusktModule(tusktStore = FileSystemUploadStore(storagePath))
             }
             val id = "test-file"
             createUpload(id, offset = 11)
@@ -113,7 +114,7 @@ class TusktServerTest {
     fun testHeadNonExistentFile() =
         testApplication {
             application {
-                tusktModule(storagePath = storagePath)
+                tusktModule(tusktStore = FileSystemUploadStore(storagePath))
             }
             val response =
                 client.head("/files/non-existent") {
@@ -134,7 +135,7 @@ class TusktServerTest {
     fun testHeadInvalidFileIdReturnsForbidden() =
         testApplication {
             application {
-                tusktModule(storagePath = storagePath)
+                tusktModule(tusktStore = FileSystemUploadStore(storagePath))
             }
             val response =
                 client.head("/files/..") {
@@ -149,7 +150,7 @@ class TusktServerTest {
     fun testPatchExistingFile() =
         testApplication {
             application {
-                tusktModule(storagePath = storagePath)
+                tusktModule(tusktStore = FileSystemUploadStore(storagePath))
             }
             val id = "patch-file"
             createUpload(id)
@@ -172,7 +173,7 @@ class TusktServerTest {
     fun testPatchConflict() =
         testApplication {
             application {
-                tusktModule(storagePath = storagePath)
+                tusktModule(tusktStore = FileSystemUploadStore(storagePath))
             }
             val id = "conflict-file"
             createUpload(id, offset = 16)
@@ -193,7 +194,7 @@ class TusktServerTest {
     fun testPatchInvalidContentType() =
         testApplication {
             application {
-                tusktModule(storagePath = storagePath)
+                tusktModule(tusktStore = FileSystemUploadStore(storagePath))
             }
             val id = "invalid-ct-file"
             createUpload(id)
@@ -213,7 +214,7 @@ class TusktServerTest {
     fun testPatchMissingUploadOffsetReturnsBadRequest() =
         testApplication {
             application {
-                tusktModule(storagePath = storagePath)
+                tusktModule(tusktStore = FileSystemUploadStore(storagePath))
             }
             val id = "missing-offset-file"
             createUpload(id)
@@ -233,7 +234,7 @@ class TusktServerTest {
     fun testPatchNegativeUploadOffsetReturnsBadRequest() =
         testApplication {
             application {
-                tusktModule(storagePath = storagePath)
+                tusktModule(tusktStore = FileSystemUploadStore(storagePath))
             }
             val id = "negative-offset-file"
             createUpload(id)
@@ -255,7 +256,7 @@ class TusktServerTest {
     fun testPatchInvalidFileIdReturnsForbidden() =
         testApplication {
             application {
-                tusktModule(storagePath = storagePath)
+                tusktModule(tusktStore = FileSystemUploadStore(storagePath))
             }
 
             val response =
@@ -274,7 +275,7 @@ class TusktServerTest {
     fun testCreation() =
         testApplication {
             application {
-                tusktModule(storagePath = storagePath)
+                tusktModule(tusktStore = FileSystemUploadStore(storagePath))
             }
             val response =
                 client.post("/files") {
@@ -295,7 +296,7 @@ class TusktServerTest {
     fun testTermination() =
         testApplication {
             application {
-                tusktModule(storagePath = storagePath)
+                tusktModule(tusktStore = FileSystemUploadStore(storagePath))
             }
             val id = "terminate-me"
             createUpload(id)
@@ -315,7 +316,7 @@ class TusktServerTest {
 //    fun testCreationWithMetadata() =
 //        testApplication {
 //            application {
-//                tusktModule(storagePath = storagePath)
+//                tusktModule(tusktStore = FileSystemUploadStore(storagePath))
 //            }
 //            // filename: world_domination_plan.pdf (Base64: d29ybGRfZG9taW5hdGlvbl9wbGFuLnBkZg==)
 //            // is_confidential: (empty value)
@@ -343,7 +344,7 @@ class TusktServerTest {
     fun testMethodOverride() =
         testApplication {
             application {
-                tusktModule(storagePath = storagePath)
+                tusktModule(tusktStore = FileSystemUploadStore(storagePath))
             }
             // Use POST with X-HTTP-Method-Override: OPTIONS
             // Should behave like OPTIONS

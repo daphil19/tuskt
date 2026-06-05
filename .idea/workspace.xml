@@ -5,13 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ab6072de-7cba-4d3e-a47d-de46e6e6281b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/kotlinc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/kotlinc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CHANGELOG.md" beforeDir="false" afterPath="$PROJECT_DIR$/CHANGELOG.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tuskt-server-standalone/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/tuskt-server-standalone/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build-logic/src/main/kotlin/tuskt.kmp-library-base.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build-logic/src/main/kotlin/tuskt.kmp-library-base.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build-logic/src/main/kotlin/tuskt.published-jvm-library.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build-logic/src/main/kotlin/tuskt.published-jvm-library.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/libs.versions.toml" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/libs.versions.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared/src/commonMain/kotlin/dev/phillipslabs/tuskt/TusConstants.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/commonMain/kotlin/dev/phillipslabs/tuskt/TusConstants.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tuskt-server/src/main/kotlin/dev/phillipslabs/tuskt/EmbeddedTusktServer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/tuskt-server/src/main/kotlin/dev/phillipslabs/tuskt/EmbeddedTusktServer.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tuskt-server/src/main/kotlin/dev/phillipslabs/tuskt/TusktModule.kt" beforeDir="false" afterPath="$PROJECT_DIR$/tuskt-server/src/main/kotlin/dev/phillipslabs/tuskt/TusktModule.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tuskt-server/src/main/kotlin/dev/phillipslabs/tuskt/extensions/TusExtension.kt" beforeDir="false" afterPath="$PROJECT_DIR$/tuskt-server/src/main/kotlin/dev/phillipslabs/tuskt/extensions/TusExtension.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tuskt-server/src/main/kotlin/dev/phillipslabs/tuskt/extensions/TusktCreationExtension.kt" beforeDir="false" afterPath="$PROJECT_DIR$/tuskt-server/src/main/kotlin/dev/phillipslabs/tuskt/extensions/TusktCreationExtension.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tuskt-server/src/test/kotlin/dev/phillipslabs/tuskt/TusktServerTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/tuskt-server/src/test/kotlin/dev/phillipslabs/tuskt/TusktServerTest.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,7 +26,7 @@
     <option name="optimizeImportsOnTheFly" value="true" />
   </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="3368" />
+    <option name="cachedIndexableFilesCount" value="927" />
     <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
   </component>
   <component name="ExternalProjectsData">
@@ -78,109 +82,9 @@
   <component name="KotlinCodeInsightWorkspaceSettings">
     <option name="optimizeImportsOnTheFly" value="true" />
   </component>
-  <component name="KotlinMultiplatform" KONAN_HOME="$USER_HOME$/.konan/kotlin-native-prebuilt-macos-aarch64-2.3.21">
-    <executable TARGET="ios_arm64" TARGET_NAME="iosArm64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":tuskt-client:" IS_TEST="true">
-      <variant NAME="Debug" GRADLE_TASK=":tuskt-client:linkDebugTestIosArm64" FILE="$PROJECT_DIR$/tuskt-client/build/bin/iosArm64/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
-        <envs />
-      </variant>
-    </executable>
-    <executable TARGET="ios_x64" TARGET_NAME="iosX64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":shared:" IS_TEST="true">
-      <variant NAME="Debug" GRADLE_TASK=":shared:linkDebugTestIosX64" FILE="$PROJECT_DIR$/shared/build/bin/iosX64/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
-        <envs />
-      </variant>
-    </executable>
-    <executable TARGET="watchos_arm64" TARGET_NAME="watchosArm64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":shared:" IS_TEST="true">
-      <variant NAME="Debug" GRADLE_TASK=":shared:linkDebugTestWatchosArm64" FILE="$PROJECT_DIR$/shared/build/bin/watchosArm64/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
-        <envs />
-      </variant>
-    </executable>
-    <executable TARGET="watchos_simulator_arm64" TARGET_NAME="watchosSimulatorArm64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":shared:" IS_TEST="true">
-      <variant NAME="Debug" GRADLE_TASK=":shared:linkDebugTestWatchosSimulatorArm64" FILE="$PROJECT_DIR$/shared/build/bin/watchosSimulatorArm64/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
-        <envs />
-      </variant>
-    </executable>
-    <executable TARGET="watchos_arm32" TARGET_NAME="watchosArm32" EXECUTABLE_NAME="test" PROJECT_PREFIX=":tuskt-client:" IS_TEST="true">
-      <variant NAME="Debug" GRADLE_TASK=":tuskt-client:linkDebugTestWatchosArm32" FILE="$PROJECT_DIR$/tuskt-client/build/bin/watchosArm32/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
-        <envs />
-      </variant>
-    </executable>
+  <component name="KotlinMultiplatform" KONAN_HOME="$USER_HOME$/.konan/kotlin-native-prebuilt-linux-x86_64-2.4.0">
     <executable TARGET="linux_x64" TARGET_NAME="linuxX64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":shared:" IS_TEST="true">
       <variant NAME="Debug" GRADLE_TASK=":shared:linkDebugTestLinuxX64" FILE="$PROJECT_DIR$/shared/build/bin/linuxX64/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
-        <envs />
-      </variant>
-    </executable>
-    <executable TARGET="linux_arm64" TARGET_NAME="linuxArm64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":tuskt-client:" IS_TEST="true">
-      <variant NAME="Debug" GRADLE_TASK=":tuskt-client:linkDebugTestLinuxArm64" FILE="$PROJECT_DIR$/tuskt-client/build/bin/linuxArm64/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
-        <envs />
-      </variant>
-    </executable>
-    <executable TARGET="ios_x64" TARGET_NAME="iosX64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":tuskt-client:" IS_TEST="true">
-      <variant NAME="Debug" GRADLE_TASK=":tuskt-client:linkDebugTestIosX64" FILE="$PROJECT_DIR$/tuskt-client/build/bin/iosX64/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
-        <envs />
-      </variant>
-    </executable>
-    <executable TARGET="tvos_simulator_arm64" TARGET_NAME="tvosSimulatorArm64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":tuskt-client:" IS_TEST="true">
-      <variant NAME="Debug" GRADLE_TASK=":tuskt-client:linkDebugTestTvosSimulatorArm64" FILE="$PROJECT_DIR$/tuskt-client/build/bin/tvosSimulatorArm64/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
-        <envs />
-      </variant>
-    </executable>
-    <executable TARGET="tvos_arm64" TARGET_NAME="tvosArm64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":shared:" IS_TEST="true">
-      <variant NAME="Debug" GRADLE_TASK=":shared:linkDebugTestTvosArm64" FILE="$PROJECT_DIR$/shared/build/bin/tvosArm64/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
-        <envs />
-      </variant>
-    </executable>
-    <executable TARGET="ios_simulator_arm64" TARGET_NAME="iosSimulatorArm64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":tuskt-client:" IS_TEST="true">
-      <variant NAME="Debug" GRADLE_TASK=":tuskt-client:linkDebugTestIosSimulatorArm64" FILE="$PROJECT_DIR$/tuskt-client/build/bin/iosSimulatorArm64/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
-        <envs />
-      </variant>
-    </executable>
-    <executable TARGET="linux_x64" TARGET_NAME="linuxX64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":tuskt-client:" IS_TEST="true">
-      <variant NAME="Debug" GRADLE_TASK=":tuskt-client:linkDebugTestLinuxX64" FILE="$PROJECT_DIR$/tuskt-client/build/bin/linuxX64/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
-        <envs />
-      </variant>
-    </executable>
-    <executable TARGET="tvos_arm64" TARGET_NAME="tvosArm64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":tuskt-client:" IS_TEST="true">
-      <variant NAME="Debug" GRADLE_TASK=":tuskt-client:linkDebugTestTvosArm64" FILE="$PROJECT_DIR$/tuskt-client/build/bin/tvosArm64/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
-        <envs />
-      </variant>
-    </executable>
-    <executable TARGET="watchos_arm32" TARGET_NAME="watchosArm32" EXECUTABLE_NAME="test" PROJECT_PREFIX=":shared:" IS_TEST="true">
-      <variant NAME="Debug" GRADLE_TASK=":shared:linkDebugTestWatchosArm32" FILE="$PROJECT_DIR$/shared/build/bin/watchosArm32/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
-        <envs />
-      </variant>
-    </executable>
-    <executable TARGET="watchos_simulator_arm64" TARGET_NAME="watchosSimulatorArm64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":tuskt-client:" IS_TEST="true">
-      <variant NAME="Debug" GRADLE_TASK=":tuskt-client:linkDebugTestWatchosSimulatorArm64" FILE="$PROJECT_DIR$/tuskt-client/build/bin/watchosSimulatorArm64/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
-        <envs />
-      </variant>
-    </executable>
-    <executable TARGET="ios_simulator_arm64" TARGET_NAME="iosSimulatorArm64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":shared:" IS_TEST="true">
-      <variant NAME="Debug" GRADLE_TASK=":shared:linkDebugTestIosSimulatorArm64" FILE="$PROJECT_DIR$/shared/build/bin/iosSimulatorArm64/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
-        <envs />
-      </variant>
-    </executable>
-    <executable TARGET="tvos_simulator_arm64" TARGET_NAME="tvosSimulatorArm64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":shared:" IS_TEST="true">
-      <variant NAME="Debug" GRADLE_TASK=":shared:linkDebugTestTvosSimulatorArm64" FILE="$PROJECT_DIR$/shared/build/bin/tvosSimulatorArm64/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
-        <envs />
-      </variant>
-    </executable>
-    <executable TARGET="watchos_arm64" TARGET_NAME="watchosArm64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":tuskt-client:" IS_TEST="true">
-      <variant NAME="Debug" GRADLE_TASK=":tuskt-client:linkDebugTestWatchosArm64" FILE="$PROJECT_DIR$/tuskt-client/build/bin/watchosArm64/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
-        <envs />
-      </variant>
-    </executable>
-    <executable TARGET="ios_arm64" TARGET_NAME="iosArm64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":shared:" IS_TEST="true">
-      <variant NAME="Debug" GRADLE_TASK=":shared:linkDebugTestIosArm64" FILE="$PROJECT_DIR$/shared/build/bin/iosArm64/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
-        <envs />
-      </variant>
-    </executable>
-    <executable TARGET="mingw_x64" TARGET_NAME="mingwX64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":shared:" IS_TEST="true">
-      <variant NAME="Debug" GRADLE_TASK=":shared:linkDebugTestMingwX64" FILE="$PROJECT_DIR$/shared/build/bin/mingwX64/debugTest/test.exe" WORKING_DIR="" PROGRAM_PARAMS="">
-        <envs />
-      </variant>
-    </executable>
-    <executable TARGET="macos_arm64" TARGET_NAME="macosArm64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":tuskt-client:" IS_TEST="true">
-      <variant NAME="Debug" GRADLE_TASK=":tuskt-client:linkDebugTestMacosArm64" FILE="$PROJECT_DIR$/tuskt-client/build/bin/macosArm64/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
         <envs />
       </variant>
     </executable>
@@ -189,13 +93,113 @@
         <envs />
       </variant>
     </executable>
-    <executable TARGET="mingw_x64" TARGET_NAME="mingwX64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":tuskt-client:" IS_TEST="true">
-      <variant NAME="Debug" GRADLE_TASK=":tuskt-client:linkDebugTestMingwX64" FILE="$PROJECT_DIR$/tuskt-client/build/bin/mingwX64/debugTest/test.exe" WORKING_DIR="" PROGRAM_PARAMS="">
+    <executable TARGET="tvos_simulator_arm64" TARGET_NAME="tvosSimulatorArm64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":tuskt-client:" IS_TEST="true">
+      <variant NAME="Debug" GRADLE_TASK=":tuskt-client:linkDebugTestTvosSimulatorArm64" FILE="$PROJECT_DIR$/tuskt-client/build/bin/tvosSimulatorArm64/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
         <envs />
       </variant>
     </executable>
     <executable TARGET="linux_arm64" TARGET_NAME="linuxArm64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":shared:" IS_TEST="true">
       <variant NAME="Debug" GRADLE_TASK=":shared:linkDebugTestLinuxArm64" FILE="$PROJECT_DIR$/shared/build/bin/linuxArm64/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
+        <envs />
+      </variant>
+    </executable>
+    <executable TARGET="mingw_x64" TARGET_NAME="mingwX64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":tuskt-client:" IS_TEST="true">
+      <variant NAME="Debug" GRADLE_TASK=":tuskt-client:linkDebugTestMingwX64" FILE="$PROJECT_DIR$/tuskt-client/build/bin/mingwX64/debugTest/test.exe" WORKING_DIR="" PROGRAM_PARAMS="">
+        <envs />
+      </variant>
+    </executable>
+    <executable TARGET="watchos_arm32" TARGET_NAME="watchosArm32" EXECUTABLE_NAME="test" PROJECT_PREFIX=":shared:" IS_TEST="true">
+      <variant NAME="Debug" GRADLE_TASK=":shared:linkDebugTestWatchosArm32" FILE="$PROJECT_DIR$/shared/build/bin/watchosArm32/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
+        <envs />
+      </variant>
+    </executable>
+    <executable TARGET="tvos_arm64" TARGET_NAME="tvosArm64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":shared:" IS_TEST="true">
+      <variant NAME="Debug" GRADLE_TASK=":shared:linkDebugTestTvosArm64" FILE="$PROJECT_DIR$/shared/build/bin/tvosArm64/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
+        <envs />
+      </variant>
+    </executable>
+    <executable TARGET="linux_x64" TARGET_NAME="linuxX64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":tuskt-client:" IS_TEST="true">
+      <variant NAME="Debug" GRADLE_TASK=":tuskt-client:linkDebugTestLinuxX64" FILE="$PROJECT_DIR$/tuskt-client/build/bin/linuxX64/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
+        <envs />
+      </variant>
+    </executable>
+    <executable TARGET="watchos_simulator_arm64" TARGET_NAME="watchosSimulatorArm64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":tuskt-client:" IS_TEST="true">
+      <variant NAME="Debug" GRADLE_TASK=":tuskt-client:linkDebugTestWatchosSimulatorArm64" FILE="$PROJECT_DIR$/tuskt-client/build/bin/watchosSimulatorArm64/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
+        <envs />
+      </variant>
+    </executable>
+    <executable TARGET="ios_x64" TARGET_NAME="iosX64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":shared:" IS_TEST="true">
+      <variant NAME="Debug" GRADLE_TASK=":shared:linkDebugTestIosX64" FILE="$PROJECT_DIR$/shared/build/bin/iosX64/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
+        <envs />
+      </variant>
+    </executable>
+    <executable TARGET="watchos_simulator_arm64" TARGET_NAME="watchosSimulatorArm64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":shared:" IS_TEST="true">
+      <variant NAME="Debug" GRADLE_TASK=":shared:linkDebugTestWatchosSimulatorArm64" FILE="$PROJECT_DIR$/shared/build/bin/watchosSimulatorArm64/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
+        <envs />
+      </variant>
+    </executable>
+    <executable TARGET="tvos_arm64" TARGET_NAME="tvosArm64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":tuskt-client:" IS_TEST="true">
+      <variant NAME="Debug" GRADLE_TASK=":tuskt-client:linkDebugTestTvosArm64" FILE="$PROJECT_DIR$/tuskt-client/build/bin/tvosArm64/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
+        <envs />
+      </variant>
+    </executable>
+    <executable TARGET="watchos_arm32" TARGET_NAME="watchosArm32" EXECUTABLE_NAME="test" PROJECT_PREFIX=":tuskt-client:" IS_TEST="true">
+      <variant NAME="Debug" GRADLE_TASK=":tuskt-client:linkDebugTestWatchosArm32" FILE="$PROJECT_DIR$/tuskt-client/build/bin/watchosArm32/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
+        <envs />
+      </variant>
+    </executable>
+    <executable TARGET="mingw_x64" TARGET_NAME="mingwX64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":shared:" IS_TEST="true">
+      <variant NAME="Debug" GRADLE_TASK=":shared:linkDebugTestMingwX64" FILE="$PROJECT_DIR$/shared/build/bin/mingwX64/debugTest/test.exe" WORKING_DIR="" PROGRAM_PARAMS="">
+        <envs />
+      </variant>
+    </executable>
+    <executable TARGET="tvos_simulator_arm64" TARGET_NAME="tvosSimulatorArm64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":shared:" IS_TEST="true">
+      <variant NAME="Debug" GRADLE_TASK=":shared:linkDebugTestTvosSimulatorArm64" FILE="$PROJECT_DIR$/shared/build/bin/tvosSimulatorArm64/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
+        <envs />
+      </variant>
+    </executable>
+    <executable TARGET="ios_simulator_arm64" TARGET_NAME="iosSimulatorArm64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":tuskt-client:" IS_TEST="true">
+      <variant NAME="Debug" GRADLE_TASK=":tuskt-client:linkDebugTestIosSimulatorArm64" FILE="$PROJECT_DIR$/tuskt-client/build/bin/iosSimulatorArm64/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
+        <envs />
+      </variant>
+    </executable>
+    <executable TARGET="ios_x64" TARGET_NAME="iosX64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":tuskt-client:" IS_TEST="true">
+      <variant NAME="Debug" GRADLE_TASK=":tuskt-client:linkDebugTestIosX64" FILE="$PROJECT_DIR$/tuskt-client/build/bin/iosX64/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
+        <envs />
+      </variant>
+    </executable>
+    <executable TARGET="ios_arm64" TARGET_NAME="iosArm64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":shared:" IS_TEST="true">
+      <variant NAME="Debug" GRADLE_TASK=":shared:linkDebugTestIosArm64" FILE="$PROJECT_DIR$/shared/build/bin/iosArm64/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
+        <envs />
+      </variant>
+    </executable>
+    <executable TARGET="ios_simulator_arm64" TARGET_NAME="iosSimulatorArm64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":shared:" IS_TEST="true">
+      <variant NAME="Debug" GRADLE_TASK=":shared:linkDebugTestIosSimulatorArm64" FILE="$PROJECT_DIR$/shared/build/bin/iosSimulatorArm64/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
+        <envs />
+      </variant>
+    </executable>
+    <executable TARGET="watchos_arm64" TARGET_NAME="watchosArm64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":shared:" IS_TEST="true">
+      <variant NAME="Debug" GRADLE_TASK=":shared:linkDebugTestWatchosArm64" FILE="$PROJECT_DIR$/shared/build/bin/watchosArm64/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
+        <envs />
+      </variant>
+    </executable>
+    <executable TARGET="macos_arm64" TARGET_NAME="macosArm64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":tuskt-client:" IS_TEST="true">
+      <variant NAME="Debug" GRADLE_TASK=":tuskt-client:linkDebugTestMacosArm64" FILE="$PROJECT_DIR$/tuskt-client/build/bin/macosArm64/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
+        <envs />
+      </variant>
+    </executable>
+    <executable TARGET="linux_arm64" TARGET_NAME="linuxArm64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":tuskt-client:" IS_TEST="true">
+      <variant NAME="Debug" GRADLE_TASK=":tuskt-client:linkDebugTestLinuxArm64" FILE="$PROJECT_DIR$/tuskt-client/build/bin/linuxArm64/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
+        <envs />
+      </variant>
+    </executable>
+    <executable TARGET="ios_arm64" TARGET_NAME="iosArm64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":tuskt-client:" IS_TEST="true">
+      <variant NAME="Debug" GRADLE_TASK=":tuskt-client:linkDebugTestIosArm64" FILE="$PROJECT_DIR$/tuskt-client/build/bin/iosArm64/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
+        <envs />
+      </variant>
+    </executable>
+    <executable TARGET="watchos_arm64" TARGET_NAME="watchosArm64" EXECUTABLE_NAME="test" PROJECT_PREFIX=":tuskt-client:" IS_TEST="true">
+      <variant NAME="Debug" GRADLE_TASK=":tuskt-client:linkDebugTestWatchosArm64" FILE="$PROJECT_DIR$/tuskt-client/build/bin/watchosArm64/debugTest/test.kexe" WORKING_DIR="" PROGRAM_PARAMS="">
         <envs />
       </variant>
     </executable>
@@ -210,61 +214,61 @@
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.9845101444356519" />
-      <entry key="MS500" value="6.916943785209493" />
-      <entry key="S2" value="23.118968243737356" />
-      <entry key="S5" value="43.07810041321548" />
-      <entry key="S10" value="64.00967112235816" />
-      <entry key="S30" value="94.98112969016805" />
-      <entry key="S60" value="107.40886081696294" />
-      <entry key="M2" value="114.84467982459563" />
-      <entry key="M5" value="121.21783322446896" />
-      <entry key="M10" value="129.15893007368334" />
-      <entry key="M15" value="147.96890489601182" />
-      <entry key="M30" value="242.8510096572366" />
-      <entry key="H1" value="396.9886645892812" />
-      <entry key="H2" value="539.8280938564802" />
-      <entry key="H4" value="637.7148781663841" />
-      <entry key="D1" value="736.9372537190443" />
-      <entry key="W1" value="755.7996696124784" />
+      <entry key="MS100" value="1.0091785719778807" />
+      <entry key="MS500" value="1.7268681609838539" />
+      <entry key="S2" value="4.533400512218318" />
+      <entry key="S5" value="7.234554354700284" />
+      <entry key="S10" value="9.089539136976171" />
+      <entry key="S30" value="12.839365051748468" />
+      <entry key="S60" value="16.73989344929514" />
+      <entry key="M2" value="21.382361338774352" />
+      <entry key="M5" value="26.93363762956676" />
+      <entry key="M10" value="33.27967628369005" />
+      <entry key="M15" value="46.654979310874765" />
+      <entry key="M30" value="124.5974694349631" />
+      <entry key="H1" value="313.43770009943705" />
+      <entry key="H2" value="572.604890235879" />
+      <entry key="H4" value="802.991099804185" />
+      <entry key="D1" value="1083.8135462859905" />
+      <entry key="W1" value="1142.8088436411315" />
     </decayedCancelled>
     <decayedSelected>
       <entry key="MS100" value="0.0" />
       <entry key="MS500" value="0.0" />
-      <entry key="S2" value="2.3701611855657394E-181" />
-      <entry key="S5" value="5.622262940121626E-73" />
-      <entry key="S10" value="7.498175071390093E-37" />
-      <entry key="S30" value="9.08486598985913E-13" />
-      <entry key="S60" value="9.531456336709676E-7" />
-      <entry key="M2" value="9.762921338421839E-4" />
-      <entry key="M5" value="0.06274520602872385" />
-      <entry key="M10" value="0.2724420739273372" />
-      <entry key="M15" value="0.49711927817253465" />
-      <entry key="M30" value="1.0777961134300924" />
-      <entry key="H1" value="1.7401044178787959" />
-      <entry key="H2" value="2.266693394827863" />
-      <entry key="H4" value="2.602666133015525" />
-      <entry key="D1" value="2.9290285721701195" />
-      <entry key="W1" value="2.9897379590175572" />
+      <entry key="S2" value="0.0" />
+      <entry key="S5" value="1.1734257957594465E-154" />
+      <entry key="S10" value="1.0832477998931673E-77" />
+      <entry key="S30" value="2.213628235877181E-26" />
+      <entry key="S60" value="1.5190531219121417E-13" />
+      <entry key="M2" value="4.431375245267503E-7" />
+      <entry key="M5" value="0.004606193068871271" />
+      <entry key="M10" value="0.13790377161163822" />
+      <entry key="M15" value="0.4678767981099598" />
+      <entry key="M30" value="1.7379498377149907" />
+      <entry key="H1" value="3.6614110357442096" />
+      <entry key="H2" value="5.58977228433801" />
+      <entry key="H4" value="7.038473493194493" />
+      <entry key="D1" value="8.628729333836642" />
+      <entry key="W1" value="8.945736172041133" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="1.9105539468861386" />
-      <entry key="MS500" value="6.86855999630936" />
-      <entry key="S2" value="23.073041962883018" />
-      <entry key="S5" value="43.041860581598804" />
-      <entry key="S10" value="63.97884062810866" />
-      <entry key="S30" value="94.95396534829543" />
-      <entry key="S60" value="107.38907464790618" />
-      <entry key="M2" value="114.83292000913755" />
-      <entry key="M5" value="121.27047871509252" />
-      <entry key="M10" value="129.4216793072448" />
-      <entry key="M15" value="148.45675684081985" />
-      <entry key="M30" value="243.9204302524511" />
-      <entry key="H1" value="398.7222537489331" />
-      <entry key="H2" value="542.0905473799771" />
-      <entry key="H4" value="640.3151005468782" />
-      <entry key="D1" value="739.8658214539589" />
-      <entry key="W1" value="758.7893402986765" />
+      <entry key="MS100" value="0.46560023989434224" />
+      <entry key="MS500" value="1.573212270127479" />
+      <entry key="S2" value="4.482905140932951" />
+      <entry key="S5" value="7.206709929405223" />
+      <entry key="S10" value="9.053809816215654" />
+      <entry key="S30" value="12.777633221355911" />
+      <entry key="S60" value="16.677694917596387" />
+      <entry key="M2" value="21.329497046204597" />
+      <entry key="M5" value="26.90454243385116" />
+      <entry key="M10" value="33.39476015138435" />
+      <entry key="M15" value="47.10282582682055" />
+      <entry key="M30" value="126.31734245798442" />
+      <entry key="H1" value="317.08391121881317" />
+      <entry key="H2" value="578.1838468496637" />
+      <entry key="H4" value="810.022920843733" />
+      <entry key="D1" value="1092.4409341696266" />
+      <entry key="W1" value="1151.7543814716435" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{
@@ -275,47 +279,47 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Gradle.Build Kulid.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.TestULID.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.TestULIDMonotonic.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.TestULIDMonotonic.ulidThrowsErrorWhenRandomIsAtMax.executor&quot;: &quot;Debug&quot;,
-    &quot;Gradle.TestULIDMonotonic.ulidsWithinSameMillisecondAreStrictlyIncreasing.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.TusktServerTest.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.TusktServerTest.testMissingTusResumableHeader.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.TusktServerTest.testOptions.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.kulid [jvm].executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
-    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultAutoModeForALLUsers.v1&quot;: &quot;true&quot;,
-    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/daphillips/projects/tuskt&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.1484375&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;ml.llm.AcpAgentsConfigurable&quot;,
-    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
-    &quot;typescript.add.unambiguous.imports.on.the.fly&quot;: &quot;true&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Gradle.Build Kulid.executor": "Run",
+    "Gradle.TestULID.executor": "Run",
+    "Gradle.TestULIDMonotonic.executor": "Run",
+    "Gradle.TestULIDMonotonic.ulidThrowsErrorWhenRandomIsAtMax.executor": "Debug",
+    "Gradle.TestULIDMonotonic.ulidsWithinSameMillisecondAreStrictlyIncreasing.executor": "Run",
+    "Gradle.TusktServerTest.executor": "Run",
+    "Gradle.TusktServerTest.testMissingTusResumableHeader.executor": "Run",
+    "Gradle.TusktServerTest.testOptions.executor": "Run",
+    "Gradle.kulid [jvm].executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "cidr.known.project.marker": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultAutoModeForALLUsers.v1": "true",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "git-widget-placeholder": "tuskt-extensions",
+    "junie.onboarding.icon.badge.shown": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/daphillips/projects/tuskt",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "yarn",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.1484375",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "ml.llm.AcpAgentsConfigurable",
+    "to.speed.mode.migration.done": "true",
+    "typescript.add.unambiguous.imports.on.the.fly": "true",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecapSpentCounter">
     <option name="endsOfQuotaMs" value="1770775242512" />
     <option name="spentUsd" value="0.01273985" />
@@ -352,6 +356,84 @@
       <option name="MODULE_MODE" value="false" />
       <option name="REDIRECT_INPUT" value="false" />
       <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="DEBUG_JUST_MY_CODE" value="true" />
+      <module name="" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="RUN_TOOL" value="" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="Tox" factoryName="Tox">
+      <module name="tuskt" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="DEBUG_JUST_MY_CODE" value="true" />
+      <option name="RUN_TOOL" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Autodetect">
+      <module name="tuskt" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="DEBUG_JUST_MY_CODE" value="true" />
+      <option name="RUN_TOOL" value="" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Doctests">
+      <module name="kotlin.scripts.KotlinBuildScript.build.gradle.kts" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="DEBUG_JUST_MY_CODE" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="RUN_TOOL" value="" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
       <method v="2" />
     </configuration>
     <configuration default="true" type="tests" factoryName="Doctests">
@@ -748,84 +830,6 @@
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
-    </configuration>
-    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="DEBUG_JUST_MY_CODE" value="true" />
-      <module name="" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="RUN_TOOL" value="" />
-      <option name="SCRIPT_NAME" value="" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration default="true" type="Tox" factoryName="Tox">
-      <module name="tuskt" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="DEBUG_JUST_MY_CODE" value="true" />
-      <option name="RUN_TOOL" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration default="true" type="tests" factoryName="Autodetect">
-      <module name="tuskt" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="DEBUG_JUST_MY_CODE" value="true" />
-      <option name="RUN_TOOL" value="" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;&quot;" />
-      <option name="_new_targetType" value="&quot;PATH&quot;" />
-      <method v="2" />
-    </configuration>
-    <configuration default="true" type="tests" factoryName="Doctests">
-      <module name="kotlin.scripts.KotlinBuildScript.build.gradle.kts" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="DEBUG_JUST_MY_CODE" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="RUN_TOOL" value="" />
-      <option name="SCRIPT_NAME" value="" />
-      <option name="CLASS_NAME" value="" />
-      <option name="METHOD_NAME" value="" />
-      <option name="FOLDER_NAME" value="" />
-      <option name="TEST_TYPE" value="TEST_SCRIPT" />
-      <option name="PATTERN" value="" />
-      <option name="USE_PATTERN" value="false" />
-      <method v="2" />
     </configuration>
     <recent_temporary>
       <list>

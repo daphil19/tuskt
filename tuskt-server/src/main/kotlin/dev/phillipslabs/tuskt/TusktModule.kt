@@ -1,5 +1,6 @@
 package dev.phillipslabs.tuskt
 
+import dev.phillipslabs.tuskt.extensions.TusExtension
 import dev.phillipslabs.tuskt.store.FileSystemUploadStore
 import dev.phillipslabs.tuskt.store.TusktStore
 import io.ktor.http.*
@@ -8,16 +9,12 @@ import io.ktor.server.plugins.methodoverride.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import java.nio.file.Path
-import kotlin.io.path.Path
-import kotlin.io.path.absolute
 
 @Suppress("LongMethod")
 public fun Application.tusktModule(
     basePath: String = "/files",
-    storagePath: Path = Path("files").absolute(),
-    tusktStore: TusktStore = FileSystemUploadStore(storagePath),
-    config: () -> Unit = {},
+    tusktStore: TusktStore = FileSystemUploadStore(),
+    extensions: List<TusExtension> = emptyList(),
 ) {
     install(XHttpMethodOverride)
 
@@ -109,21 +106,19 @@ public fun Application.tusktModule(
             options {
                 // This could return a 200 or a 204. Electing a 204 here because of the vibe
                 call.response.header(TusHeaders.TUS_VERSION, TUS_VERSION)
-                // TODO other headers can go here as we add support
-//                call.response.header(TusHeaders.TUS_EXTENSION, TUS_EXTENSIONS)
+                call.response.header(TusHeaders.TUS_EXTENSION, extensions.flatMap { it.names }.distinct().joinToString(","))
                 call.respond(HttpStatusCode.NoContent)
             }
 
-            // creation extension - create upload
-            // TODO do we want to have a way to make these extensions op-in in some way?
-            post {
-                // TODO handle upload defer length
-                // make sure Upload-defer-length is correctly set
-                val uploadDeferLength = call.request.headers[TusHeaders.UPLOAD_LENGTH]?.toIntOrNull()
-                if (uploadDeferLength != null && uploadDeferLength != 1) {
-                    // invalid upload length
-                    call.respond(HttpStatusCode.BadRequest)
+            // TODO this should probably be passed in instead of constructed here?
+            val config =
+                TusktConfig().apply {
+                    this.basePath = basePath
+                    this.tusktStore = tusktStore
                 }
+
+            extensions.forEach { extension ->
+                extension.configure(config)
             }
         }
     }

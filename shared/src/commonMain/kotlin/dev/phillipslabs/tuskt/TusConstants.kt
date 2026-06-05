@@ -4,7 +4,7 @@ import io.ktor.http.*
 
 public const val TUS_VERSION: String = "1.0.0"
 public const val TUS_RESUME_VERSION: String = "1.0.0"
-public const val TUS_EXTENSIONS: String = "creation"
+public const val TUS_CREATION_EXTENSION: String = "creation"
 
 // extension properties require a backing field, but I want to avoid having to re-create the object each time
 private val offsetOctetStream = ContentType(ContentType.Application.TYPE, "offset+octet-stream")

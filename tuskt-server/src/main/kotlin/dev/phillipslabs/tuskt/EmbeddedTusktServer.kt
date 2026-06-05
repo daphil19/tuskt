@@ -1,5 +1,6 @@
 package dev.phillipslabs.tuskt
 
+import dev.phillipslabs.tuskt.store.FileSystemUploadStore
 import io.ktor.server.engine.*
 import java.nio.file.Path
 import kotlin.io.path.Path
@@ -25,6 +26,9 @@ public fun <TEngine : ApplicationEngine, TConfiguration : ApplicationEngine.Conf
         port = configuration.port,
         host = configuration.host,
         module = {
-            tusktModule(basePath = configuration.basePath, storagePath = configuration.storagePath)
+            tusktModule(
+                basePath = configuration.basePath,
+                tusktStore = FileSystemUploadStore(configuration.storagePath),
+            )
         },
     )

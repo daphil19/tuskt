@@ -1,10 +1,3 @@
-@file:OptIn(
-    org.jetbrains.kotlin.gradle.ExperimentalWasmDsl::class,
-    org.jetbrains.kotlin.gradle.dsl.abi.ExperimentalAbiValidation::class,
-)
-
-import org.jetbrains.kotlin.gradle.dsl.abi.ExperimentalAbiValidation
-
 plugins {
     id("org.jetbrains.kotlin.multiplatform")
     id("com.android.kotlin.multiplatform.library")
@@ -20,11 +13,16 @@ version = providers.gradleProperty("VERSION_NAME").get()
 kotlin {
     explicitApi()
 
-    abiValidation {
-        enabled = true
-    }
+    @OptIn(org.jetbrains.kotlin.gradle.dsl.abi.ExperimentalAbiValidation::class)
+    abiValidation()
 
-    jvmToolchain(libs.findVersion("jdk").get().toString().toInt())
+    jvmToolchain(
+        libs
+            .findVersion("jdk")
+            .get()
+            .toString()
+            .toInt(),
+    )
 }
 
 ktlint {
