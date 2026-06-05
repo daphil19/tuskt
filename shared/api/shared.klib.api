@@ -33,8 +33,8 @@ final object dev.phillipslabs.tuskt/TusHeaders { // dev.phillipslabs.tuskt/TusHe
         final fun <get-UPLOAD_OFFSET>(): kotlin/String // dev.phillipslabs.tuskt/TusHeaders.UPLOAD_OFFSET.<get-UPLOAD_OFFSET>|<get-UPLOAD_OFFSET>(){}[0]
 }
 
-final const val dev.phillipslabs.tuskt/TUS_EXTENSIONS // dev.phillipslabs.tuskt/TUS_EXTENSIONS|{}TUS_EXTENSIONS[0]
-    final fun <get-TUS_EXTENSIONS>(): kotlin/String // dev.phillipslabs.tuskt/TUS_EXTENSIONS.<get-TUS_EXTENSIONS>|<get-TUS_EXTENSIONS>(){}[0]
+final const val dev.phillipslabs.tuskt/TUS_CREATION_EXTENSION // dev.phillipslabs.tuskt/TUS_CREATION_EXTENSION|{}TUS_CREATION_EXTENSION[0]
+    final fun <get-TUS_CREATION_EXTENSION>(): kotlin/String // dev.phillipslabs.tuskt/TUS_CREATION_EXTENSION.<get-TUS_CREATION_EXTENSION>|<get-TUS_CREATION_EXTENSION>(){}[0]
 final const val dev.phillipslabs.tuskt/TUS_RESUME_VERSION // dev.phillipslabs.tuskt/TUS_RESUME_VERSION|{}TUS_RESUME_VERSION[0]
     final fun <get-TUS_RESUME_VERSION>(): kotlin/String // dev.phillipslabs.tuskt/TUS_RESUME_VERSION.<get-TUS_RESUME_VERSION>|<get-TUS_RESUME_VERSION>(){}[0]
 final const val dev.phillipslabs.tuskt/TUS_VERSION // dev.phillipslabs.tuskt/TUS_VERSION|{}TUS_VERSION[0]

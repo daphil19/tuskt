@@ -10,10 +10,22 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
-@Suppress("LongMethod")
 public fun Application.tusktModule(
     basePath: String = "/files",
     tusktStore: TusktStore = FileSystemUploadStore(),
+    extensions: List<TusExtension> = emptyList(),
+): Unit =
+    tusktModule(
+        TusktConfig().apply {
+            this.basePath = basePath
+            this.tusktStore = tusktStore
+        },
+        extensions,
+    )
+
+@Suppress("LongMethod")
+public fun Application.tusktModule(
+    config: TusktConfig,
     extensions: List<TusExtension> = emptyList(),
 ) {
     install(XHttpMethodOverride)
@@ -22,7 +34,7 @@ public fun Application.tusktModule(
     install(TusResponseHeaders)
 
     routing {
-        route(basePath) {
+        route(config.basePath) {
             route("/{id}") {
                 // core protocol - upload status/offset
                 head {
@@ -32,7 +44,7 @@ public fun Application.tusktModule(
                     // this throws a bad request if id isn't found, but if id isn't found we shouldn't ever get here?
                     val id = call.requirePathParameter("id")
                     val tusktUploadMetadata =
-                        tusktStore.getInfo(id) ?: run {
+                        config.tusktStore.getInfo(id) ?: run {
                             call.respond(HttpStatusCode.NotFound)
                             return@head
                         }
@@ -53,12 +65,15 @@ public fun Application.tusktModule(
                     // TODO do we really need to get metadata here?
                     val id = call.requirePathParameter("id")
                     val tusktUploadMetadata =
-                        tusktStore.getInfo(id) ?: run {
+                        config.tusktStore.getInfo(id) ?: run {
                             call.respond(HttpStatusCode.NotFound)
                             return@patch
                         }
 
-                    if (call.request.headers[HttpHeaders.ContentType] != ContentType.Application.OffsetOctetStream.toString()) {
+                    if (
+                        call.request.headers[HttpHeaders.ContentType]
+                        != ContentType.Application.OffsetOctetStream.toString()
+                    ) {
                         // TODO response body?
                         call.respond(HttpStatusCode.UnsupportedMediaType)
                         return@patch
@@ -77,7 +92,7 @@ public fun Application.tusktModule(
 
                     // TODO write and also update metadata!
 
-                    val newOffset = tusktStore.append(tusktUploadMetadata, call.receiveChannel())
+                    val newOffset = config.tusktStore.append(tusktUploadMetadata, call.receiveChannel())
 
                     // write the bytes to the file
 //                    filePath
@@ -106,16 +121,15 @@ public fun Application.tusktModule(
             options {
                 // This could return a 200 or a 204. Electing a 204 here because of the vibe
                 call.response.header(TusHeaders.TUS_VERSION, TUS_VERSION)
-                call.response.header(TusHeaders.TUS_EXTENSION, extensions.flatMap { it.names }.distinct().joinToString(","))
+                call.response.header(
+                    TusHeaders.TUS_EXTENSION,
+                    extensions
+                        .flatMap { it.names }
+                        .distinct()
+                        .joinToString(","),
+                )
                 call.respond(HttpStatusCode.NoContent)
             }
-
-            // TODO this should probably be passed in instead of constructed here?
-            val config =
-                TusktConfig().apply {
-                    this.basePath = basePath
-                    this.tusktStore = tusktStore
-                }
 
             extensions.forEach { extension ->
                 extension.configure(config)
@@ -146,12 +160,12 @@ public val TusResponseHeaders: ApplicationPlugin<Unit> =
         }
     }
 
-private suspend fun RoutingContext.getIdOrRespond() =
-    // TODO id hardening (drop path attempts in name, etc)!
-    // TODO it probably makes sense to have a uuid for the id, so we can just check for validity there
-    call.parameters["id"].also {
-        // TODO logging
-        if (it == null) {
-            call.respond(HttpStatusCode.Forbidden)
-        }
-    }
+// private suspend fun RoutingContext.getIdOrRespond() =
+//    // TODO id hardening (drop path attempts in name, etc)!
+//    // TODO it probably makes sense to have a uuid for the id, so we can just check for validity there
+//    call.parameters["id"].also {
+//        // TODO logging
+//        if (it == null) {
+//            call.respond(HttpStatusCode.Forbidden)
+//        }
+//    }

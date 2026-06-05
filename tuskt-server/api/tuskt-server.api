@@ -7,11 +7,23 @@ public final class dev/phillipslabs/tuskt/EmbeddedTusktServerKt {
 	public static final fun getDEFAULT_TUSKT_STORAGE_PATH ()Ljava/nio/file/Path;
 }
 
+public final class dev/phillipslabs/tuskt/TusktConfig {
+	public fun <init> ()V
+	public final fun getBasePath ()Ljava/lang/String;
+	public final fun getStoragePath ()Ljava/nio/file/Path;
+	public final fun getTusktStore ()Ldev/phillipslabs/tuskt/store/TusktStore;
+	public final fun setBasePath (Ljava/lang/String;)V
+	public final fun setStoragePath (Ljava/nio/file/Path;)V
+	public final fun setTusktStore (Ldev/phillipslabs/tuskt/store/TusktStore;)V
+}
+
 public final class dev/phillipslabs/tuskt/TusktModuleKt {
 	public static final fun getTusResponseHeaders ()Lio/ktor/server/application/ApplicationPlugin;
 	public static final fun getTusResumableVersionCheck ()Lio/ktor/server/application/ApplicationPlugin;
-	public static final fun tusktModule (Lio/ktor/server/application/Application;Ljava/lang/String;Ljava/nio/file/Path;Ldev/phillipslabs/tuskt/store/TusktStore;)V
-	public static synthetic fun tusktModule$default (Lio/ktor/server/application/Application;Ljava/lang/String;Ljava/nio/file/Path;Ldev/phillipslabs/tuskt/store/TusktStore;ILjava/lang/Object;)V
+	public static final fun tusktModule (Lio/ktor/server/application/Application;Ldev/phillipslabs/tuskt/TusktConfig;Ljava/util/List;)V
+	public static final fun tusktModule (Lio/ktor/server/application/Application;Ljava/lang/String;Ldev/phillipslabs/tuskt/store/TusktStore;Ljava/util/List;)V
+	public static synthetic fun tusktModule$default (Lio/ktor/server/application/Application;Ldev/phillipslabs/tuskt/TusktConfig;Ljava/util/List;ILjava/lang/Object;)V
+	public static synthetic fun tusktModule$default (Lio/ktor/server/application/Application;Ljava/lang/String;Ldev/phillipslabs/tuskt/store/TusktStore;Ljava/util/List;ILjava/lang/Object;)V
 }
 
 public final class dev/phillipslabs/tuskt/TusktServerConfiguration {
@@ -62,6 +74,17 @@ public final synthetic class dev/phillipslabs/tuskt/TusktUploadMetadata$$seriali
 
 public final class dev/phillipslabs/tuskt/TusktUploadMetadata$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public abstract interface class dev/phillipslabs/tuskt/extensions/TusExtension {
+	public abstract fun configure (Lio/ktor/server/routing/Route;Ldev/phillipslabs/tuskt/TusktConfig;)V
+	public abstract fun getNames ()Ljava/util/Set;
+}
+
+public final class dev/phillipslabs/tuskt/extensions/TusktCreationExtension : dev/phillipslabs/tuskt/extensions/TusExtension {
+	public fun <init> ()V
+	public fun configure (Lio/ktor/server/routing/Route;Ldev/phillipslabs/tuskt/TusktConfig;)V
+	public fun getNames ()Ljava/util/Set;
 }
 
 public final class dev/phillipslabs/tuskt/store/FileSystemUploadStore : dev/phillipslabs/tuskt/store/TusktStore {

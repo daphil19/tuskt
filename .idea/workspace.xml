@@ -5,16 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ab6072de-7cba-4d3e-a47d-de46e6e6281b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/kotlinc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/kotlinc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build-logic/src/main/kotlin/tuskt.kmp-library-base.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build-logic/src/main/kotlin/tuskt.kmp-library-base.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build-logic/src/main/kotlin/tuskt.published-jvm-library.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build-logic/src/main/kotlin/tuskt.published-jvm-library.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/libs.versions.toml" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/libs.versions.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shared/src/commonMain/kotlin/dev/phillipslabs/tuskt/TusConstants.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shared/src/commonMain/kotlin/dev/phillipslabs/tuskt/TusConstants.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tuskt-server/src/main/kotlin/dev/phillipslabs/tuskt/EmbeddedTusktServer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/tuskt-server/src/main/kotlin/dev/phillipslabs/tuskt/EmbeddedTusktServer.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared/api/jvm/shared.api" beforeDir="false" afterPath="$PROJECT_DIR$/shared/api/jvm/shared.api" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared/api/shared.klib.api" beforeDir="false" afterPath="$PROJECT_DIR$/shared/api/shared.klib.api" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tuskt-server/api/tuskt-server.api" beforeDir="false" afterPath="$PROJECT_DIR$/tuskt-server/api/tuskt-server.api" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tuskt-server/src/main/kotlin/dev/phillipslabs/tuskt/TusktModule.kt" beforeDir="false" afterPath="$PROJECT_DIR$/tuskt-server/src/main/kotlin/dev/phillipslabs/tuskt/TusktModule.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tuskt-server/src/main/kotlin/dev/phillipslabs/tuskt/extensions/TusExtension.kt" beforeDir="false" afterPath="$PROJECT_DIR$/tuskt-server/src/main/kotlin/dev/phillipslabs/tuskt/extensions/TusExtension.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tuskt-server/src/main/kotlin/dev/phillipslabs/tuskt/extensions/TusktCreationExtension.kt" beforeDir="false" afterPath="$PROJECT_DIR$/tuskt-server/src/main/kotlin/dev/phillipslabs/tuskt/extensions/TusktCreationExtension.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tuskt-server/src/test/kotlin/dev/phillipslabs/tuskt/TusktServerTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/tuskt-server/src/test/kotlin/dev/phillipslabs/tuskt/TusktServerTest.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -214,61 +209,61 @@
   </component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.0091785719778807" />
-      <entry key="MS500" value="1.7268681609838539" />
-      <entry key="S2" value="4.533400512218318" />
-      <entry key="S5" value="7.234554354700284" />
-      <entry key="S10" value="9.089539136976171" />
-      <entry key="S30" value="12.839365051748468" />
-      <entry key="S60" value="16.73989344929514" />
-      <entry key="M2" value="21.382361338774352" />
-      <entry key="M5" value="26.93363762956676" />
-      <entry key="M10" value="33.27967628369005" />
-      <entry key="M15" value="46.654979310874765" />
-      <entry key="M30" value="124.5974694349631" />
-      <entry key="H1" value="313.43770009943705" />
-      <entry key="H2" value="572.604890235879" />
-      <entry key="H4" value="802.991099804185" />
-      <entry key="D1" value="1083.8135462859905" />
-      <entry key="W1" value="1142.8088436411315" />
+      <entry key="MS100" value="1.0" />
+      <entry key="MS500" value="1.0000000000891018" />
+      <entry key="S2" value="1.0067508187188847" />
+      <entry key="S5" value="1.4008434762595354" />
+      <entry key="S10" value="2.9052127188779293" />
+      <entry key="S30" value="7.7913107958570045" />
+      <entry key="S60" value="10.924968696547554" />
+      <entry key="M2" value="13.300402967642539" />
+      <entry key="M5" value="19.0860692338597" />
+      <entry key="M10" value="30.000279307181902" />
+      <entry key="M15" value="42.976738096559274" />
+      <entry key="M30" value="109.42960388904666" />
+      <entry key="H1" value="285.7859869711026" />
+      <entry key="H2" value="548.0380681291794" />
+      <entry key="H4" value="792.6277814092189" />
+      <entry key="D1" value="1100.7344801312568" />
+      <entry key="W1" value="1166.588536016235" />
     </decayedCancelled>
     <decayedSelected>
       <entry key="MS100" value="0.0" />
       <entry key="MS500" value="0.0" />
-      <entry key="S2" value="0.0" />
-      <entry key="S5" value="1.1734257957594465E-154" />
-      <entry key="S10" value="1.0832477998931673E-77" />
-      <entry key="S30" value="2.213628235877181E-26" />
-      <entry key="S60" value="1.5190531219121417E-13" />
-      <entry key="M2" value="4.431375245267503E-7" />
-      <entry key="M5" value="0.004606193068871271" />
-      <entry key="M10" value="0.13790377161163822" />
-      <entry key="M15" value="0.4678767981099598" />
-      <entry key="M30" value="1.7379498377149907" />
-      <entry key="H1" value="3.6614110357442096" />
-      <entry key="H2" value="5.58977228433801" />
-      <entry key="H4" value="7.038473493194493" />
-      <entry key="D1" value="8.628729333836642" />
-      <entry key="W1" value="8.945736172041133" />
+      <entry key="S2" value="5.7415355049301224E-133" />
+      <entry key="S5" value="1.2694372030562548E-53" />
+      <entry key="S10" value="3.562916225588604E-27" />
+      <entry key="S30" value="1.5273381637532986E-9" />
+      <entry key="S60" value="3.9081174032436276E-5" />
+      <entry key="M2" value="0.006251495867175785" />
+      <entry key="M5" value="0.13188283711853607" />
+      <entry key="M10" value="0.4097944374671931" />
+      <entry key="M15" value="0.7378513219713195" />
+      <entry key="M30" value="1.9302649248851216" />
+      <entry key="H1" value="3.908656960779682" />
+      <entry key="H2" value="6.032588345524841" />
+      <entry key="H4" value="7.690662114912152" />
+      <entry key="D1" value="9.557933894997628" />
+      <entry key="W1" value="9.935254753799425" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="0.46560023989434224" />
-      <entry key="MS500" value="1.573212270127479" />
-      <entry key="S2" value="4.482905140932951" />
-      <entry key="S5" value="7.206709929405223" />
-      <entry key="S10" value="9.053809816215654" />
-      <entry key="S30" value="12.777633221355911" />
-      <entry key="S60" value="16.677694917596387" />
-      <entry key="M2" value="21.329497046204597" />
-      <entry key="M5" value="26.90454243385116" />
-      <entry key="M10" value="33.39476015138435" />
-      <entry key="M15" value="47.10282582682055" />
-      <entry key="M30" value="126.31734245798442" />
-      <entry key="H1" value="317.08391121881317" />
-      <entry key="H2" value="578.1838468496637" />
-      <entry key="H4" value="810.022920843733" />
-      <entry key="D1" value="1092.4409341696266" />
-      <entry key="W1" value="1151.7543814716435" />
+      <entry key="MS100" value="0.02368307135172497" />
+      <entry key="MS500" value="0.4730288233942771" />
+      <entry key="S2" value="0.8347716604616781" />
+      <entry key="S5" value="1.3012147421972426" />
+      <entry key="S10" value="2.8060833096890865" />
+      <entry key="S30" value="7.704136965492561" />
+      <entry key="S60" value="10.863410065775938" />
+      <entry key="M2" value="13.268880136200638" />
+      <entry key="M5" value="19.195121256686036" />
+      <entry key="M10" value="30.390624386026143" />
+      <entry key="M15" value="43.69616431027011" />
+      <entry key="M30" value="111.34231738488195" />
+      <entry key="H1" value="289.6792902123424" />
+      <entry key="H2" value="554.0593926129376" />
+      <entry key="H4" value="800.3113818945171" />
+      <entry key="D1" value="1110.290963995176" />
+      <entry key="W1" value="1176.5235756599259" />
     </decayedShown>
   </component>
   <component name="ProjectColorInfo">{

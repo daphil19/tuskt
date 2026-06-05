@@ -1,8 +1,8 @@
 package dev.phillipslabs.tuskt
 
-import dev.phillipslabs.tuskt.store.FileSystemUploadStore
 import com.google.common.jimfs.Configuration
 import com.google.common.jimfs.Jimfs
+import dev.phillipslabs.tuskt.store.FileSystemUploadStore
 import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.server.testing.*
