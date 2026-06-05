@@ -2,6 +2,8 @@
 
 Tuskt is a Kotlin implementation of the [tus resumable upload protocol](https://tus.io/).
 
+Documentation site: <https://daphil19.github.io/tuskt/>
+
 The repository currently contains:
 
 - `:tuskt-client`: a Kotlin Multiplatform tus client
@@ -55,7 +57,7 @@ Tuskt is early-stage and currently implements the core resumable upload flow aro
 - `HEAD` for upload offset lookup
 - `PATCH` for resuming/appending upload bytes
 
-The current server does not yet implement tus extensions such as creation. You can see that reflected in the ignored server tests and TODOs in the codebase.
+The current server does not yet implement tus extensions such as creation. You can see that reflected in the ignored server tests and TODOs in the codebase. See the [Roadmap](ROADMAP.md) for planned protocol extensions.
 
 ## Current Capabilities
 
@@ -100,8 +102,8 @@ The shared module exposes protocol headers and constants used by both the client
 
 The project currently uses:
 
-- Kotlin `2.3.20`
-- Ktor `3.4.2`
+- Kotlin `2.3.21`
+- Ktor `3.5.0`
 
 ## Build
 

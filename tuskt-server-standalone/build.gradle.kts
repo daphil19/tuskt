@@ -4,6 +4,7 @@ import org.gradle.jvm.tasks.Jar
 plugins {
     id("tuskt.jvm-module")
     alias(libs.plugins.shadow)
+    // TODO should we make this an actual application vs just the jar?
 }
 
 dependencies {

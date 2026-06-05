@@ -46,3 +46,8 @@ bin/
 
 ### Android ###
 local.properties
+
+### Docs ###
+.uv-cache/
+.venv/
+site/

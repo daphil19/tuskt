@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Upgrade to Ktor 3.5.0.
+- Refactored header and path parameter handling using new Ktor 3.5.0 extension functions (`requireHeader`, `requirePathParameter`).
+- Added `StatusPages` to handle `BadRequestException` globally in the server module.
+
 ## [0.1.0] - 2026-04-18
 
 ### Added

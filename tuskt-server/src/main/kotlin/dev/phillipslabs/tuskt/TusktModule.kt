@@ -10,12 +10,14 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import java.nio.file.Path
 import kotlin.io.path.Path
+import kotlin.io.path.absolute
 
 @Suppress("LongMethod")
 public fun Application.tusktModule(
     basePath: String = "/files",
-    storagePath: Path = Path("files").toAbsolutePath(),
+    storagePath: Path = Path("files").absolute(),
     tusktStore: TusktStore = FileSystemUploadStore(storagePath),
+    config: () -> Unit = {},
 ) {
     install(XHttpMethodOverride)
 
@@ -113,6 +115,7 @@ public fun Application.tusktModule(
             }
 
             // creation extension - create upload
+            // TODO do we want to have a way to make these extensions op-in in some way?
             post {
                 // TODO handle upload defer length
                 // make sure Upload-defer-length is correctly set
