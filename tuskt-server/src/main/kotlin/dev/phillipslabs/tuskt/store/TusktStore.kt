@@ -11,6 +11,7 @@ public interface TusktStore {
 
     public suspend fun getOffset(tusktUploadId: String): Long?
 
+    // TODO is it always going to be the case that an append updates metadata?
     public suspend fun append(
         tusktUploadMetadata: TusktUploadMetadata,
         bytes: ByteReadChannel,

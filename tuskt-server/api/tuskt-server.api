@@ -10,16 +10,16 @@ public final class dev/phillipslabs/tuskt/EmbeddedTusktServerKt {
 public final class dev/phillipslabs/tuskt/TusktConfig {
 	public fun <init> ()V
 	public final fun getBasePath ()Ljava/lang/String;
+	public final fun getMaxUploadSize ()Ljava/lang/Long;
 	public final fun getStoragePath ()Ljava/nio/file/Path;
 	public final fun getTusktStore ()Ldev/phillipslabs/tuskt/store/TusktStore;
 	public final fun setBasePath (Ljava/lang/String;)V
+	public final fun setMaxUploadSize (Ljava/lang/Long;)V
 	public final fun setStoragePath (Ljava/nio/file/Path;)V
 	public final fun setTusktStore (Ldev/phillipslabs/tuskt/store/TusktStore;)V
 }
 
 public final class dev/phillipslabs/tuskt/TusktModuleKt {
-	public static final fun getTusResponseHeaders ()Lio/ktor/server/application/ApplicationPlugin;
-	public static final fun getTusResumableVersionCheck ()Lio/ktor/server/application/ApplicationPlugin;
 	public static final fun tusktModule (Lio/ktor/server/application/Application;Ldev/phillipslabs/tuskt/TusktConfig;Ljava/util/List;)V
 	public static final fun tusktModule (Lio/ktor/server/application/Application;Ljava/lang/String;Ldev/phillipslabs/tuskt/store/TusktStore;Ljava/util/List;)V
 	public static synthetic fun tusktModule$default (Lio/ktor/server/application/Application;Ldev/phillipslabs/tuskt/TusktConfig;Ljava/util/List;ILjava/lang/Object;)V
@@ -47,16 +47,19 @@ public final class dev/phillipslabs/tuskt/TusktServerConfiguration {
 
 public final class dev/phillipslabs/tuskt/TusktUploadMetadata {
 	public static final field Companion Ldev/phillipslabs/tuskt/TusktUploadMetadata$Companion;
-	public fun <init> (Ljava/lang/String;JLjava/lang/Long;)V
+	public fun <init> (Ljava/lang/String;JLjava/lang/Long;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/lang/String;JLjava/lang/Long;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()J
 	public final fun component3 ()Ljava/lang/Long;
-	public final fun copy (Ljava/lang/String;JLjava/lang/Long;)Ldev/phillipslabs/tuskt/TusktUploadMetadata;
-	public static synthetic fun copy$default (Ldev/phillipslabs/tuskt/TusktUploadMetadata;Ljava/lang/String;JLjava/lang/Long;ILjava/lang/Object;)Ldev/phillipslabs/tuskt/TusktUploadMetadata;
+	public final fun component4 ()Ljava/util/Map;
+	public final fun copy (Ljava/lang/String;JLjava/lang/Long;Ljava/util/Map;)Ldev/phillipslabs/tuskt/TusktUploadMetadata;
+	public static synthetic fun copy$default (Ldev/phillipslabs/tuskt/TusktUploadMetadata;Ljava/lang/String;JLjava/lang/Long;Ljava/util/Map;ILjava/lang/Object;)Ldev/phillipslabs/tuskt/TusktUploadMetadata;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCurrentOffset ()J
 	public final fun getExpectedUploadLength ()Ljava/lang/Long;
 	public final fun getId ()Ljava/lang/String;
+	public final fun getMetadata ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
@@ -83,6 +86,8 @@ public abstract interface class dev/phillipslabs/tuskt/extensions/TusExtension {
 
 public final class dev/phillipslabs/tuskt/extensions/TusktCreationExtension : dev/phillipslabs/tuskt/extensions/TusExtension {
 	public fun <init> ()V
+	public fun <init> (Z)V
+	public synthetic fun <init> (ZILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun configure (Lio/ktor/server/routing/Route;Ldev/phillipslabs/tuskt/TusktConfig;)V
 	public fun getNames ()Ljava/util/Set;
 }

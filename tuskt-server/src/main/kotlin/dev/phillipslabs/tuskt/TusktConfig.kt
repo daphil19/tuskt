@@ -11,4 +11,5 @@ public class TusktConfig {
     public var basePath: String = "/files"
     public var storagePath: Path = Path("files").absolute()
     public var tusktStore: TusktStore = FileSystemUploadStore(storagePath)
+    public var maxUploadSize: Long? = null
 }

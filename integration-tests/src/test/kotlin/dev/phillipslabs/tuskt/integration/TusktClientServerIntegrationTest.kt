@@ -13,7 +13,6 @@ import io.ktor.client.plugins.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import kotlinx.coroutines.runBlocking
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.nio.file.FileSystem
 import java.nio.file.Path
@@ -27,6 +26,8 @@ import kotlin.test.assertNull
 
 private const val REQUEST_TIMEOUT_MILLIS = 5_000L
 
+// TODO should I just ignore these???
+// @Ignore
 class TusktClientServerIntegrationTest {
     @Test
     fun testInitializeAgainstRunningServer() =

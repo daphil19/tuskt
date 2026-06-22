@@ -33,12 +33,14 @@ final object dev.phillipslabs.tuskt/TusHeaders { // dev.phillipslabs.tuskt/TusHe
         final fun <get-UPLOAD_OFFSET>(): kotlin/String // dev.phillipslabs.tuskt/TusHeaders.UPLOAD_OFFSET.<get-UPLOAD_OFFSET>|<get-UPLOAD_OFFSET>(){}[0]
 }
 
+final const val dev.phillipslabs.tuskt/TUS_CREATION_DEFER_LENGTH_EXTENSION // dev.phillipslabs.tuskt/TUS_CREATION_DEFER_LENGTH_EXTENSION|{}TUS_CREATION_DEFER_LENGTH_EXTENSION[0]
+    final fun <get-TUS_CREATION_DEFER_LENGTH_EXTENSION>(): kotlin/String // dev.phillipslabs.tuskt/TUS_CREATION_DEFER_LENGTH_EXTENSION.<get-TUS_CREATION_DEFER_LENGTH_EXTENSION>|<get-TUS_CREATION_DEFER_LENGTH_EXTENSION>(){}[0]
 final const val dev.phillipslabs.tuskt/TUS_CREATION_EXTENSION // dev.phillipslabs.tuskt/TUS_CREATION_EXTENSION|{}TUS_CREATION_EXTENSION[0]
     final fun <get-TUS_CREATION_EXTENSION>(): kotlin/String // dev.phillipslabs.tuskt/TUS_CREATION_EXTENSION.<get-TUS_CREATION_EXTENSION>|<get-TUS_CREATION_EXTENSION>(){}[0]
 final const val dev.phillipslabs.tuskt/TUS_RESUME_VERSION // dev.phillipslabs.tuskt/TUS_RESUME_VERSION|{}TUS_RESUME_VERSION[0]
     final fun <get-TUS_RESUME_VERSION>(): kotlin/String // dev.phillipslabs.tuskt/TUS_RESUME_VERSION.<get-TUS_RESUME_VERSION>|<get-TUS_RESUME_VERSION>(){}[0]
-final const val dev.phillipslabs.tuskt/TUS_VERSION // dev.phillipslabs.tuskt/TUS_VERSION|{}TUS_VERSION[0]
-    final fun <get-TUS_VERSION>(): kotlin/String // dev.phillipslabs.tuskt/TUS_VERSION.<get-TUS_VERSION>|<get-TUS_VERSION>(){}[0]
 
 final val dev.phillipslabs.tuskt/OffsetOctetStream // dev.phillipslabs.tuskt/OffsetOctetStream|@io.ktor.http.ContentType.Application{}OffsetOctetStream[0]
     final fun (io.ktor.http/ContentType.Application).<get-OffsetOctetStream>(): io.ktor.http/ContentType // dev.phillipslabs.tuskt/OffsetOctetStream.<get-OffsetOctetStream>|<get-OffsetOctetStream>@io.ktor.http.ContentType.Application(){}[0]
+final val dev.phillipslabs.tuskt/SUPPORTED_TUS_VERSIONS // dev.phillipslabs.tuskt/SUPPORTED_TUS_VERSIONS|{}SUPPORTED_TUS_VERSIONS[0]
+    final fun <get-SUPPORTED_TUS_VERSIONS>(): kotlin.collections/List<kotlin/String> // dev.phillipslabs.tuskt/SUPPORTED_TUS_VERSIONS.<get-SUPPORTED_TUS_VERSIONS>|<get-SUPPORTED_TUS_VERSIONS>(){}[0]

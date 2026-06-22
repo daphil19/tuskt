@@ -38,6 +38,8 @@ public fun Application.tusktModule(
             route("/{id}") {
                 // core protocol - upload status/offset
                 head {
+                    // TODO if creation is enabled we need to check for upload-defer-length
+
                     // spec says we must return this
                     call.response.header(HttpHeaders.CacheControl, "no-store")
 
@@ -120,7 +122,7 @@ public fun Application.tusktModule(
             // core protocol - server information
             options {
                 // This could return a 200 or a 204. Electing a 204 here because of the vibe
-                call.response.header(TusHeaders.TUS_VERSION, TUS_VERSION)
+                call.response.header(TusHeaders.TUS_VERSION, SUPPORTED_TUS_VERSIONS.joinToString(","))
                 call.response.header(
                     TusHeaders.TUS_EXTENSION,
                     extensions
@@ -138,20 +140,23 @@ public fun Application.tusktModule(
     }
 }
 
-public val TusResumableVersionCheck: ApplicationPlugin<Unit> =
+internal val TusResumableVersionCheck: ApplicationPlugin<Unit> =
     createApplicationPlugin(name = "TusResumableVersionCheck") {
         onCall { call ->
             if (call.request.httpMethod != HttpMethod.Options) {
+                // don't use the newer requireHeader because we want to handle if the header isn't present here
+                // (we send back the versions supported with a different status code)
                 val version = call.request.headers[TusHeaders.TUS_RESUMABLE]
-                if (version == null || version != TUS_VERSION) {
-                    call.response.header(TusHeaders.TUS_VERSION, TUS_VERSION)
+                if (version !in SUPPORTED_TUS_VERSIONS) {
+                    call.response.header(TusHeaders.TUS_VERSION, SUPPORTED_TUS_VERSIONS.joinToString(","))
                     call.respond(HttpStatusCode.PreconditionFailed)
                 }
             }
         }
     }
 
-public val TusResponseHeaders: ApplicationPlugin<Unit> =
+// make sure we always set the version unless options comes back
+internal val TusResponseHeaders: ApplicationPlugin<Unit> =
     createApplicationPlugin(name = "TusResponseHeaders") {
         onCallRespond { call, _ ->
             if (call.request.httpMethod != HttpMethod.Options) {

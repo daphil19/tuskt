@@ -50,7 +50,7 @@ class TusktServerTest {
             val response = client.options("/files")
             assertEquals(HttpStatusCode.NoContent, response.status)
             assertNotNull(response.headers[TusHeaders.TUS_VERSION])
-            assertEquals(TUS_VERSION, response.headers[TusHeaders.TUS_VERSION])
+            assertEquals(SUPPORTED_TUS_VERSIONS.joinToString(","), response.headers[TusHeaders.TUS_VERSION])
         }
 
     @Test
@@ -72,7 +72,7 @@ class TusktServerTest {
             }
             val response = client.head("/files/some-id")
             assertEquals(HttpStatusCode.PreconditionFailed, response.status)
-            assertEquals(TUS_VERSION, response.headers[TusHeaders.TUS_VERSION])
+            assertEquals(SUPPORTED_TUS_VERSIONS.joinToString(","), response.headers[TusHeaders.TUS_VERSION])
         }
 
     @Test
@@ -86,7 +86,7 @@ class TusktServerTest {
                     header(TusHeaders.TUS_RESUMABLE, "2.0.0")
                 }
             assertEquals(HttpStatusCode.PreconditionFailed, response.status)
-            assertEquals(TUS_VERSION, response.headers[TusHeaders.TUS_VERSION])
+            assertEquals(SUPPORTED_TUS_VERSIONS.joinToString(","), response.headers[TusHeaders.TUS_VERSION])
         }
 
     @Test
@@ -101,13 +101,13 @@ class TusktServerTest {
 
             val response =
                 client.head("/files/$id") {
-                    header(TusHeaders.TUS_RESUMABLE, TUS_VERSION)
+                    header(TusHeaders.TUS_RESUMABLE, SUPPORTED_TUS_VERSIONS.first())
                 }
 
             assertEquals(HttpStatusCode.OK, response.status)
             assertEquals("no-store", response.headers[HttpHeaders.CacheControl])
             assertEquals("11", response.headers[TusHeaders.UPLOAD_OFFSET])
-            assertEquals(TUS_VERSION, response.headers[TusHeaders.TUS_RESUMABLE])
+            assertEquals(SUPPORTED_TUS_VERSIONS.first(), response.headers[TusHeaders.TUS_RESUMABLE])
         }
 
     @Test
@@ -118,7 +118,7 @@ class TusktServerTest {
             }
             val response =
                 client.head("/files/non-existent") {
-                    header(TusHeaders.TUS_RESUMABLE, TUS_VERSION)
+                    header(TusHeaders.TUS_RESUMABLE, SUPPORTED_TUS_VERSIONS.first())
                 }
             // Protocol says: If the resource is not found, the Server SHOULD return either the 404 Not Found, 410 Gone,
             // or 403 Forbidden status without the Upload-Offset header.
@@ -139,7 +139,7 @@ class TusktServerTest {
             }
             val response =
                 client.head("/files/..") {
-                    header(TusHeaders.TUS_RESUMABLE, TUS_VERSION)
+                    header(TusHeaders.TUS_RESUMABLE, SUPPORTED_TUS_VERSIONS.first())
                 }
 
             assertEquals(HttpStatusCode.Forbidden, response.status)
@@ -157,7 +157,7 @@ class TusktServerTest {
 
             val response =
                 client.patch("/files/$id") {
-                    header(TusHeaders.TUS_RESUMABLE, TUS_VERSION)
+                    header(TusHeaders.TUS_RESUMABLE, SUPPORTED_TUS_VERSIONS.first())
                     header(TusHeaders.UPLOAD_OFFSET, "0")
                     header(HttpHeaders.ContentType, "application/offset+octet-stream")
                     setBody("hello")
@@ -165,7 +165,7 @@ class TusktServerTest {
 
             assertEquals(HttpStatusCode.NoContent, response.status)
             assertEquals("5", response.headers[TusHeaders.UPLOAD_OFFSET])
-            assertEquals(TUS_VERSION, response.headers[TusHeaders.TUS_RESUMABLE])
+            assertEquals(SUPPORTED_TUS_VERSIONS.first(), response.headers[TusHeaders.TUS_RESUMABLE])
             assertEquals("hello", Files.readString(storagePath.resolve("$id.bin")))
         }
 
@@ -181,7 +181,7 @@ class TusktServerTest {
 
             val response =
                 client.patch("/files/$id") {
-                    header(TusHeaders.TUS_RESUMABLE, TUS_VERSION)
+                    header(TusHeaders.TUS_RESUMABLE, SUPPORTED_TUS_VERSIONS.first())
                     header(TusHeaders.UPLOAD_OFFSET, "0") // Incorrect offset
                     header(HttpHeaders.ContentType, "application/offset+octet-stream")
                     setBody("new data")
@@ -201,7 +201,7 @@ class TusktServerTest {
 
             val response =
                 client.patch("/files/$id") {
-                    header(TusHeaders.TUS_RESUMABLE, TUS_VERSION)
+                    header(TusHeaders.TUS_RESUMABLE, SUPPORTED_TUS_VERSIONS.first())
                     header(TusHeaders.UPLOAD_OFFSET, "0")
                     header(HttpHeaders.ContentType, "application/octet-stream") // Missing offset+
                     setBody("data")
@@ -221,7 +221,7 @@ class TusktServerTest {
 
             val response =
                 client.patch("/files/$id") {
-                    header(TusHeaders.TUS_RESUMABLE, TUS_VERSION)
+                    header(TusHeaders.TUS_RESUMABLE, SUPPORTED_TUS_VERSIONS.first())
                     header(HttpHeaders.ContentType, "application/offset+octet-stream")
                     setBody("data")
                 }
@@ -241,7 +241,7 @@ class TusktServerTest {
 
             val response =
                 client.patch("/files/$id") {
-                    header(TusHeaders.TUS_RESUMABLE, TUS_VERSION)
+                    header(TusHeaders.TUS_RESUMABLE, SUPPORTED_TUS_VERSIONS.first())
                     header(TusHeaders.UPLOAD_OFFSET, "-1")
                     header(HttpHeaders.ContentType, "application/offset+octet-stream")
                     setBody("data")
@@ -261,7 +261,7 @@ class TusktServerTest {
 
             val response =
                 client.patch("/files/..") {
-                    header(TusHeaders.TUS_RESUMABLE, TUS_VERSION)
+                    header(TusHeaders.TUS_RESUMABLE, SUPPORTED_TUS_VERSIONS.first())
                     header(TusHeaders.UPLOAD_OFFSET, "0")
                     header(HttpHeaders.ContentType, "application/offset+octet-stream")
                     setBody("data")
@@ -279,7 +279,7 @@ class TusktServerTest {
             }
             val response =
                 client.post("/files") {
-                    header(TusHeaders.TUS_RESUMABLE, TUS_VERSION)
+                    header(TusHeaders.TUS_RESUMABLE, SUPPORTED_TUS_VERSIONS.first())
                     header(TusHeaders.UPLOAD_LENGTH, "100")
                 }
 
@@ -303,7 +303,7 @@ class TusktServerTest {
 
             val response =
                 client.delete("/files/$id") {
-                    header(TusHeaders.TUS_RESUMABLE, TUS_VERSION)
+                    header(TusHeaders.TUS_RESUMABLE, SUPPORTED_TUS_VERSIONS.first())
                 }
 
             assertEquals(HttpStatusCode.NoContent, response.status)
@@ -323,7 +323,7 @@ class TusktServerTest {
 //            val metadataHeader = "filename d29ybGRfZG9taW5hdGlvbl9wbGFuLnBkZg==,is_confidential"
 //            val response =
 //                client.post("/files") {
-//                    header(TusHeaders.TUS_RESUMABLE, TUS_VERSION)
+//                    header(TusHeaders.TUS_RESUMABLE, SUPPORTED_TUS_VERSIONS.first())
 //                    header(TusHeaders.UPLOAD_LENGTH, "100")
 //                    header(TusHeaders.UPLOAD_METADATA, metadataHeader)
 //                }

@@ -17,7 +17,20 @@ public class FileSystemUploadStore(
     private val json = Json { ignoreUnknownKeys = true }
 
     override suspend fun create(tusktUploadMetadata: TusktUploadMetadata): String {
-        TODO("Not yet implemented")
+        // TODO should this generate the id instead the caller?
+        require(getUploadPath(tusktUploadMetadata.id).notExists()) {
+            "Upload with id ${tusktUploadMetadata.id} already exists"
+        }
+        require(getMetadataPath(tusktUploadMetadata.id).notExists()) {
+            "Metadata for upload with id ${tusktUploadMetadata.id} already exists"
+        }
+
+        // create the metadata file
+        withContext(Dispatchers.IO) {
+            getMetadataPath(tusktUploadMetadata.id).writeText(json.encodeToString(tusktUploadMetadata))
+        }
+
+        return tusktUploadMetadata.id
     }
 
     override suspend fun getInfo(tusktUploadId: String): TusktUploadMetadata? =
@@ -45,7 +58,6 @@ public class FileSystemUploadStore(
                     }
             }
 
-        // TODO update metadata!
         val newMetadata = tusktUploadMetadata.copy(currentOffset = tusktUploadMetadata.currentOffset + appendedBytes)
 
         withContext(Dispatchers.IO) {
