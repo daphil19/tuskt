@@ -37,6 +37,8 @@ final const val dev.phillipslabs.tuskt/TUS_CREATION_DEFER_LENGTH_EXTENSION // de
     final fun <get-TUS_CREATION_DEFER_LENGTH_EXTENSION>(): kotlin/String // dev.phillipslabs.tuskt/TUS_CREATION_DEFER_LENGTH_EXTENSION.<get-TUS_CREATION_DEFER_LENGTH_EXTENSION>|<get-TUS_CREATION_DEFER_LENGTH_EXTENSION>(){}[0]
 final const val dev.phillipslabs.tuskt/TUS_CREATION_EXTENSION // dev.phillipslabs.tuskt/TUS_CREATION_EXTENSION|{}TUS_CREATION_EXTENSION[0]
     final fun <get-TUS_CREATION_EXTENSION>(): kotlin/String // dev.phillipslabs.tuskt/TUS_CREATION_EXTENSION.<get-TUS_CREATION_EXTENSION>|<get-TUS_CREATION_EXTENSION>(){}[0]
+final const val dev.phillipslabs.tuskt/TUS_CREATION_WITH_UPLOAD_EXTENSION // dev.phillipslabs.tuskt/TUS_CREATION_WITH_UPLOAD_EXTENSION|{}TUS_CREATION_WITH_UPLOAD_EXTENSION[0]
+    final fun <get-TUS_CREATION_WITH_UPLOAD_EXTENSION>(): kotlin/String // dev.phillipslabs.tuskt/TUS_CREATION_WITH_UPLOAD_EXTENSION.<get-TUS_CREATION_WITH_UPLOAD_EXTENSION>|<get-TUS_CREATION_WITH_UPLOAD_EXTENSION>(){}[0]
 final const val dev.phillipslabs.tuskt/TUS_RESUME_VERSION // dev.phillipslabs.tuskt/TUS_RESUME_VERSION|{}TUS_RESUME_VERSION[0]
     final fun <get-TUS_RESUME_VERSION>(): kotlin/String // dev.phillipslabs.tuskt/TUS_RESUME_VERSION.<get-TUS_RESUME_VERSION>|<get-TUS_RESUME_VERSION>(){}[0]
 

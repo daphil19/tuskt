@@ -86,8 +86,8 @@ public abstract interface class dev/phillipslabs/tuskt/extensions/TusExtension {
 
 public final class dev/phillipslabs/tuskt/extensions/TusktCreationExtension : dev/phillipslabs/tuskt/extensions/TusExtension {
 	public fun <init> ()V
-	public fun <init> (Z)V
-	public synthetic fun <init> (ZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (ZZ)V
+	public synthetic fun <init> (ZZILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun configure (Lio/ktor/server/routing/Route;Ldev/phillipslabs/tuskt/TusktConfig;)V
 	public fun getNames ()Ljava/util/Set;
 }

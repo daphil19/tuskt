@@ -72,50 +72,10 @@ public fun Application.tusktModule(
                             return@patch
                         }
 
-                    if (
-                        call.request.headers[HttpHeaders.ContentType]
-                        != ContentType.Application.OffsetOctetStream.toString()
-                    ) {
-                        // TODO response body?
-                        call.respond(HttpStatusCode.UnsupportedMediaType)
-                        return@patch
+                    val uploaded = handleUploadBytes(config.tusktStore, tusktUploadMetadata)
+                    if (uploaded) {
+                        call.respond(HttpStatusCode.NoContent)
                     }
-
-                    val offset = call.requireHeader(TusHeaders.UPLOAD_OFFSET).toLong()
-                    if (offset < 0) {
-                        call.respond(HttpStatusCode.BadRequest)
-                        return@patch
-                    }
-
-                    if (tusktUploadMetadata.currentOffset != offset) {
-                        call.respond(HttpStatusCode.Conflict)
-                        return@patch
-                    }
-
-                    // TODO write and also update metadata!
-
-                    val newOffset = config.tusktStore.append(tusktUploadMetadata, call.receiveChannel())
-
-                    // write the bytes to the file
-//                    filePath
-//                        .outputStream(
-//                            StandardOpenOption.CREATE,
-//                            StandardOpenOption.WRITE,
-//                            StandardOpenOption.APPEND,
-//                        ).use { output ->
-//                            val input = call.receiveChannel()
-//                            val buffer = ByteArray(DEFAULT_BUFFER_SIZE)
-//                            while (true) {
-//                                val bytesRead = input.readAvailable(buffer, 0, buffer.size)
-//                                if (bytesRead == -1) break
-//                                output.write(buffer, 0, bytesRead)
-//                            }
-//                        }
-
-                    // TODO header for new content size!
-                    call.response.header(TusHeaders.UPLOAD_OFFSET, newOffset)
-
-                    call.respond(HttpStatusCode.NoContent)
                 }
             }
 
@@ -174,3 +134,63 @@ internal val TusResponseHeaders: ApplicationPlugin<Unit> =
 //            call.respond(HttpStatusCode.Forbidden)
 //        }
 //    }
+
+// TODO does it make sense to have any context parameters here?
+@Suppress("ReturnCount")
+internal suspend fun RoutingContext.handleUploadBytes(
+    tusktStore: TusktStore,
+    tusktUploadMetadata: TusktUploadMetadata,
+    creating: Boolean = false,
+): Boolean {
+    if (
+        call.request.headers[HttpHeaders.ContentType]
+        != ContentType.Application.OffsetOctetStream.toString()
+    ) {
+        // TODO response body?
+        call.respond(HttpStatusCode.UnsupportedMediaType)
+        return false
+    }
+
+    val offset =
+        if (creating) {
+            0
+        } else {
+            // if we are not just creating a new upload we need to make sure we get the offset from the upload offset
+            call.requireHeader(TusHeaders.UPLOAD_OFFSET).toLong().also {
+                if (it < 0) {
+                    call.respond(HttpStatusCode.BadRequest)
+                    return false
+                }
+            }
+        }
+
+    if (tusktUploadMetadata.currentOffset != offset) {
+        call.respond(HttpStatusCode.Conflict)
+        return false
+    }
+
+    // TODO write and also update metadata!
+
+    val newOffset = tusktStore.append(tusktUploadMetadata, call.receiveChannel())
+
+    // write the bytes to the file
+//                    filePath
+//                        .outputStream(
+//                            StandardOpenOption.CREATE,
+//                            StandardOpenOption.WRITE,
+//                            StandardOpenOption.APPEND,
+//                        ).use { output ->
+//                            val input = call.receiveChannel()
+//                            val buffer = ByteArray(DEFAULT_BUFFER_SIZE)
+//                            while (true) {
+//                                val bytesRead = input.readAvailable(buffer, 0, buffer.size)
+//                                if (bytesRead == -1) break
+//                                output.write(buffer, 0, bytesRead)
+//                            }
+//                        }
+
+    // TODO header for new content size!
+    call.response.header(TusHeaders.UPLOAD_OFFSET, newOffset)
+
+    return true
+}

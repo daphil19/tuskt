@@ -9,15 +9,19 @@ import io.ktor.server.routing.*
 import kotlin.io.encoding.Base64
 import kotlin.uuid.Uuid
 
-// TODO add an option that allows for defer length to be enabled or disabled
+// TODO consider some sort of dsl-style config function
 public class TusktCreationExtension(
     private val deferLength: Boolean = false,
+    private val enableUpload: Boolean = false,
 ) : TusExtension {
     override val names: Set<String> =
         buildSet {
             add(TUS_CREATION_EXTENSION)
             if (deferLength) {
                 add(TUS_CREATION_DEFER_LENGTH_EXTENSION)
+            }
+            if (enableUpload) {
+                add(TUS_CREATION_WITH_UPLOAD_EXTENSION)
             }
         }
 
@@ -53,6 +57,11 @@ public class TusktCreationExtension(
                     }
                 }
 
+            if (uploadLength == 0L) {
+                // zero-length files are completed immediately
+                // TODO is there some sort of state we need to set for this?
+            }
+
             // TODO do we need to worry if both headers are present here?
 
             // TODO handle this somehow:
@@ -70,19 +79,33 @@ public class TusktCreationExtension(
                         key to value.takeUnless { it.isEmpty() }?.let { Base64.decode(it).decodeToString() }
                     }
 
-            val uploadId =
-                tusktConfig.tusktStore.create(
-                    TusktUploadMetadata(
-                        Uuid.random().toHexDashString(),
-                        0,
-                        uploadLength,
-                        headerValues,
-                    ),
+            // TODO provide some sort of extension point for custom metadata handling per spec
+
+            val tusktUploadMetadata =
+                TusktUploadMetadata(
+                    Uuid.random().toHexDashString(),
+                    0,
+                    uploadLength,
+                    headerValues,
                 )
+            tusktConfig.tusktStore.create(tusktUploadMetadata)
 
             // response location is absolute URI given the base url
             // TODO check if a different value is needed
-            call.response.header(HttpHeaders.Location, "/${tusktConfig.basePath.trimEnd('/')}/$uploadId")
+            call.response.header(
+                HttpHeaders.Location,
+                "/${tusktConfig.basePath.trimEnd('/')}/${tusktUploadMetadata.id}",
+            )
+
+            if (enableUpload) {
+                val uploaded = handleUploadBytes(tusktConfig.tusktStore, tusktUploadMetadata)
+                if (!uploaded) {
+                    // we still successfully created but had some sort of issue during the upload,
+                    // set the offset header to 0
+                    call.response.header(TusHeaders.UPLOAD_OFFSET, 0)
+                }
+            }
+
             call.respond(HttpStatusCode.Created)
         }
     }

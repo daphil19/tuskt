@@ -1,6 +1,7 @@
 public final class dev/phillipslabs/tuskt/TusConstantsKt {
 	public static final field TUS_CREATION_DEFER_LENGTH_EXTENSION Ljava/lang/String;
 	public static final field TUS_CREATION_EXTENSION Ljava/lang/String;
+	public static final field TUS_CREATION_WITH_UPLOAD_EXTENSION Ljava/lang/String;
 	public static final field TUS_RESUME_VERSION Ljava/lang/String;
 	public static final fun getOffsetOctetStream (Lio/ktor/http/ContentType$Application;)Lio/ktor/http/ContentType;
 	public static final fun getSUPPORTED_TUS_VERSIONS ()Ljava/util/List;
