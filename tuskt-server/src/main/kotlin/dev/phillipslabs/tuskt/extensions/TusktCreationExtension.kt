@@ -69,8 +69,9 @@ public class TusktCreationExtension(
             //  the Client MUST set the Upload-Length header in the next PATCH request, once the length is known.
 
             val headerValues =
-                call
-                    .requireHeader(TusHeaders.UPLOAD_METADATA)
+                call.request
+                    .header(TusHeaders.UPLOAD_METADATA)
+                    .orEmpty()
                     .split(",")
                     .map { it.split(" ") }
                     .associate { (key, value) ->

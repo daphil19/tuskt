@@ -272,27 +272,6 @@ class TusktServerTest {
 
     @Test
     @Ignore("Test will fail until we implement the correct extension")
-    fun testCreation() =
-        testApplication {
-            application {
-                tusktModule(tusktStore = FileSystemUploadStore(storagePath))
-            }
-            val response =
-                client.post("/files") {
-                    header(TusHeaders.TUS_RESUMABLE, SUPPORTED_TUS_VERSIONS.first())
-                    header(TusHeaders.UPLOAD_LENGTH, "100")
-                }
-
-            assertEquals(HttpStatusCode.Created, response.status)
-            val location = response.headers[HttpHeaders.Location]
-            assertNotNull(location)
-            val id = location.substringAfterLast("/")
-            assertTrue(storagePath.resolve("$id.bin").exists())
-            assertTrue(storagePath.resolve("$id.json").exists())
-        }
-
-    @Test
-    @Ignore("Test will fail until we implement the correct extension")
     fun testTermination() =
         testApplication {
             application {
@@ -310,35 +289,6 @@ class TusktServerTest {
             assertFalse(storagePath.resolve("$id.bin").exists())
             assertFalse(storagePath.resolve("$id.json").exists())
         }
-
-//    @Test
-//    @Ignore("Test will fail until we implement the correct extension")
-//    fun testCreationWithMetadata() =
-//        testApplication {
-//            application {
-//                tusktModule(tusktStore = FileSystemUploadStore(storagePath))
-//            }
-//            // filename: world_domination_plan.pdf (Base64: d29ybGRfZG9taW5hdGlvbl9wbGFuLnBkZg==)
-//            // is_confidential: (empty value)
-//            val metadataHeader = "filename d29ybGRfZG9taW5hdGlvbl9wbGFuLnBkZg==,is_confidential"
-//            val response =
-//                client.post("/files") {
-//                    header(TusHeaders.TUS_RESUMABLE, SUPPORTED_TUS_VERSIONS.first())
-//                    header(TusHeaders.UPLOAD_LENGTH, "100")
-//                    header(TusHeaders.UPLOAD_METADATA, metadataHeader)
-//                }
-//
-//            assertEquals(HttpStatusCode.Created, response.status)
-//            val location = response.headers[HttpHeaders.Location]
-//            assertNotNull(location)
-//            val id = location.substringAfterLast("/")
-//
-//            val metadataFile = storagePath.resolve("$id.json")
-//            val metadataObj = Json.decodeFromString<TusktUploadMetadata>(metadataFile.readText())
-//
-//            assertEquals("world_domination_plan.pdf", metadataObj.metadata["filename"])
-//            assertEquals("", metadataObj.metadata["is_confidential"])
-//        }
 
     @Test
     fun testMethodOverride() =
