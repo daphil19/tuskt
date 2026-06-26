@@ -17,17 +17,20 @@ public class FileSystemUploadStore(
     private val json = Json { ignoreUnknownKeys = true }
 
     override suspend fun create(tusktUploadMetadata: TusktUploadMetadata): String {
+        val metadataFile = getMetadataPath(tusktUploadMetadata.id)
+        val uploadFile = getUploadPath(tusktUploadMetadata.id)
         // TODO should this generate the id instead the caller?
-        require(getUploadPath(tusktUploadMetadata.id).notExists()) {
+        require(uploadFile.notExists()) {
             "Upload with id ${tusktUploadMetadata.id} already exists"
         }
-        require(getMetadataPath(tusktUploadMetadata.id).notExists()) {
+        require(metadataFile.notExists()) {
             "Metadata for upload with id ${tusktUploadMetadata.id} already exists"
         }
 
         // create the metadata file
         withContext(Dispatchers.IO) {
-            getMetadataPath(tusktUploadMetadata.id).writeText(json.encodeToString(tusktUploadMetadata))
+            metadataFile.writeText(json.encodeToString(tusktUploadMetadata))
+            uploadFile.createFile()
         }
 
         return tusktUploadMetadata.id

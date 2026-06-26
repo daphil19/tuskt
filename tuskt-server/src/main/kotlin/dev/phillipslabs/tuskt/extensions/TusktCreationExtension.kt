@@ -71,14 +71,15 @@ public class TusktCreationExtension(
             val headerValues =
                 call.request
                     .header(TusHeaders.UPLOAD_METADATA)
-                    .orEmpty()
-                    .split(",")
-                    .map { it.split(" ") }
-                    .associate { (key, value) ->
+                    ?.split(",")
+                    ?.map { it.split(" ", limit = 2) }
+                    ?.associate { parts ->
+                        val key = parts[0]
+                        val encodedValue = parts.getOrNull(1)
                         // TODO do we need to do anything to keep the metadata safe?
                         // the key SHOULD be ascii-encoded, and the value MUST be base64-encoded
-                        key to value.takeUnless { it.isEmpty() }?.let { Base64.decode(it).decodeToString() }
-                    }
+                        key to encodedValue?.let { Base64.decode(it).decodeToString() }
+                    } ?: emptyMap()
 
             // TODO provide some sort of extension point for custom metadata handling per spec
 
@@ -99,7 +100,7 @@ public class TusktCreationExtension(
             )
 
             if (enableUpload) {
-                val uploaded = handleUploadBytes(tusktConfig.tusktStore, tusktUploadMetadata)
+                val uploaded = handleUploadBytes(tusktConfig.tusktStore, tusktUploadMetadata, true)
                 if (!uploaded) {
                     // we still successfully created but had some sort of issue during the upload,
                     // set the offset header to 0
